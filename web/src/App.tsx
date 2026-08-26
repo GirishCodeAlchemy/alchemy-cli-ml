@@ -6,13 +6,10 @@ import { HomePage } from './pages/HomePage';
 import { CommandPage } from './pages/CommandPage';
 import { CategoryPage } from './pages/CategoryPage';
 import { NotFoundPage } from './pages/NotFoundPage';
-import { useTheme } from './hooks/useTheme';
 
-const AppContent: React.FC = () => {
-  const { theme } = useTheme();
-
+const App: React.FC = () => {
   return (
-    <div className={theme === 'light' ? 'light' : ''}>
+    <HelmetProvider>
       <BrowserRouter>
         <Layout>
           <Routes>
@@ -23,14 +20,6 @@ const AppContent: React.FC = () => {
           </Routes>
         </Layout>
       </BrowserRouter>
-    </div>
-  );
-};
-
-const App: React.FC = () => {
-  return (
-    <HelmetProvider>
-      <AppContent />
     </HelmetProvider>
   );
 };

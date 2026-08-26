@@ -46,6 +46,7 @@ class IntentClassifier:
             strip_accents="unicode",
             analyzer="word",
             min_df=1,
+            stop_words=None,  # Don't filter stop words on small test datasets
         )
 
         if self._config.model_type == "linear_svc":

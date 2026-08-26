@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import { SearchBar } from '../components/SearchBar';
 import { SearchResults } from '../components/SearchResults';
 import { ExampleChips } from '../components/ExampleChips';
@@ -11,8 +11,9 @@ import { apiClient } from '../api/client';
 
 export const HomePage: React.FC = () => {
   const { results, isLoading, query, search } = useSearch();
-  const { recentSearches, addSearch } = useRecentSearches();
+  const { recentSearches, addSearch, removeSearch, clearSearches } = useRecentSearches();
   const [technologies, setTechnologies] = useState<Record<string, number>>({});
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     apiClient.getTechnologies().then(setTechnologies).catch(() => {});
@@ -21,6 +22,7 @@ export const HomePage: React.FC = () => {
   const handleSearch = (q: string) => {
     search(q);
     addSearch(q);
+    setSearchValue(q);
   };
 
   return (
@@ -44,7 +46,12 @@ export const HomePage: React.FC = () => {
         )}
 
         {/* Search */}
-        <SearchBar onSearch={handleSearch} initialQuery={query} />
+        <SearchBar
+          value={searchValue}
+          onChange={setSearchValue}
+          onSearch={handleSearch}
+          isLoading={isLoading}
+        />
 
         {/* Example chips */}
         {!query && (
@@ -56,7 +63,12 @@ export const HomePage: React.FC = () => {
         {/* Recent searches */}
         {!query && recentSearches.length > 0 && (
           <div className="mt-6">
-            <RecentSearches searches={recentSearches} onSelect={handleSearch} />
+            <RecentSearches
+              searches={recentSearches}
+              onSelect={handleSearch}
+              onRemove={removeSearch}
+              onClear={clearSearches}
+            />
           </div>
         )}
 

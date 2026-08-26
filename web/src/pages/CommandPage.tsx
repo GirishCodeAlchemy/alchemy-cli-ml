@@ -6,7 +6,7 @@ import { apiClient } from '../api/client';
 import { SearchResult } from '../api/types';
 
 export const CommandPage: React.FC = () => {
-  const { technology, id } = useParams<{ technology: string; id: string }>();
+  const { id } = useParams<{ technology: string; id: string }>();
   const [command, setCommand] = useState<SearchResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -20,7 +20,7 @@ export const CommandPage: React.FC = () => {
         setCommand(cmd as unknown as SearchResult);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError('Command not found');
         setLoading(false);
       });

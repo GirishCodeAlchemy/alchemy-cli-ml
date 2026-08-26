@@ -12,7 +12,7 @@ interface CommandCardProps {
   rank?: number;
 }
 
-export const CommandCard: React.FC<CommandCardProps> = ({ result, rank }) => {
+export const CommandCard: React.FC<CommandCardProps> = ({ result, rank: _rank }) => {
   const [showExplanation, setShowExplanation] = useState(false);
 
   return (

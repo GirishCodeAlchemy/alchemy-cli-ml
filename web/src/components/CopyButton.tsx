@@ -6,7 +6,7 @@ interface CopyButtonProps {
   size?: 'sm' | 'lg';
 }
 
-const CopyButton: React.FC<CopyButtonProps> = ({ text, className = "", size = "sm" }) => {
+const CopyButton: React.FC<CopyButtonProps> = ({ text, className = "", size: _size = "sm" }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = useCallback(async () => {
