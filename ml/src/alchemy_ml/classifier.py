@@ -119,15 +119,37 @@ class IntentClassifier:
         tech_labels = self._tech_encoder.fit_transform(filtered_techs)
         intent_labels = self._intent_encoder.fit_transform(filtered_intents)
 
+        # Skip fitting if insufficient data after filtering
+        if len(filtered_queries) < self._config.min_samples_per_class:
+            logger.warning(
+                "Insufficient samples after filtering (%d < %d). Skipping classifier training.",
+                len(filtered_queries),
+                self._config.min_samples_per_class,
+            )
+            self._fitted = True
+            return {
+                "tech_accuracy": 0.0,
+                "intent_accuracy": 0.0,
+                "samples_trained": 0,
+            }
+
         # Train technology classifier
         self._tech_pipeline = self._build_pipeline()
-        self._tech_pipeline.fit(filtered_queries, tech_labels)
-        tech_acc = float(self._tech_pipeline.score(filtered_queries, tech_labels))
+        try:
+            self._tech_pipeline.fit(filtered_queries, tech_labels)
+            tech_acc = float(self._tech_pipeline.score(filtered_queries, tech_labels))
+        except ValueError as e:
+            logger.warning("Failed to train technology classifier: %s. Skipping.", e)
+            tech_acc = 0.0
 
         # Train intent classifier
         self._intent_pipeline = self._build_pipeline()
-        self._intent_pipeline.fit(filtered_queries, intent_labels)
-        intent_acc = float(self._intent_pipeline.score(filtered_queries, intent_labels))
+        try:
+            self._intent_pipeline.fit(filtered_queries, intent_labels)
+            intent_acc = float(self._intent_pipeline.score(filtered_queries, intent_labels))
+        except ValueError as e:
+            logger.warning("Failed to train intent classifier: %s. Skipping.", e)
+            intent_acc = 0.0
 
         self._fitted = True
 

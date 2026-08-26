@@ -54,7 +54,7 @@ def _get_engine():
 
 
 @click.group(invoke_without_command=True)
-@click.argument("query", nargs=-1)
+@click.argument("query", nargs=-1, required=False)
 @click.option("--json-output", "--json", "json_out", is_flag=True, help="Output JSON")
 @click.option("--explain", is_flag=True, help="Show match explanations")
 @click.option("--debug", is_flag=True, help="Show debug information")
@@ -76,6 +76,11 @@ def main(
     command_only: bool,
 ) -> None:
     """AlchemyCLI AI — Ask your terminal. Find the right command."""
+    # Handle subcommand routing for known commands that got consumed as args
+    if query and len(query) == 1 and query[0] in main.commands:
+        ctx.invoke(main.commands[query[0]])
+        return
+
     if ctx.invoked_subcommand is not None:
         return
 
