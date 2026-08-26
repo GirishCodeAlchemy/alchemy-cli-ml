@@ -53,8 +53,23 @@ def _get_engine():
     return engine
 
 
-@click.group(invoke_without_command=True)
-@click.argument("query", nargs=-1)
+class AskGroup(click.Group):
+    """Custom click group that passes unknown args as a search query."""
+
+    def parse_args(self, ctx: click.Context, args: list[str]) -> list[str]:
+        # If the first arg looks like a quoted query (not a known command/option),
+        # stash it so the group callback can use it.
+        # This lets `alchemyai "some question"` work alongside subcommands.
+        if args and not args[0].startswith("-") and args[0] not in self.commands:
+            # Check if it's a multi-word query or unknown single word
+            ctx.ensure_object(dict)
+            ctx.obj["query_args"] = list(args)
+            # Clear args so click doesn't try to parse them as subcommands
+            args = []
+        return super().parse_args(ctx, args)
+
+
+@click.group(cls=AskGroup, invoke_without_command=True)
 @click.option("--json-output", "--json", "json_out", is_flag=True, help="Output JSON")
 @click.option("--explain", is_flag=True, help="Show match explanations")
 @click.option("--debug", is_flag=True, help="Show debug information")
@@ -66,7 +81,6 @@ def _get_engine():
 @click.pass_context
 def main(
     ctx: click.Context,
-    query: tuple[str, ...],
     json_out: bool,
     explain: bool,
     debug: bool,
@@ -76,17 +90,21 @@ def main(
     command_only: bool,
 ) -> None:
     """AlchemyCLI AI — Ask your terminal. Find the right command."""
+    ctx.ensure_object(dict)
+
     if ctx.invoked_subcommand is not None:
         return
 
+    query_args: list[str] = ctx.obj.get("query_args", [])
+
     # No query and no subcommand → interactive mode
-    if not query:
+    if not query_args:
         engine = _get_engine()
         from .interactive import run_interactive
         run_interactive(engine, explain=explain)
         return
 
-    query_str = " ".join(query)
+    query_str = " ".join(query_args)
 
     # Check for technology shortcut
     if query_str.lower() in TECH_SHORTCUTS:
@@ -279,7 +297,6 @@ def model_info() -> None:
 def model_download() -> None:
     """Download or update the ML model."""
     console.print("\n  Downloading model...\n", style="info")
-    # The model downloads automatically on first use via sentence-transformers
     engine = _get_engine()
     info = engine.get_model_info()
     console.print(f"  Model ready: {info.embedding_model}\n", style="green")

@@ -88,7 +88,11 @@ class SentenceTransformerEmbedder(Embedder):
             kwargs["cache_folder"] = str(cache_dir)
 
         self._model = SentenceTransformer(self._model_name, **kwargs)
-        self._dimension = self._model.get_sentence_embedding_dimension()
+        # Support both old and new sentence-transformers API
+        if hasattr(self._model, "get_embedding_dimension"):
+            self._dimension = self._model.get_embedding_dimension()
+        else:
+            self._dimension = self._model.get_sentence_embedding_dimension()
 
         logger.info("Model loaded. Dimension: %d", self._dimension)
 

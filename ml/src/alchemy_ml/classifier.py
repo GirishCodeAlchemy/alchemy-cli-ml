@@ -62,7 +62,6 @@ class IntentClassifier:
                 class_weight="balanced",
                 random_state=42,
                 solver="lbfgs",
-                multi_class="multinomial",
             )
 
         return Pipeline([("tfidf", vectorizer), ("clf", clf)])
