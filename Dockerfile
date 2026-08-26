@@ -7,15 +7,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Python dependencies
-COPY pyproject.toml ./
-RUN pip install --no-cache-dir -e ".[train]"
-
-# Copy source
+# Copy source code and config first (needed for pip install -e)
+COPY README.md pyproject.toml ./
 COPY ml/ ml/
 COPY cli/ cli/
 COPY api/ api/
 COPY knowledge/ knowledge/
+
+# Python dependencies
+RUN pip install --no-cache-dir -e ".[train]"
 
 # Build dataset and index on image build
 RUN python -m alchemy_ml.cli dataset && \
