@@ -1,0 +1,4472 @@
+# Build AlchemyCLI AI — Local ML-Powered Developer Command Assistant
+
+## 1. Project Overview
+
+Build a production-quality open-source developer command assistant called:
+
+# AlchemyCLI AI
+
+Primary CLI:
+
+```bash
+alchemyai
+```
+
+The goal is to allow developers, DevOps engineers, SREs, cloud engineers, system administrators, and students to ask natural-language questions from the terminal and receive the most relevant, verified command or set of commands.
+
+Examples:
+
+```bash
+alchemyai "how do I find pods using the most memory?"
+```
+
+```bash
+alchemyai "how do I restart a kubernetes deployment?"
+```
+
+```bash
+alchemyai "find which process is using port 8080"
+```
+
+```bash
+alchemyai "how do I undo my last git commit but keep the changes?"
+```
+
+```bash
+alchemyai "show kafka consumer group lag"
+```
+
+```bash
+alchemyai "create a python virtual environment"
+```
+
+```bash
+alchemyai "build a rust project in release mode"
+```
+
+```bash
+alchemyai "find docker containers consuming the most memory"
+```
+
+The system must understand the intent of the question and retrieve the most appropriate command(s) from a verified command knowledge base.
+
+---
+
+# 2. Critical Design Principle
+
+DO NOT build a model that freely generates shell commands.
+
+The ML model should understand the user's intent and retrieve commands from a verified dataset.
+
+Architecture:
+
+```text
+                       User Question
+                            │
+                            ▼
+                    Python ML/NLP Layer
+                            │
+                    Intent + Embedding
+                            │
+                            ▼
+                     Semantic Search
+                            │
+                            ▼
+                Verified Command Knowledge Base
+                            │
+                            ▼
+                    Ranked Candidates
+                            │
+                            ▼
+                    Safety Validation
+                            │
+                            ▼
+                       CLI Response
+```
+
+The ML model answers:
+
+> "Which verified command(s) best match this question?"
+
+It does NOT answer:
+
+> "Invent a shell command."
+
+This is a mandatory safety and correctness requirement.
+
+---
+
+# 3. Product Name
+
+Product:
+
+```text
+AlchemyCLI AI
+```
+
+CLI:
+
+```text
+alchemyai
+```
+
+Website:
+
+```text
+AlchemyCLI AI
+```
+
+Suggested tagline:
+
+```text
+Ask your terminal. Find the right command.
+```
+
+Alternative:
+
+```text
+Understand commands. Don't memorize them.
+```
+
+Use:
+
+```text
+Ask your terminal. Find the right command.
+```
+
+as the primary tagline.
+
+---
+
+# 4. Example User Experience
+
+User:
+
+```bash
+alchemyai "how do I restart a kubernetes deployment?"
+```
+
+Response:
+
+```text
+AlchemyCLI AI
+
+Kubernetes › Deployments
+
+Restart a deployment
+
+  kubectl rollout restart deployment/<deployment>
+
+Description:
+  Restart all pods managed by a Kubernetes deployment.
+
+Example:
+
+  kubectl rollout restart deployment/my-api
+
+Risk:
+  ⚠ WARNING
+
+Related:
+  kubectl rollout status deployment/<deployment>
+  kubectl rollout undo deployment/<deployment>
+
+Documentation:
+  Kubernetes official documentation
+
+Confidence:
+  98%
+
+[Copy]
+```
+
+---
+
+# 5. Multiple Results
+
+If several commands are relevant:
+
+```bash
+alchemyai "how do I troubleshoot a kubernetes pod?"
+```
+
+Return:
+
+```text
+Top matches
+
+1. View pod status
+   kubectl get pod <pod> -o wide
+
+2. Describe pod
+   kubectl describe pod <pod>
+
+3. View pod logs
+   kubectl logs <pod>
+
+4. View previous container logs
+   kubectl logs <pod> --previous
+
+5. Execute a command inside pod
+   kubectl exec -it <pod> -- <command>
+```
+
+Rank the commands according to semantic relevance.
+
+---
+
+# 6. Natural Language Understanding
+
+The system must understand:
+
+* natural language
+* abbreviations
+* technology aliases
+* typos
+* synonyms
+* command descriptions
+* intent
+* context
+
+Examples:
+
+```text
+k8s
+kubernetes
+kube
+kubectl
+```
+
+must be related.
+
+Likewise:
+
+```text
+container
+containers
+docker container
+docker containers
+```
+
+and:
+
+```text
+consumer lag
+kafka lag
+consumer group lag
+group lag
+```
+
+should be semantically related.
+
+---
+
+# 7. ML Architecture
+
+Use Python for the ML/NLP layer.
+
+Recommended architecture:
+
+```text
+Python ML Service
+       │
+       ├── Query preprocessing
+       │
+       ├── Embedding model
+       │
+       ├── Intent classifier
+       │
+       ├── Semantic retrieval
+       │
+       ├── Keyword retrieval
+       │
+       ├── Hybrid ranking
+       │
+       └── Safety classifier
+```
+
+The initial implementation should use a pretrained sentence embedding model.
+
+Preferred initial model family:
+
+```text
+sentence-transformers
+```
+
+Use a small, high-quality embedding model suitable for local inference.
+
+Do not require a GPU.
+
+The system must work on:
+
+* macOS
+* Linux
+* Windows
+
+with CPU inference.
+
+---
+
+# 8. Model Strategy
+
+Implement the ML system in three stages.
+
+## Stage 1 — Baseline
+
+Use a pretrained sentence embedding model.
+
+Example:
+
+```text
+SentenceTransformer
+```
+
+Generate embeddings for:
+
+* command title
+* command description
+* intent examples
+* tags
+* aliases
+* examples
+
+Store embeddings locally.
+
+This should work without model training.
+
+---
+
+## Stage 2 — Domain Fine-Tuning
+
+Fine-tune the embedding model using the AlchemyCLI dataset.
+
+Training examples should contain:
+
+```text
+query → correct command
+```
+
+Examples:
+
+```text
+"restart kubernetes deployment"
+    →
+kubectl rollout restart deployment/<deployment>
+
+"restart a k8s deployment"
+    →
+kubectl rollout restart deployment/<deployment>
+
+"restart deployment in kubernetes"
+    →
+kubectl rollout restart deployment/<deployment>
+```
+
+Negative examples should be included.
+
+Example:
+
+```text
+Query:
+restart kubernetes deployment
+
+Positive:
+kubectl rollout restart deployment/<deployment>
+
+Negative:
+kubectl get deployment
+kubectl describe deployment
+kubectl rollout undo deployment/<deployment>
+```
+
+---
+
+# 9. Training Objective
+
+Use a retrieval-oriented objective.
+
+Prefer:
+
+```text
+MultipleNegativesRankingLoss
+```
+
+or another suitable Sentence Transformers retrieval loss.
+
+The goal is:
+
+```text
+similar query
+      ↓
+close embedding
+      ↓
+correct command
+```
+
+and:
+
+```text
+unrelated command
+      ↓
+farther embedding
+```
+
+Do not train a generative language model.
+
+---
+
+# 10. Stage 3 — Intent Classification
+
+Add a lightweight classifier.
+
+Predict:
+
+```text
+technology
+intent
+operation
+```
+
+Example:
+
+```text
+"show me pods using the most memory"
+
+technology:
+kubernetes
+
+intent:
+resource_usage
+
+operation:
+top_memory
+```
+
+Another:
+
+```text
+"undo my last commit but keep changes"
+
+technology:
+git
+
+intent:
+undo_commit
+
+operation:
+soft_reset
+```
+
+Use a lightweight classifier such as:
+
+```text
+LogisticRegression
+```
+
+or:
+
+```text
+LinearSVC
+```
+
+with TF-IDF features as a baseline.
+
+Optionally compare against an embedding-based classifier.
+
+The system must not depend entirely on the classifier.
+
+Semantic retrieval remains the primary mechanism.
+
+---
+
+# 11. Hybrid Search
+
+Implement hybrid ranking.
+
+Combine:
+
+```text
+semantic similarity
++
+keyword similarity
++
+technology match
++
+intent match
++
+tag match
++
+command popularity
++
+safety relevance
+```
+
+Example scoring:
+
+```text
+final_score =
+    0.55 * semantic_score
+  + 0.20 * keyword_score
+  + 0.10 * technology_score
+  + 0.10 * intent_score
+  + 0.05 * tag_score
+```
+
+Keep these weights configurable.
+
+Do not hard-code them throughout the codebase.
+
+---
+
+# 12. Confidence
+
+Return a confidence score.
+
+Example:
+
+```text
+confidence: 0.97
+```
+
+Map it to:
+
+```text
+90-100%:
+Very likely match
+
+75-89%:
+Likely match
+
+50-74%:
+Possible match
+
+Below 50%:
+Low confidence
+```
+
+Do not present low-confidence results as authoritative.
+
+---
+
+# 13. Low Confidence Behavior
+
+If confidence is below a configurable threshold:
+
+```text
+I couldn't confidently identify the command.
+
+Try specifying the technology:
+
+  kubernetes
+  docker
+  git
+  python
+  rust
+  go
+  kafka
+```
+
+Also show the closest matches if useful.
+
+Never fabricate an answer.
+
+---
+
+# 14. Clarification Mode
+
+If the question is ambiguous:
+
+```bash
+alchemyai "restart it"
+```
+
+respond:
+
+```text
+What would you like to restart?
+
+  1. Kubernetes deployment
+  2. Docker container
+  3. Linux service
+  4. Something else
+```
+
+If possible, use recent local query context.
+
+Example:
+
+```bash
+alchemyai "kubernetes deployment commands"
+alchemyai "restart it"
+```
+
+The second query can use the previous context.
+
+---
+
+# 15. Context
+
+Implement lightweight local conversation context.
+
+Store only recent CLI queries locally.
+
+Example:
+
+```text
+Query 1:
+show kubernetes deployments
+
+Query 2:
+restart it
+```
+
+Interpret:
+
+```text
+restart the Kubernetes deployment
+```
+
+Context should:
+
+* remain local
+* never be uploaded
+* have configurable retention
+* be clearable
+
+Command:
+
+```bash
+alchemyai context clear
+```
+
+---
+
+# 16. No Cloud LLM
+
+The initial system must NOT require:
+
+* OpenAI
+* Anthropic
+* Gemini
+* Claude
+* remote LLM
+* cloud inference
+
+The ML model must run locally.
+
+Internet should only be needed for:
+
+```bash
+alchemyai update
+```
+
+or optional model downloads during installation.
+
+---
+
+# 17. Offline Mode
+
+After installation:
+
+```bash
+alchemyai "how do I find kubernetes pod logs?"
+```
+
+must work without internet.
+
+All of the following must work offline:
+
+```bash
+alchemyai search ...
+alchemyai "natural language question"
+alchemyai kubernetes
+alchemyai docker
+alchemyai git
+alchemyai python
+```
+
+---
+
+# 18. Python ML Service
+
+Create:
+
+```text
+ml/
+```
+
+Structure:
+
+```text
+ml/
+├── src/
+│   ├── alchemy_ml/
+│   │   ├── __init__.py
+│   │   ├── embeddings.py
+│   │   ├── retrieval.py
+│   │   ├── ranking.py
+│   │   ├── classifier.py
+│   │   ├── preprocessing.py
+│   │   ├── safety.py
+│   │   ├── inference.py
+│   │   ├── evaluation.py
+│   │   └── config.py
+│   │
+│   └── train.py
+│
+├── data/
+│   ├── raw/
+│   ├── processed/
+│   ├── train.jsonl
+│   ├── validation.jsonl
+│   └── test.jsonl
+│
+├── models/
+│   ├── embedding/
+│   ├── classifier/
+│   └── metadata.json
+│
+├── scripts/
+│   ├── build_dataset.py
+│   ├── generate_embeddings.py
+│   ├── train_classifier.py
+│   ├── train_embeddings.py
+│   ├── evaluate.py
+│   └── benchmark.py
+│
+├── tests/
+│
+├── pyproject.toml
+└── README.md
+```
+
+---
+
+# 19. Python Dependencies
+
+Prefer:
+
+```text
+Python 3.11+
+```
+
+Use:
+
+```text
+sentence-transformers
+torch
+scikit-learn
+numpy
+pandas
+pyyaml
+pydantic
+fastapi
+uvicorn
+```
+
+Use:
+
+```text
+faiss-cpu
+```
+
+for local vector search where appropriate.
+
+Also support a pure NumPy/sklearn fallback if FAISS is unavailable.
+
+Do not introduce unnecessary dependencies.
+
+---
+
+# 20. Model Storage
+
+Models must be versioned.
+
+Example:
+
+```text
+models/
+├── embedding/
+│   └── alchemyai-embedding-v1/
+├── classifier/
+│   └── intent-v1/
+└── metadata.json
+```
+
+Metadata:
+
+```json
+{
+  "model_version": "1.0.0",
+  "embedding_model": "local-model-name",
+  "dataset_version": "2026.08.01",
+  "created_at": "2026-08-01"
+}
+```
+
+---
+
+# 21. Vector Database
+
+Do NOT require a remote vector database.
+
+Use:
+
+```text
+FAISS
+```
+
+locally.
+
+Index:
+
+```text
+command_embeddings.faiss
+```
+
+Metadata:
+
+```text
+command_metadata.json
+```
+
+Architecture:
+
+```text
+Question
+   ↓
+Embedding
+   ↓
+FAISS
+   ↓
+Top K commands
+   ↓
+Hybrid ranking
+```
+
+---
+
+# 22. Alternative Vector Store
+
+Keep the retrieval layer abstract.
+
+Interface:
+
+```python
+class VectorStore:
+    def add(self, embeddings, metadata):
+        ...
+
+    def search(self, embedding, top_k):
+        ...
+```
+
+Default:
+
+```text
+FAISS
+```
+
+This allows future support for:
+
+```text
+Chroma
+Milvus
+Qdrant
+```
+
+without rewriting the application.
+
+---
+
+# 23. Knowledge Base
+
+The knowledge base remains the source of truth.
+
+Use:
+
+```text
+knowledge/
+```
+
+or:
+
+```text
+cheatsheets/
+```
+
+Each command must have structured metadata.
+
+Example:
+
+```yaml
+id: kubernetes-rollout-restart
+
+technology: kubernetes
+
+category: deployments
+
+name: Restart deployment
+
+intent: restart_deployment
+
+command: kubectl rollout restart deployment/<deployment>
+
+description: >
+  Restart the pods managed by a Kubernetes deployment.
+
+tags:
+  - kubernetes
+  - deployment
+  - restart
+  - rollout
+
+aliases:
+  - restart k8s deployment
+  - restart kubernetes deployment
+  - rollout restart
+  - restart deployment
+
+examples:
+  - query: how do I restart a kubernetes deployment?
+  - query: restart a k8s deployment
+  - query: rollout restart deployment
+
+risk: warning
+
+documentation:
+  url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_restart/
+
+verified_at: 2026-08-01
+```
+
+---
+
+# 24. Initial Dataset
+
+Build an initial dataset containing at least:
+
+```text
+Kubernetes
+Docker
+Docker Compose
+Git
+Linux
+Bash
+Python
+Go
+Rust
+Cargo
+Terraform
+AWS CLI
+Google Cloud CLI
+Azure CLI
+Kafka
+PostgreSQL
+MySQL
+Redis
+Prometheus
+Grafana
+Helm
+GitHub CLI
+curl
+jq
+SSH
+systemctl
+journalctl
+```
+
+Target approximately:
+
+```text
+1,500-3,000 verified commands
+```
+
+Do not artificially inflate the dataset.
+
+Accuracy is more important than count.
+
+---
+
+# 25. Initial Dataset Categories
+
+## Kubernetes
+
+Include intents for:
+
+```text
+get pods
+get deployments
+get services
+get nodes
+get namespaces
+describe resources
+logs
+previous logs
+follow logs
+exec
+port forwarding
+copy files
+restart deployment
+rollout status
+rollout history
+rollback
+scale deployment
+scale statefulset
+delete pod
+delete deployment
+apply manifest
+diff
+events
+resource usage
+CPU usage
+memory usage
+node usage
+labels
+selectors
+annotations
+taints
+tolerations
+configmaps
+secrets
+service accounts
+RBAC
+roles
+rolebindings
+cluster roles
+cluster rolebindings
+ingress
+services
+endpoints
+DNS
+persistent volumes
+persistent volume claims
+storage classes
+jobs
+cronjobs
+daemonsets
+statefulsets
+```
+
+---
+
+# 26. Docker Dataset
+
+Include:
+
+```text
+list containers
+running containers
+all containers
+logs
+follow logs
+exec
+inspect
+stats
+CPU
+memory
+images
+pull image
+build image
+tag image
+push image
+remove image
+remove container
+restart container
+stop container
+start container
+network
+volume
+cleanup
+prune
+Dockerfile
+buildx
+registry
+authentication
+compose
+compose up
+compose down
+compose logs
+compose restart
+compose build
+```
+
+---
+
+# 27. Git Dataset
+
+Include:
+
+```text
+status
+log
+graph
+branches
+create branch
+delete branch
+switch branch
+checkout
+merge
+rebase
+interactive rebase
+undo commit
+undo last commit
+keep changes
+discard changes
+unstage
+restore file
+revert commit
+reset
+cherry-pick
+stash
+stash apply
+stash pop
+stash list
+remote
+fetch
+pull
+push
+force push
+tags
+diff
+show commit
+blame
+bisect
+submodules
+cleanup
+```
+
+Pay particular attention to dangerous commands.
+
+---
+
+# 28. Linux Dataset
+
+Include:
+
+```text
+find files
+find directories
+search text
+grep
+sed
+awk
+sort
+uniq
+cut
+xargs
+head
+tail
+follow logs
+disk usage
+directory size
+memory usage
+CPU usage
+processes
+ports
+network connections
+kill process
+environment variables
+permissions
+chmod
+chown
+users
+groups
+services
+systemctl
+journalctl
+DNS
+hostname
+IP
+routes
+curl
+wget
+tar
+gzip
+zip
+unzip
+SSH
+scp
+rsync
+```
+
+---
+
+# 29. Python Dataset
+
+Include:
+
+```text
+python version
+pip
+pip list
+virtual environment
+venv
+install package
+requirements
+freeze dependencies
+upgrade package
+uninstall package
+run module
+run script
+compile
+pytest
+formatting
+ruff
+mypy
+debugging
+environment variables
+HTTP
+JSON
+asyncio
+processes
+```
+
+---
+
+# 30. Go Dataset
+
+Include:
+
+```text
+go version
+go run
+go build
+go test
+go test coverage
+go fmt
+go vet
+go mod init
+go mod tidy
+go get
+go list
+go env
+cross compilation
+build tags
+benchmarks
+race detector
+pprof
+```
+
+---
+
+# 31. Rust Dataset
+
+Include:
+
+```text
+rustc version
+cargo version
+cargo new
+cargo init
+cargo build
+cargo build --release
+cargo run
+cargo test
+cargo check
+cargo fmt
+cargo clippy
+cargo update
+cargo add
+cargo remove
+cargo tree
+cargo clean
+cargo doc
+cargo bench
+features
+cross compilation
+rustup
+toolchains
+```
+
+---
+
+# 32. Kafka Dataset
+
+Include:
+
+```text
+list topics
+describe topic
+create topic
+delete topic
+produce
+consume
+consumer groups
+consumer lag
+group offsets
+partition offsets
+reset offsets
+consume from timestamp
+consume from offset
+consumer group description
+topic configuration
+partition count
+replication
+ACLs
+```
+
+---
+
+# 33. Terraform Dataset
+
+Include:
+
+```text
+init
+plan
+apply
+destroy
+validate
+fmt
+show
+state list
+state show
+state rm
+import
+output
+refresh
+workspace
+providers
+lock
+graph
+```
+
+Mark destructive operations appropriately.
+
+---
+
+# 34. Prometheus Dataset
+
+Include:
+
+```text
+PromQL
+rate
+irate
+increase
+sum
+avg
+max
+min
+histogram
+quantile
+label filtering
+regex
+aggregation
+recording rules
+alerts
+targets
+service discovery
+```
+
+---
+
+# 35. Grafana Dataset
+
+Include:
+
+```text
+dashboard
+datasource
+queries
+variables
+alerts
+provisioning
+API
+export dashboard
+import dashboard
+annotations
+panels
+```
+
+---
+
+# 36. Dataset Format
+
+Use two datasets.
+
+## Command Dataset
+
+```text
+commands.yaml
+```
+
+Contains verified commands.
+
+## Training Dataset
+
+```text
+training.jsonl
+```
+
+Contains natural-language queries.
+
+Example:
+
+```json
+{
+  "query": "how do I restart a kubernetes deployment",
+  "command_id": "kubernetes-rollout-restart",
+  "technology": "kubernetes",
+  "intent": "restart_deployment"
+}
+```
+
+---
+
+# 37. Training Dataset Requirements
+
+Each command should have multiple query variations.
+
+Minimum:
+
+```text
+5-15 queries per command
+```
+
+Include:
+
+### Beginner
+
+```text
+how do I restart a deployment
+```
+
+### Experienced
+
+```text
+kubectl rollout restart deployment
+```
+
+### Informal
+
+```text
+restart my k8s deployment
+```
+
+### Abbreviation
+
+```text
+restart k8s deploy
+```
+
+### Typo
+
+```text
+restart kubernets deployment
+```
+
+### Conceptual
+
+```text
+how can I recreate the pods for a deployment
+```
+
+The training pipeline should normalize these.
+
+---
+
+# 38. Synthetic Dataset Generation
+
+Create a Python script:
+
+```bash
+python scripts/generate_training_data.py
+```
+
+It should generate query variations from the structured command dataset.
+
+Use templates such as:
+
+```text
+how do I {intent}?
+how can I {intent}?
+what command {intent}?
+command to {intent}
+how to {intent}
+{technology} {intent}
+```
+
+Do not rely on an LLM to generate the dataset.
+
+Use deterministic templates initially.
+
+Human-authored queries should be the highest-quality dataset.
+
+---
+
+# 39. Negative Dataset
+
+Generate hard negatives.
+
+For example:
+
+```text
+Query:
+restart kubernetes deployment
+
+Positive:
+kubectl rollout restart deployment/<deployment>
+
+Hard negatives:
+kubectl rollout status deployment/<deployment>
+kubectl rollout undo deployment/<deployment>
+kubectl get deployment
+kubectl scale deployment/<deployment>
+```
+
+This improves retrieval accuracy.
+
+---
+
+# 40. Dataset Splitting
+
+Use:
+
+```text
+70% training
+15% validation
+15% testing
+```
+
+Split by command/query carefully.
+
+Avoid leakage.
+
+A query variant belonging to a command in the training set must not appear in the test set.
+
+---
+
+# 41. Model Training Pipeline
+
+Implement:
+
+```bash
+make ml-install
+make dataset
+make embeddings
+make train
+make evaluate
+```
+
+Equivalent:
+
+```bash
+python -m alchemy_ml.dataset
+python -m alchemy_ml.train
+python -m alchemy_ml.evaluate
+```
+
+Pipeline:
+
+```text
+Raw commands
+    ↓
+Normalize
+    ↓
+Generate query variations
+    ↓
+Generate positive/negative pairs
+    ↓
+Train embedding model
+    ↓
+Train intent classifier
+    ↓
+Build FAISS index
+    ↓
+Evaluate
+    ↓
+Package model
+```
+
+---
+
+# 42. Evaluation Metrics
+
+Measure:
+
+```text
+Recall@1
+Recall@3
+Recall@5
+MRR
+Precision@1
+Precision@3
+```
+
+Target:
+
+```text
+Recall@1 >= 85%
+Recall@3 >= 95%
+```
+
+for the initial benchmark dataset.
+
+Do not claim these numbers unless the actual evaluation reaches them.
+
+---
+
+# 43. Evaluation CLI
+
+Implement:
+
+```bash
+alchemyai-ml evaluate
+```
+
+Output:
+
+```text
+AlchemyCLI AI Evaluation
+
+Dataset:
+v1.0
+
+Commands:
+1,847
+
+Queries:
+12,394
+
+Recall@1:
+88.7%
+
+Recall@3:
+96.4%
+
+MRR:
+0.921
+
+Intent Accuracy:
+94.1%
+
+Safety Classification:
+99.2%
+```
+
+---
+
+# 44. Confusion Matrix
+
+For intent classification generate:
+
+```text
+reports/confusion_matrix.png
+```
+
+Also:
+
+```text
+reports/evaluation.json
+reports/evaluation.md
+```
+
+---
+
+# 45. Benchmark Dataset
+
+Create a manually curated benchmark:
+
+```text
+ml/data/benchmark.jsonl
+```
+
+At least:
+
+```text
+300 queries
+```
+
+covering:
+
+```text
+Kubernetes
+Docker
+Git
+Linux
+Python
+Go
+Rust
+Kafka
+Terraform
+Cloud
+Databases
+Observability
+```
+
+The benchmark must contain ambiguous queries and hard negatives.
+
+---
+
+# 46. Safety Classifier
+
+Implement a safety layer independent of the ML retrieval model.
+
+Classify commands as:
+
+```text
+safe
+warning
+dangerous
+```
+
+Examples:
+
+Safe:
+
+```bash
+kubectl get pods
+docker ps
+git status
+cargo check
+go test
+```
+
+Warning:
+
+```bash
+kubectl rollout restart deployment/<deployment>
+docker system prune
+git reset --hard HEAD~1
+terraform apply
+```
+
+Dangerous:
+
+```bash
+kubectl delete namespace <namespace>
+docker system prune -a
+git push --force
+terraform destroy
+rm -rf <path>
+```
+
+---
+
+# 47. Never Execute Commands
+
+This is mandatory.
+
+AlchemyCLI AI must NEVER:
+
+```text
+execute shell commands
+execute subprocesses from retrieved commands
+execute generated commands
+modify the user's system
+```
+
+The application only displays and copies commands.
+
+---
+
+# 48. Dangerous Command UX
+
+For dangerous commands:
+
+```text
+⚠ DANGEROUS
+
+terraform destroy
+
+This command can permanently destroy infrastructure.
+
+[Copy Anyway]
+```
+
+Copying is allowed after explicit confirmation.
+
+Execution is NEVER supported.
+
+---
+
+# 49. Query Pipeline
+
+Implement:
+
+```text
+User Input
+    ↓
+Whitespace normalization
+    ↓
+Typo normalization
+    ↓
+Technology detection
+    ↓
+Intent classification
+    ↓
+Query embedding
+    ↓
+FAISS retrieval
+    ↓
+Keyword retrieval
+    ↓
+Hybrid ranking
+    ↓
+Safety classification
+    ↓
+Confidence threshold
+    ↓
+Response
+```
+
+---
+
+# 50. Technology Detection
+
+Detect:
+
+```text
+kubernetes
+k8s
+kubectl
+docker
+git
+python
+pip
+go
+golang
+rust
+cargo
+terraform
+aws
+gcloud
+azure
+kafka
+postgres
+mysql
+redis
+prometheus
+grafana
+linux
+bash
+ssh
+curl
+jq
+```
+
+Technology detection should increase ranking accuracy.
+
+---
+
+# 51. Query Examples
+
+The system must understand:
+
+```text
+"pods using too much memory"
+```
+
+→ Kubernetes resource usage.
+
+```text
+"which process is listening on 8080"
+```
+
+→ Linux/networking.
+
+```text
+"undo last commit keep changes"
+```
+
+→ Git soft reset.
+
+```text
+"docker containers eating cpu"
+```
+
+→ Docker stats.
+
+```text
+"restart k8s deployment"
+```
+
+→ kubectl rollout restart.
+
+```text
+"consumer group lag"
+```
+
+→ Kafka consumer groups.
+
+```text
+"python environment"
+```
+
+→ Python venv.
+
+```text
+"rust optimized build"
+```
+
+→ cargo build --release.
+
+---
+
+# 52. Typo Handling
+
+Handle common typos:
+
+```text
+kubernets -> kubernetes
+kuberenetes -> kubernetes
+dockr -> docker
+pyhton -> python
+pyton -> python
+kafak -> kafka
+promtheus -> prometheus
+grafna -> grafana
+terrafom -> terraform
+```
+
+Do not create an enormous hard-coded typo dictionary.
+
+Use fuzzy matching where appropriate.
+
+---
+
+# 53. Synonym Handling
+
+Support:
+
+```text
+remove/delete
+restart/recycle
+show/list
+inspect/describe
+memory/ram
+CPU/processor
+logs/output
+undo/revert
+container/containers
+pod/pods
+```
+
+Use both deterministic normalization and semantic embeddings.
+
+---
+
+# 54. Query Explainability
+
+The CLI should optionally show why a command matched.
+
+Example:
+
+```bash
+alchemyai "restart k8s deployment" --explain
+```
+
+Output:
+
+```text
+Technology:
+  Kubernetes
+
+Detected intent:
+  restart deployment
+
+Matched tags:
+  restart
+  deployment
+  rollout
+
+Semantic similarity:
+  0.94
+
+Final confidence:
+  0.98
+```
+
+---
+
+# 55. CLI Commands
+
+Implement:
+
+```bash
+alchemyai
+alchemyai "<question>"
+alchemyai ask "<question>"
+alchemyai search "<query>"
+alchemyai show <command>
+alchemyai list
+alchemyai kubernetes
+alchemyai docker
+alchemyai git
+alchemyai python
+alchemyai rust
+alchemyai go
+alchemyai update
+alchemyai model
+alchemyai model info
+alchemyai context
+alchemyai context clear
+alchemyai favorites
+alchemyai serve
+alchemyai version
+```
+
+---
+
+# 56. Short Form
+
+The shortest natural interaction should be:
+
+```bash
+alchemyai "find pods using most memory"
+```
+
+Do not force users to write:
+
+```bash
+alchemyai ask "..."
+```
+
+Both must work.
+
+---
+
+# 57. Interactive Mode
+
+Running:
+
+```bash
+alchemyai
+```
+
+starts an interactive terminal assistant.
+
+Example:
+
+```text
+╭──────────────────────────────────────────────────────╮
+│                  ALCHEMYCLI AI                       │
+│                                                      │
+│ Ask anything about developer commands                │
+╰──────────────────────────────────────────────────────╯
+
+You:
+> how do I find pods using the most memory?
+
+Alchemy:
+> Kubernetes
+
+  kubectl top pods --all-namespaces --sort-by=memory
+
+  [Copy]
+
+You:
+>
+```
+
+Support:
+
+```text
+/help
+/history
+/clear
+/exit
+```
+
+---
+
+# 58. Interactive Follow-Up
+
+Example:
+
+```text
+You:
+> show pods using most memory
+
+Alchemy:
+> kubectl top pods --all-namespaces --sort-by=memory
+
+You:
+> only in production
+
+Alchemy:
+> kubectl top pods -n production --sort-by=memory
+```
+
+The system should understand context.
+
+However, do not invent flags.
+
+If the exact command cannot be safely determined:
+
+```text
+I need to know the namespace.
+
+Which namespace should I use?
+```
+
+---
+
+# 59. Web UI
+
+The existing web UI concept should remain.
+
+Create:
+
+```text
+web/
+```
+
+with:
+
+```text
+React
+TypeScript
+Vite
+Tailwind
+```
+
+The homepage should primarily be an AI-style command search interface.
+
+Do NOT make it look like ChatGPT.
+
+It should look like a developer command search engine.
+
+---
+
+# 60. Web Homepage
+
+Hero:
+
+```text
+AlchemyCLI AI
+
+Ask your terminal.
+Find the right command.
+
+┌───────────────────────────────────────────────────────┐
+│ 🔎  What are you trying to do?                       │
+└───────────────────────────────────────────────────────┘
+
+Try:
+
+"find pods using the most memory"
+
+"undo my last git commit"
+
+"find process using port 8080"
+```
+
+---
+
+# 61. Web Result
+
+Example:
+
+```text
+Kubernetes · Resource Usage
+
+Find pods using the most memory
+
+kubectl top pods --all-namespaces --sort-by=memory
+
+                              [Copy]
+
+Confidence
+98%
+
+Why this matched:
+✓ Kubernetes detected
+✓ memory usage detected
+✓ pod detected
+
+Risk:
+SAFE
+
+Related commands:
+kubectl top nodes
+kubectl describe pod <pod>
+
+Official Documentation →
+```
+
+---
+
+# 62. Web API
+
+Create:
+
+```text
+POST /api/v1/ask
+```
+
+Request:
+
+```json
+{
+  "query": "how do I restart a kubernetes deployment?"
+}
+```
+
+Response:
+
+```json
+{
+  "query": "how do I restart a kubernetes deployment?",
+  "results": [
+    {
+      "command_id": "kubernetes-rollout-restart",
+      "command": "kubectl rollout restart deployment/<deployment>",
+      "confidence": 0.98,
+      "technology": "kubernetes",
+      "intent": "restart_deployment",
+      "risk": "warning"
+    }
+  ]
+}
+```
+
+---
+
+# 63. Python ML API
+
+Use FastAPI.
+
+Endpoints:
+
+```text
+GET /health
+
+GET /model
+
+POST /predict
+
+POST /search
+
+POST /reload
+```
+
+Example:
+
+```text
+POST /predict
+```
+
+Input:
+
+```json
+{
+  "query": "find kubernetes pods using too much memory"
+}
+```
+
+---
+
+# 64. Go/Python Architecture
+
+The preferred production architecture:
+
+```text
+                     Fast UI
+                       │
+                       ▼
+                  Python Fast REST API
+                       │
+                       ▼
+                 Python ML API
+                       │
+              ┌────────┴────────┐
+              │                 │
+          Embedding          Classifier
+              │                 │
+              └────────┬────────┘
+                       ▼
+                     FAISS
+                       │
+                       ▼
+                Command Dataset
+```
+
+However, the CLI should eventually be able to perform local inference without requiring a Python server.
+
+---
+
+# 65. CLI Production Inference
+
+Design the system so that the Python model can eventually be exported to a format usable by the CLI.
+
+Preferred future architecture:
+
+```text
+Python
+  ↓
+Train
+  ↓
+Export ONNX
+  ↓
+Python package inference
+  ↓
+AlchemyCLI
+```
+
+For MVP, it is acceptable for:
+
+```bash
+alchemyai
+```
+
+# 67. Automatic ML Server Startup
+
+Eventually:
+
+```bash
+alchemyai "question"
+```
+
+should automatically start the local ML service if required.
+
+The user should not need to manually run:
+
+```bash
+python server.py
+```
+
+Do not make this mandatory for the first implementation if packaging becomes complex.
+
+---
+
+# 68. Model Download
+
+Provide:
+
+```bash
+alchemyai model download
+```
+
+and:
+
+```bash
+alchemyai model update
+```
+
+The model must be versioned.
+
+Example:
+
+```text
+Alchemy Model
+
+Embedding:
+alchemyai-embedding-v1
+
+Intent:
+alchemyai-intent-v1
+
+Dataset:
+2026.08
+```
+
+---
+
+# 69. Model Information
+
+Command:
+
+```bash
+alchemyai model info
+```
+
+Output:
+
+```text
+AlchemyCLI AI Model
+
+Embedding model:
+Alchemy Embedding v1
+
+Intent model:
+Alchemy Intent v1
+
+Commands:
+2,341
+
+Training queries:
+17,482
+
+Vector index:
+FAISS
+
+Model size:
+~250 MB
+
+Last updated:
+August 2026
+```
+
+Use actual values.
+
+Do not hard-code fake metrics.
+
+---
+
+# 70. Dataset Versioning
+
+Every release must have:
+
+```text
+application version
+model version
+dataset version
+```
+
+Example:
+
+```text
+AlchemyCLI:
+0.5.0
+
+Model:
+1.2.0
+
+Dataset:
+2026.08.11
+```
+
+---
+
+# 71. Model Training Reproducibility
+
+Training must be reproducible.
+
+Store:
+
+```text
+random seed
+model name
+hyperparameters
+dataset version
+training date
+Python version
+dependency versions
+```
+
+Create:
+
+```text
+ml/config/training.yaml
+```
+
+Example:
+
+```yaml
+seed: 42
+
+embedding:
+  model: "..."
+  epochs: 3
+  batch_size: 32
+  learning_rate: 0.00002
+
+retrieval:
+  top_k: 10
+
+classifier:
+  C: 1.0
+```
+
+---
+
+# 72. Model Experiment Tracking
+
+Do not introduce MLflow initially.
+
+Store experiments as JSON:
+
+```text
+ml/experiments/
+```
+
+Example:
+
+```text
+experiment-001.json
+experiment-002.json
+```
+
+Record:
+
+```text
+model
+dataset
+hyperparameters
+metrics
+timestamp
+```
+
+---
+
+# 73. Model Benchmarking
+
+Create:
+
+```bash
+alchemyai-ml benchmark
+```
+
+Measure:
+
+```text
+latency
+memory
+throughput
+Recall@1
+Recall@3
+Recall@5
+```
+
+Example:
+
+```text
+CPU inference:
+
+Embedding:
+18ms/query
+
+FAISS:
+2ms/query
+
+Total:
+25ms/query
+```
+
+Only report actual measurements.
+
+---
+
+# 74. Caching
+
+Cache embeddings for repeated queries.
+
+Use an in-memory LRU cache.
+
+Example:
+
+```text
+"restart k8s deployment"
+```
+
+repeated multiple times should avoid recomputing the embedding.
+
+---
+
+# 75. Security
+
+The ML service must treat user input as data.
+
+Never execute:
+
+```text
+shell
+Python
+PowerShell
+SQL
+Kubernetes
+Terraform
+Docker
+```
+
+provided in the question.
+
+Never pass user input to:
+
+```text
+os.system
+subprocess(..., shell=True)
+eval
+exec
+```
+
+---
+
+# 76. Prompt Injection
+
+Although there is no LLM in the initial architecture, design the system so arbitrary text cannot alter system behavior.
+
+The query should only be processed as text.
+
+No dynamic instructions.
+
+---
+
+# 77. Secrets
+
+Never store:
+
+```text
+passwords
+tokens
+API keys
+SSH private keys
+cloud credentials
+```
+
+in:
+
+```text
+dataset
+logs
+training data
+query history
+telemetry
+```
+
+Implement redaction for obvious secret patterns.
+
+---
+
+# 78. Telemetry
+
+No telemetry by default.
+
+Do not send:
+
+```text
+queries
+commands
+clipboard
+history
+system information
+```
+
+to a remote server.
+
+---
+
+# 79. Custom Commands
+
+Allow users to add their own commands.
+
+Example:
+
+```text
+~/.config/alchemyai/commands/
+```
+
+Users can create:
+
+```text
+company.yaml
+sre.yaml
+personal.yaml
+```
+
+These should be indexed locally.
+
+Example:
+
+```yaml
+id: restart-company-service
+
+technology: company
+
+name: Restart company service
+
+command: companyctl service restart <service>
+
+description: Restart an internal company service.
+
+tags:
+  - restart
+  - service
+```
+
+---
+
+# 80. Custom Dataset Training
+
+Users should NOT need to retrain the model every time they add a command.
+
+Instead:
+
+```text
+new command
+   ↓
+generate embedding
+   ↓
+add to FAISS
+   ↓
+available immediately
+```
+
+This is critical.
+
+---
+
+# 81. Optional Fine-Tuning
+
+Only retrain when enough new query examples exist.
+
+Example:
+
+```text
+100+ new high-quality training examples
+```
+
+Then:
+
+```bash
+make train
+```
+
+---
+
+# 82. Continuous Learning
+
+Do not automatically train from user queries.
+
+Instead, provide an optional feedback mechanism:
+
+```text
+Was this useful?
+
+[y] Yes
+[n] No
+```
+
+If the user explicitly opts into contributing anonymous feedback, store:
+
+```text
+query
+selected command ID
+positive/negative
+```
+
+locally first.
+
+Never upload by default.
+
+---
+
+# 83. Feedback Dataset
+
+Optional:
+
+```text
+ml/data/feedback/
+```
+
+Convert approved feedback into training examples.
+
+Command:
+
+```bash
+alchemyai ml import-feedback
+```
+
+Require explicit user action.
+
+---
+
+# 84. Web UI Feedback
+
+Show:
+
+```text
+Was this result useful?
+
+👍   👎
+```
+
+Do not transmit feedback unless analytics are explicitly enabled.
+
+---
+
+# 85. Search Modes
+
+Support:
+
+```bash
+alchemyai --mode semantic "restart k8s deployment"
+alchemyai --mode keyword "kubectl rollout"
+alchemyai --mode hybrid "restart deployment"
+```
+
+Default:
+
+```text
+hybrid
+```
+
+---
+
+# 86. Debug Mode
+
+Implement:
+
+```bash
+alchemyai --debug "find pods using memory"
+```
+
+Show:
+
+```text
+Normalized query:
+find pods using memory
+
+Technology:
+kubernetes
+
+Intent:
+resource_usage
+
+Semantic candidates:
+1. kubectl top pods
+2. kubectl top nodes
+3. kubectl describe pod
+
+Final ranking:
+1. kubectl top pods
+
+Confidence:
+0.96
+```
+
+---
+
+# 87. JSON Output
+
+Support:
+
+```bash
+alchemyai "restart k8s deployment" --json
+```
+
+Output:
+
+```json
+{
+  "query": "restart k8s deployment",
+  "technology": "kubernetes",
+  "intent": "restart_deployment",
+  "results": [
+    {
+      "command": "kubectl rollout restart deployment/<deployment>",
+      "confidence": 0.98,
+      "risk": "warning"
+    }
+  ]
+}
+```
+
+This makes AlchemyCLI useful in scripts.
+
+---
+
+# 88. Shell Integration
+
+Eventually support:
+
+```bash
+alchemyai "find process using port 8080" --command
+```
+
+Output only:
+
+```text
+lsof -i :8080
+```
+
+This allows:
+
+```bash
+$(alchemyai "find process using port 8080" --command)
+```
+
+BUT:
+
+AlchemyCLI must NOT execute it automatically.
+
+---
+
+# 89. Copy Mode
+
+Support:
+
+```bash
+alchemyai "find process using port 8080" --copy
+```
+
+Copy the command.
+
+For dangerous commands, require confirmation.
+
+---
+
+# 90. Interactive Terminal UI
+
+Use:
+
+```text
+Bubble Tea
+Lip Gloss
+```
+
+Create:
+
+```text
+Search
+Results
+Command Details
+History
+Favorites
+Help
+```
+
+Keyboard:
+
+```text
+↑ ↓
+Enter
+/
+Ctrl+K
+c
+q
+Esc
+```
+
+---
+
+# 91. Web Search
+
+The web UI must use the same ML API.
+
+Example:
+
+```text
+POST /api/v1/ask
+```
+
+The web must not implement its own ranking algorithm.
+
+---
+
+# 92. Web Command Pages
+
+Every command must still have a static/shareable URL.
+
+Example:
+
+```text
+/kubernetes/kubectl-rollout-restart
+```
+
+The ML layer finds the command.
+
+The command page displays the authoritative structured information.
+
+---
+
+# 93. Web AI Search
+
+Homepage:
+
+```text
+What are you trying to do?
+
+[ Find pods using too much memory                 ]
+```
+
+Result:
+
+```text
+Best match
+
+kubectl top pods --all-namespaces --sort-by=memory
+
+Confidence:
+96%
+
+Why:
+✓ Kubernetes
+✓ pod
+✓ memory
+✓ usage
+
+[Copy Command]
+```
+
+---
+
+# 94. SEO
+
+Generate pages for every command.
+
+Include:
+
+```text
+title
+description
+canonical
+OpenGraph
+structured metadata
+sitemap
+robots.txt
+```
+
+---
+
+# 95. REST API
+
+Implement:
+
+```text
+GET /api/v1/health
+GET /api/v1/model
+GET /api/v1/commands
+GET /api/v1/commands/:id
+GET /api/v1/search
+POST /api/v1/ask
+GET /api/v1/categories
+GET /api/v1/recent
+```
+
+---
+
+# 96. API Documentation
+
+Provide OpenAPI:
+
+```text
+openapi.yaml
+```
+
+and:
+
+```text
+/api/docs
+```
+
+---
+
+# 97. Docker
+
+Provide:
+
+```bash
+docker compose up
+```
+
+Services:
+
+```text
+frontend/API
+ML service
+```
+
+For development, separate containers are acceptable.
+
+For production, provide an option for a single-container deployment.
+
+---
+
+# 98. Production Architecture
+
+Development:
+
+```text
+Fast UI
+  │
+  ▼
+Python API
+  │
+  ▼
+Python ML
+  │
+  ▼
+FAISS
+```
+
+Production target:
+
+```text
+                    AlchemyCLI AI
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+             CLI                    Web
+              │                       │
+              └───────────┬───────────┘
+                          │
+                     Local ML
+                          │
+                       FAISS
+                          │
+                  Command Knowledge
+```
+
+Eventually export the embedding model to ONNX so the CLI can perform inference locally without Python.
+
+---
+
+# 99. ONNX Roadmap
+
+Implement an abstraction:
+
+```python
+class Embedder:
+    def encode(self, texts):
+        ...
+```
+
+Initial:
+
+```text
+SentenceTransformerEmbedder
+```
+
+Future:
+
+```text
+ONNXEmbedder
+```
+
+Do not tightly couple retrieval to PyTorch.
+
+---
+
+# 100. CLI Packaging
+
+The final user should ideally install:
+
+```bash
+brew install alchemycli
+```
+
+or:
+
+```bash
+curl -fsSL https://.../install.sh | sh
+```
+
+or download a binary.
+
+After installation:
+
+```bash
+alchemyai "how do I find a process using port 8080?"
+```
+
+must work.
+
+---
+
+# 101. Python Environment
+
+For ML development use:
+
+```text
+uv
+```
+
+or another modern Python package manager.
+
+Prefer:
+
+```bash
+uv sync
+```
+
+for reproducible ML development.
+
+Do not require Conda.
+
+---
+
+# 102. Makefile
+
+Create:
+
+```text
+make setup
+make test
+make lint
+make validate
+make dataset
+make embeddings
+make train
+make evaluate
+make benchmark
+make build
+make docker
+make release
+```
+
+---
+
+# 103. Testing
+
+## Python
+
+Test:
+
+```text
+preprocessing
+technology detection
+intent classification
+embedding generation
+retrieval
+ranking
+confidence
+safety
+redaction
+```
+
+## Python CLI
+
+Test:
+
+```text
+CLI
+configuration
+API client
+search
+clipboard
+history
+favorites
+JSON output
+```
+
+## Python Fast UI
+
+Test:
+
+```text
+search
+results
+copy
+command details
+dark mode
+keyboard shortcuts
+```
+
+---
+
+# 104. ML Regression Tests
+
+Create:
+
+```text
+ml/tests/regression.jsonl
+```
+
+Example:
+
+```json
+{
+  "query": "restart k8s deployment",
+  "expected": "kubernetes-rollout-restart"
+}
+```
+
+Every model build must run these tests.
+
+A new model must not significantly reduce accuracy.
+
+---
+
+# 105. Accuracy Gate
+
+CI should fail if:
+
+```text
+Recall@1 drops more than 3%
+```
+
+from the current production model.
+
+Also fail if safety classification accuracy falls below the configured threshold.
+
+---
+
+# 106. Initial Benchmark Questions
+
+Include at least these categories.
+
+### Kubernetes
+
+```text
+how do I restart a kubernetes deployment
+how do I view pod logs
+how do I see previous container logs
+how do I find pods using the most memory
+how do I port forward to a pod
+how do I execute a command inside a pod
+how do I scale a deployment
+how do I rollback a deployment
+```
+
+### Docker
+
+```text
+how do I see running containers
+how do I see container logs
+how do I enter a container
+how do I see docker memory usage
+how do I remove unused docker images
+how do I restart a container
+```
+
+### Git
+
+```text
+how do I undo the last commit
+how do I undo the last commit but keep changes
+how do I undo a pushed commit
+how do I stash changes
+how do I see git history
+how do I create a branch
+how do I delete a branch
+```
+
+### Linux
+
+```text
+what process is using port 8080
+how do I find large files
+how do I check disk usage
+how do I check memory
+how do I follow a log
+how do I find a process
+```
+
+### Python
+
+```text
+how do I create a virtual environment
+how do I install a package
+how do I freeze requirements
+how do I run a python module
+```
+
+### Rust
+
+```text
+how do I create a rust project
+how do I build rust in release mode
+how do I run tests
+how do I check rust code
+how do I run clippy
+```
+
+### Go
+
+```text
+how do I create a go module
+how do I run go tests
+how do I build a go binary
+how do I update dependencies
+```
+
+### Kafka
+
+```text
+how do I see kafka consumer lag
+how do I list kafka topics
+how do I describe a topic
+how do I reset consumer offsets
+```
+
+---
+
+# 107. Dataset Quality
+
+Every command must contain:
+
+```text
+ID
+Technology
+Category
+Name
+Command
+Description
+Intent
+Tags
+Aliases
+Examples
+Risk
+Official documentation
+Verification date
+```
+
+Reject commands missing:
+
+```text
+command
+description
+risk
+documentation
+verified_at
+```
+
+unless explicitly marked as a local/custom command.
+
+---
+
+# 108. Official Documentation Verification
+
+Use official documentation as the authoritative source.
+
+Do not blindly trust:
+
+```text
+Stack Overflow
+random blogs
+old GitHub snippets
+AI-generated commands
+```
+
+when official documentation exists.
+
+Before adding a command:
+
+```text
+Official docs
+      ↓
+Verify syntax
+      ↓
+Verify flags
+      ↓
+Check deprecation
+      ↓
+Add to dataset
+```
+
+---
+
+# 109. Documentation Update Pipeline
+
+Create:
+
+```bash
+alchemyai ml check-docs
+```
+
+Check:
+
+```text
+HTTP 404
+HTTP redirects
+deprecated documentation
+missing URLs
+```
+
+Generate:
+
+```text
+reports/documentation-status.json
+```
+
+---
+
+# 110. Dataset Update Pipeline
+
+Create:
+
+```bash
+make update-dataset
+```
+
+Do not automatically modify production commands.
+
+Generate a proposed update:
+
+```text
+reports/dataset-update.md
+```
+
+Human review is required.
+
+---
+
+# 111. Versioned Dataset
+
+Store:
+
+```text
+datasets/
+├── v1/
+├── v2/
+└── current/
+```
+
+Do not overwrite historical datasets.
+
+---
+
+# 112. Model Registry
+
+Store:
+
+```text
+models/registry.json
+```
+
+Example:
+
+```json
+{
+  "production": {
+    "embedding": "alchemyai-embedding-v1.2",
+    "classifier": "alchemyai-intent-v1.1",
+    "dataset": "2026.08"
+  }
+}
+```
+
+---
+
+# 113. CLI Update
+
+Implement:
+
+```bash
+alchemyai update
+```
+
+It should update:
+
+```text
+command dataset
+model
+vector index
+```
+
+when new versions are available.
+
+Show:
+
+```text
+Current:
+
+Model: 1.1
+Dataset: 2026.07
+
+Available:
+
+Model: 1.2
+Dataset: 2026.08
+
+Update? [y/N]
+```
+
+Never silently replace a model.
+
+---
+
+# 114. Rollback
+
+Support:
+
+```bash
+alchemyai model list
+alchemyai model use <version>
+```
+
+Example:
+
+```text
+Installed models:
+
+* 1.2
+  1.1
+  1.0
+```
+
+This allows rollback if a model performs poorly.
+
+---
+
+# 115. User Configuration
+
+Use:
+
+```text
+~/.config/alchemyai/config.yaml
+```
+
+Example:
+
+```yaml
+model: latest
+search_mode: hybrid
+top_k: 5
+confidence_threshold: 0.70
+theme: system
+show_explanations: true
+```
+
+---
+
+# 116. Privacy Configuration
+
+Allow:
+
+```yaml
+history:
+  enabled: true
+
+feedback:
+  enabled: false
+
+telemetry:
+  enabled: false
+```
+
+Default:
+
+```text
+telemetry: false
+feedback: false
+```
+
+---
+
+# 117. No Hidden Network Calls
+
+The CLI must not make network calls unless the user explicitly invokes:
+
+```text
+alchemyai update
+alchemyai docs
+```
+
+or another explicitly network-enabled command.
+
+Natural-language searches must be local.
+
+---
+
+# 118. Error Handling
+
+If the ML model isn't available:
+
+```text
+AlchemyCLI AI model is not installed.
+
+You can:
+
+  alchemyai model download
+
+or use keyword search:
+
+  alchemyai search "kubernetes logs"
+```
+
+The CLI should gracefully fall back to keyword search.
+
+---
+
+# 119. Graceful Degradation
+
+Modes:
+
+```text
+AI semantic search
+        ↓ unavailable
+keyword search
+        ↓ unavailable
+topic browsing
+```
+
+AlchemyCLI should remain useful even if ML components fail.
+
+---
+
+# 120. CLI Help
+
+```bash
+alchemyai --help
+```
+
+should be concise:
+
+```text
+AlchemyCLI AI
+
+Ask natural-language questions about developer commands.
+
+Usage:
+
+  alchemyai "<question>"
+  alchemyai search "<query>"
+  alchemyai <topic>
+  alchemyai serve
+  alchemyai update
+
+Examples:
+
+  alchemyai "find pods using the most memory"
+  alchemyai "undo my last git commit"
+  alchemyai "find process using port 8080"
+  alchemyai "show kafka consumer lag"
+
+Commands:
+
+  ask
+  search
+  list
+  show
+  favorites
+  context
+  model
+  update
+  serve
+  version
+```
+
+---
+
+# 121. Documentation
+
+Create:
+
+```text
+README.md
+docs/
+```
+
+Include:
+
+```text
+Getting Started
+Architecture
+CLI Usage
+Web Usage
+ML Architecture
+Training
+Dataset Creation
+Model Evaluation
+Custom Commands
+Security
+Privacy
+Contributing
+Release Process
+```
+
+---
+
+# 122. ML Developer Documentation
+
+Create:
+
+```text
+ml/README.md
+```
+
+Explain:
+
+```text
+1. Install Python dependencies
+2. Download base model
+3. Build dataset
+4. Generate embeddings
+5. Train classifier
+6. Fine-tune embeddings
+7. Build FAISS index
+8. Evaluate
+9. Package model
+```
+
+Example:
+
+```bash
+cd ml
+uv sync
+
+make dataset
+make train
+make evaluate
+```
+
+---
+
+# 123. Example Development Flow
+
+A developer should be able to clone the repository:
+
+```bash
+git clone <repository>
+cd alchemycli
+```
+
+Run:
+
+```bash
+make setup
+```
+
+Then:
+
+```bash
+alchemyai "how do I find kubernetes pod logs?"
+```
+
+Then:
+
+```bash
+make web
+```
+
+and visit:
+
+```text
+http://localhost:3000
+```
+
+---
+
+# 124. Development Docker
+
+Provide:
+
+```bash
+docker compose -f docker-compose.dev.yml up
+```
+
+Services:
+
+```text
+web
+api
+ml
+```
+
+---
+
+# 125. Production Docker
+
+Provide:
+
+```bash
+docker compose -f docker-compose.prod.yml up
+```
+
+Prefer:
+
+```text
+one application container
+```
+
+where practical.
+
+---
+
+# 126. CI/CD
+
+GitHub Actions:
+
+```text
+ci.yml
+```
+
+Run:
+
+```text
+Python tests
+Frontend tests
+Lint
+Schema validation
+Dataset validation
+ML regression tests
+Frontend build
+python build
+Docker build
+```
+
+---
+
+# 127. Model CI
+
+Do not retrain the ML model on every code commit.
+
+Train only when:
+
+```text
+dataset changes
+model code changes
+training configuration changes
+```
+
+Evaluate before promotion.
+
+---
+
+# 128. Model Promotion
+
+Pipeline:
+
+```text
+Train
+ ↓
+Evaluate
+ ↓
+Regression tests
+ ↓
+Safety tests
+ ↓
+Benchmark
+ ↓
+Compare with production
+ ↓
+Promote
+```
+
+Never automatically promote a worse model.
+
+---
+
+# 129. Production Model Requirements
+
+A model is production-ready only if:
+
+```text
+Recall@1 meets threshold
+Recall@3 meets threshold
+No major regression
+Safety classification passes
+Latency acceptable
+Memory acceptable
+Model reproducible
+```
+
+---
+
+# 130. Initial MVP Scope
+
+Do NOT try to solve every technology immediately.
+
+MVP should focus on:
+
+```text
+Kubernetes
+Docker
+Git
+Linux
+Python
+Go
+Rust
+Kafka
+Terraform
+```
+
+Build these extremely well.
+
+Then expand.
+
+---
+
+# 131. Phase 2 Technologies
+
+After MVP:
+
+```text
+AWS
+GCP
+Azure
+PostgreSQL
+MySQL
+Redis
+Prometheus
+Grafana
+Helm
+GitHub CLI
+Bash
+curl
+jq
+SSH
+```
+
+---
+
+# 132. Future Technologies
+
+Design the dataset so it can later support:
+
+```text
+Java
+Node.js
+TypeScript
+C++
+C#
+Ruby
+Ansible
+ArgoCD
+Flux
+Istio
+Nginx
+Apache
+RabbitMQ
+Pub/Sub
+BigQuery
+Snowflake
+Datadog
+OpenTelemetry
+OpenObserve
+```
+
+Adding a new technology should require only adding dataset files, not modifying ML architecture.
+
+---
+
+# 133. Plugin Architecture
+
+Eventually allow:
+
+```text
+alchemyai plugin add <technology>
+```
+
+But DO NOT implement a complicated plugin system in MVP.
+
+Keep the data-driven architecture extensible.
+
+---
+
+# 134. Important ML Principle
+
+The ML model is not the source of truth.
+
+The source of truth is:
+
+```text
+Verified Command Knowledge Base
+```
+
+The ML model only performs:
+
+```text
+understanding
+retrieval
+ranking
+classification
+```
+
+This distinction must be documented throughout the project.
+
+---
+
+# 135. Final Architecture
+
+The complete architecture should be:
+
+```text
+                         ALCHEMYCLI AI
+                              │
+             ┌────────────────┴─────────────────┐
+             │                                  │
+          Terminal                            Web
+             │                                  │
+             ▼                                  ▼
+        Python CLI Client                       Python UI
+             │                                  │
+             └────────────────┬─────────────────┘
+                              │
+                              ▼
+                         Python Fast API Layer
+                              │
+                              ▼
+                       Python ML Engine
+                              │
+             ┌────────────────┼─────────────────┐
+             │                │                 │
+             ▼                ▼                 ▼
+         Embeddings       Intent Model      Safety Model
+             │                │                 │
+             └────────────────┼─────────────────┘
+                              ▼
+                           FAISS
+                              │
+                              ▼
+                  Verified Command Dataset
+                              │
+                              ▼
+                       Official Documentation
+```
+
+---
+
+# 136. Final Example
+
+The user enters:
+
+```bash
+alchemyai "I have a kubernetes pod crashing, how can I troubleshoot it?"
+```
+
+The system detects:
+
+```text
+Technology:
+Kubernetes
+
+Intent:
+Troubleshooting
+
+Entities:
+pod
+crashing
+```
+
+Retrieves:
+
+```text
+1. kubectl get pod <pod>
+2. kubectl describe pod <pod>
+3. kubectl logs <pod>
+4. kubectl logs <pod> --previous
+5. kubectl get events
+```
+
+Response:
+
+```text
+Kubernetes troubleshooting
+
+Your pod appears to need diagnostic commands.
+
+1. Check pod status
+
+   kubectl get pod <pod> -o wide
+
+2. Inspect pod details
+
+   kubectl describe pod <pod>
+
+3. View logs
+
+   kubectl logs <pod>
+
+4. View previous container logs
+
+   kubectl logs <pod> --previous
+
+5. Check recent events
+
+   kubectl get events --sort-by=.lastTimestamp
+
+Recommended first step:
+
+   kubectl describe pod <pod>
+
+Confidence:
+96%
+
+[Copy]
+
+Related:
+CrashLoopBackOff
+ImagePullBackOff
+OOMKilled
+```
+
+---
+
+# 137. Another Example
+
+User:
+
+```bash
+alchemyai "what is eating all the memory on my linux server?"
+```
+
+System detects:
+
+```text
+Technology:
+Linux
+
+Intent:
+resource_usage
+
+Resource:
+memory
+```
+
+Result:
+
+```text
+Linux · Memory
+
+Find processes using the most memory
+
+ps aux --sort=-%mem | head
+```
+
+Related:
+
+```text
+free -h
+top
+htop
+```
+
+---
+
+# 138. Another Example
+
+User:
+
+```bash
+alchemyai "I accidentally committed something but haven't pushed it"
+```
+
+The system should NOT immediately assume one solution.
+
+Show:
+
+```text
+It sounds like you want to undo a local commit.
+
+Which do you want?
+
+1. Undo commit but keep changes staged
+   git reset --soft HEAD~1
+
+2. Undo commit and keep changes unstaged
+   git reset HEAD~1
+
+3. Undo commit and discard changes
+   git reset --hard HEAD~1
+```
+
+This is an important example of where intent alone is insufficient.
+
+Ask a clarification question rather than guessing.
+
+---
+
+# 139. Final Safety Principle
+
+When multiple commands have materially different consequences:
+
+```text
+DO NOT GUESS.
+ASK.
+```
+
+Example:
+
+```text
+"delete my docker images"
+```
+
+could mean:
+
+```text
+remove one image
+remove dangling images
+remove unused images
+remove all unused images
+```
+
+The system should clarify.
+
+---
+
+# 140. Definition of Done
+
+The project is complete when:
+
+## CLI
+
+```bash
+alchemyai "natural language question"
+alchemyai search "..."
+alchemyai kubernetes
+alchemyai docker
+alchemyai git
+alchemyai model info
+alchemyai model update
+alchemyai update
+alchemyai serve
+```
+
+work.
+
+## ML
+
+```text
+✓ pretrained embedding model
+✓ local inference
+✓ intent classifier
+✓ semantic search
+✓ FAISS
+✓ hybrid ranking
+✓ confidence
+✓ hard negatives
+✓ training pipeline
+✓ evaluation pipeline
+✓ benchmark
+✓ regression tests
+✓ model versioning
+✓ dataset versioning
+```
+
+work.
+
+## Dataset
+
+At least:
+
+```text
+1,500 verified commands
+300+ benchmark queries
+5-15 query variations per important command
+official documentation
+risk classification
+```
+
+for the initial release.
+
+## Web
+
+```text
+✓ natural-language search
+✓ command results
+✓ confidence
+✓ explanations
+✓ copy
+✓ share
+✓ command pages
+✓ categories
+✓ dark mode
+✓ responsive
+✓ SEO
+```
+
+work.
+
+## Deployment
+
+```text
+✓ local CLI
+✓ local ML
+✓ Docker
+✓ Docker Compose
+✓ production build
+✓ GitHub Actions
+✓ release binaries
+```
+
+work.
+
+---
+
+# 141. Final Implementation Instruction
+
+Do not stop at architecture.
+
+Actually implement the repository.
+
+Start with:
+
+```text
+Phase 1:
+Repository + data model + initial dataset
+
+Phase 2:
+Python ML baseline
+
+Phase 3:
+Semantic retrieval
+
+Phase 4:
+Intent classifier
+
+Phase 5:
+Training/evaluation pipeline
+
+Phase 6:
+Go CLI
+
+Phase 7:
+FastAPI ML service
+
+Phase 8:
+Go API
+
+Phase 9:
+React web UI
+
+Phase 10:
+Packaging + Docker
+
+Phase 11:
+Testing + benchmarks
+
+Phase 12:
+Documentation
+```
+
+At every phase:
+
+```text
+Implement
+Test
+Run
+Fix
+Document
+```
+
+Do not leave placeholder implementations such as:
+
+```text
+TODO
+implement later
+fake model
+mock results
+hard-coded AI response
+```
+
+unless explicitly marked as a temporary development stub and replaced before completion.
+
+---
+
+# 142. Most Important Requirement
+
+AlchemyCLI AI must provide this experience:
+
+```bash
+$ alchemyai "how do I find pods using the most memory?"
+
+AlchemyCLI AI
+
+Kubernetes › Resource Usage
+
+  kubectl top pods --all-namespaces --sort-by=memory
+
+  Shows pod CPU and memory usage, sorted by memory.
+
+  Confidence: 96%
+  Risk: SAFE
+
+  Related:
+    kubectl top nodes
+    kubectl describe pod <pod>
+
+  Documentation:
+    Official Kubernetes Documentation
+
+  [Copied]
+```
+
+The user should NOT need to know:
+
+```text
+kubectl
+top
+--sort-by
+```
+
+before using AlchemyCLI AI.
+
+That is the entire purpose of the product.
+
+Build the system so that a developer can describe what they want in normal language and AlchemyCLI AI finds the safest, most relevant, verified command available in its knowledge base.

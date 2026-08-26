@@ -1,0 +1,1375 @@
+# AlchemyCLI AI - Kafka Commands
+
+- id: kafka-list-topics
+  technology: kafka
+  category: topics
+  name: List all topics
+  intent: list_topics
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --list
+  description: >
+    Lists all available topics in the Kafka cluster. This is a read-only
+    operation that returns the names of all topics, including internal topics
+    if they exist.
+  tags:
+    - topics
+    - list
+    - discovery
+  aliases:
+    - list all kafka topics
+    - show kafka topics
+    - get all topics
+    - what topics exist
+    - display topics in cluster
+  examples:
+    - query: "list all kafka topics"
+    - query: "show me the topics on the broker"
+    - query: "what topics are available in the cluster"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-topic
+  technology: kafka
+  category: topics
+  name: Describe a topic
+  intent: describe_topic
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --describe --topic <topic>
+  description: >
+    Describes the details of a specific Kafka topic including partition count,
+    replication factor, partition assignments, leader and ISR (in-sync replicas)
+    information for each partition.
+  tags:
+    - topics
+    - describe
+    - partitions
+    - replicas
+  aliases:
+    - describe kafka topic
+    - show topic details
+    - get topic info
+    - topic partition details
+    - inspect topic
+    - show topic configuration
+  examples:
+    - query: "describe the topic my-events"
+    - query: "show me details of the orders topic"
+    - query: "what are the partitions for topic user-activity"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-create-topic
+  technology: kafka
+  category: topics
+  name: Create a topic
+  intent: create_topic
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --create --topic <topic> --partitions <num_partitions> --replication-factor <replication_factor>
+  description: >
+    Creates a new Kafka topic with the specified number of partitions and
+    replication factor. The replication factor cannot exceed the number of
+    brokers in the cluster.
+  tags:
+    - topics
+    - create
+    - partitions
+    - replication
+  aliases:
+    - create a kafka topic
+    - make a new topic
+    - add topic to kafka
+    - create topic with partitions
+    - new kafka topic
+    - set up a topic
+  examples:
+    - query: "create a topic called orders with 6 partitions and replication factor 3"
+    - query: "make a new kafka topic named user-events"
+    - query: "add a topic with 12 partitions"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_createtopic
+  verified_at: "2026-08-01"
+
+- id: kafka-delete-topic
+  technology: kafka
+  category: topics
+  name: Delete a topic
+  intent: delete_topic
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --delete --topic <topic>
+  description: >
+    Deletes a Kafka topic and all its data. This operation is irreversible.
+    The topic and all messages stored in it will be permanently removed.
+    Requires delete.topic.enable=true in broker configuration.
+  tags:
+    - topics
+    - delete
+    - destructive
+  aliases:
+    - delete a kafka topic
+    - remove a topic
+    - drop topic
+    - destroy topic
+    - delete topic and data
+  examples:
+    - query: "delete the topic old-events"
+    - query: "remove the kafka topic test-data"
+    - query: "drop the unused topic"
+  risk: dangerous
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_modify_topic
+  verified_at: "2026-08-01"
+
+- id: kafka-increase-partitions
+  technology: kafka
+  category: topics
+  name: Increase partition count
+  intent: increase_partitions
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --alter --topic <topic> --partitions <new_partition_count>
+  description: >
+    Increases the number of partitions for an existing topic. Note that
+    partition count can only be increased, never decreased. Increasing
+    partitions may affect message ordering for keys that were previously
+    mapped to existing partitions.
+  tags:
+    - topics
+    - partitions
+    - alter
+    - scaling
+  aliases:
+    - increase kafka partitions
+    - add more partitions
+    - scale topic partitions
+    - change partition count
+    - expand partitions
+    - repartition topic
+  examples:
+    - query: "increase partitions for topic orders to 12"
+    - query: "add more partitions to the events topic"
+    - query: "scale up the partition count for user-activity"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_modify_topic
+  verified_at: "2026-08-01"
+
+- id: kafka-produce-message
+  technology: kafka
+  category: producers
+  name: Produce messages to a topic
+  intent: produce_message
+  command: kafka-console-producer.sh --bootstrap-server <broker>:<port> --topic <topic>
+  description: >
+    Starts an interactive console producer that reads messages from standard
+    input and publishes them to the specified Kafka topic. Each line entered
+    becomes a separate message. Press Ctrl+C to stop producing.
+  tags:
+    - producer
+    - publish
+    - send
+    - messages
+  aliases:
+    - produce messages to kafka
+    - send messages to topic
+    - publish to kafka topic
+    - write messages to kafka
+    - kafka producer
+    - push messages to topic
+  examples:
+    - query: "produce messages to the orders topic"
+    - query: "send data to kafka topic events"
+    - query: "start a console producer for topic notifications"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_send
+  verified_at: "2026-08-01"
+
+- id: kafka-produce-with-key
+  technology: kafka
+  category: producers
+  name: Produce messages with key
+  intent: produce_message_with_key
+  command: kafka-console-producer.sh --bootstrap-server <broker>:<port> --topic <topic> --property parse.key=true --property key.separator=<separator>
+  description: >
+    Produces messages with keys to a Kafka topic. The key and value are
+    separated by the specified separator character (commonly a colon or comma).
+    Messages with the same key are guaranteed to go to the same partition.
+  tags:
+    - producer
+    - key
+    - keyed-messages
+    - partitioning
+  aliases:
+    - produce keyed messages
+    - send messages with key
+    - produce with key separator
+    - publish keyed data
+    - kafka produce key value
+    - send key-value messages
+  examples:
+    - query: "produce messages with keys to the orders topic using colon separator"
+    - query: "send keyed messages to kafka"
+    - query: "produce key-value pairs to the user-events topic"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_send
+  verified_at: "2026-08-01"
+
+- id: kafka-produce-with-headers
+  technology: kafka
+  category: producers
+  name: Produce messages with headers
+  intent: produce_message_with_headers
+  command: kafka-console-producer.sh --bootstrap-server <broker>:<port> --topic <topic> --property parse.headers=true --property headers.delimiter=<delimiter> --property headers.separator=<separator> --property headers.key.separator=<key_separator>
+  description: >
+    Produces messages with custom headers to a Kafka topic. Headers are
+    key-value metadata attached to messages without being part of the message
+    payload. Useful for routing, tracing, and metadata propagation.
+  tags:
+    - producer
+    - headers
+    - metadata
+  aliases:
+    - produce messages with headers
+    - send messages with kafka headers
+    - publish with metadata headers
+    - kafka producer with custom headers
+    - add headers to kafka messages
+  examples:
+    - query: "produce messages with headers to the events topic"
+    - query: "send messages with custom headers in kafka"
+    - query: "publish data with tracing headers"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_send
+  verified_at: "2026-08-01"
+
+- id: kafka-produce-with-serializer
+  technology: kafka
+  category: producers
+  name: Produce with specific serializer
+  intent: produce_with_serializer
+  command: kafka-console-producer.sh --bootstrap-server <broker>:<port> --topic <topic> --property value.serializer=<serializer_class>
+  description: >
+    Produces messages using a specific serializer class for the value. Common
+    serializers include StringSerializer, IntegerSerializer, and custom Avro or
+    JSON serializers. The key serializer can also be set via key.serializer.
+  tags:
+    - producer
+    - serializer
+    - avro
+    - json
+  aliases:
+    - produce with serializer
+    - kafka producer with custom serializer
+    - send with avro serializer
+    - produce json serialized messages
+    - use specific serializer for producing
+  examples:
+    - query: "produce messages using a custom serializer"
+    - query: "send avro serialized messages to kafka"
+    - query: "produce with string serializer to topic"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#producerconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-messages
+  technology: kafka
+  category: consumers
+  name: Consume messages from a topic
+  intent: consume_messages
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic>
+  description: >
+    Starts a console consumer that reads and displays messages from the
+    specified Kafka topic. By default, it only consumes new messages arriving
+    after the consumer starts. Press Ctrl+C to stop consuming.
+  tags:
+    - consumer
+    - read
+    - subscribe
+    - messages
+  aliases:
+    - consume messages from kafka
+    - read messages from topic
+    - subscribe to kafka topic
+    - listen to kafka messages
+    - consume from topic
+    - get messages from kafka
+  examples:
+    - query: "consume messages from the orders topic"
+    - query: "read messages from kafka topic events"
+    - query: "listen to messages on user-activity topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-from-beginning
+  technology: kafka
+  category: consumers
+  name: Consume from beginning
+  intent: consume_from_beginning
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning
+  description: >
+    Consumes all messages from the beginning of the topic. This reads every
+    message stored in the topic from the earliest available offset across all
+    partitions.
+  tags:
+    - consumer
+    - from-beginning
+    - replay
+    - historical
+  aliases:
+    - consume from beginning
+    - read all messages from start
+    - replay topic from beginning
+    - get all historical messages
+    - consume entire topic
+    - read topic from earliest
+  examples:
+    - query: "consume all messages from the beginning of the orders topic"
+    - query: "read the entire topic from the start"
+    - query: "replay all messages in the events topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-from-offset
+  technology: kafka
+  category: consumers
+  name: Consume from specific offset
+  intent: consume_from_offset
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --partition <partition> --offset <offset>
+  description: >
+    Consumes messages from a specific partition starting at a specific offset.
+    This allows precise control over which messages to read. The offset is
+    a zero-based index of the message within the partition.
+  tags:
+    - consumer
+    - offset
+    - partition
+    - seek
+  aliases:
+    - consume from specific offset
+    - read from offset
+    - seek to offset in kafka
+    - start consuming at offset
+    - read partition from offset
+  examples:
+    - query: "consume from partition 0 starting at offset 100"
+    - query: "read messages from offset 500 in partition 2"
+    - query: "start consuming from a specific offset"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-with-key
+  technology: kafka
+  category: consumers
+  name: Consume messages with key
+  intent: consume_with_key
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning --property print.key=true --property key.separator=<separator>
+  description: >
+    Consumes messages and displays both the key and value for each message.
+    The key and value are separated by the specified separator character
+    in the output. Useful for debugging keyed messages.
+  tags:
+    - consumer
+    - key
+    - key-value
+    - debug
+  aliases:
+    - consume with keys
+    - show message keys
+    - read key and value
+    - display kafka message keys
+    - consume key value pairs
+    - print message keys
+  examples:
+    - query: "consume messages showing keys from the orders topic"
+    - query: "read messages with their keys displayed"
+    - query: "show key-value pairs from the events topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-with-headers
+  technology: kafka
+  category: consumers
+  name: Consume messages with headers
+  intent: consume_with_headers
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning --property print.headers=true --property headers.separator=<separator>
+  description: >
+    Consumes messages and displays the headers attached to each message.
+    Headers contain metadata key-value pairs that were set by the producer.
+    Useful for tracing and debugging message flow.
+  tags:
+    - consumer
+    - headers
+    - metadata
+    - tracing
+  aliases:
+    - consume with headers
+    - show message headers
+    - read kafka headers
+    - display message metadata
+    - consume messages with metadata
+  examples:
+    - query: "consume messages showing headers from the orders topic"
+    - query: "display message headers from kafka"
+    - query: "read messages with their header metadata"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-with-timestamp
+  technology: kafka
+  category: consumers
+  name: Consume messages with timestamps
+  intent: consume_with_timestamp
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning --property print.timestamp=true
+  description: >
+    Consumes messages and displays the timestamp of each message. The timestamp
+    can be either the creation time (set by the producer) or the log append
+    time (set by the broker), depending on the topic's message.timestamp.type
+    configuration.
+  tags:
+    - consumer
+    - timestamp
+    - time
+    - debug
+  aliases:
+    - consume with timestamps
+    - show message timestamps
+    - read messages with time
+    - display message creation time
+    - kafka consume showing time
+  examples:
+    - query: "consume messages showing timestamps"
+    - query: "read messages with their timestamps"
+    - query: "display when each message was produced"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-with-deserializer
+  technology: kafka
+  category: consumers
+  name: Consume with specific deserializer
+  intent: consume_with_deserializer
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning --property value.deserializer=<deserializer_class>
+  description: >
+    Consumes messages using a specific deserializer class for the value.
+    Common deserializers include StringDeserializer, IntegerDeserializer,
+    and custom Avro or JSON deserializers. The key deserializer can also
+    be set via key.deserializer.
+  tags:
+    - consumer
+    - deserializer
+    - avro
+    - json
+  aliases:
+    - consume with deserializer
+    - read with custom deserializer
+    - consume avro messages
+    - deserialize kafka messages
+    - use specific deserializer
+  examples:
+    - query: "consume messages using a custom deserializer"
+    - query: "read avro deserialized messages from kafka"
+    - query: "consume with string deserializer from topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#consumerconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-list-consumer-groups
+  technology: kafka
+  category: consumer-groups
+  name: List consumer groups
+  intent: list_consumer_groups
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --list
+  description: >
+    Lists all consumer groups registered with the Kafka cluster. This includes
+    both active and inactive consumer groups. Useful for discovering which
+    applications are consuming from the cluster.
+  tags:
+    - consumer-groups
+    - list
+    - discovery
+  aliases:
+    - list consumer groups
+    - show all consumer groups
+    - get consumer groups
+    - what consumer groups exist
+    - display kafka consumer groups
+    - list all groups
+  examples:
+    - query: "list all consumer groups"
+    - query: "show me the consumer groups on the cluster"
+    - query: "what consumer groups are active"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-consumer-group
+  technology: kafka
+  category: consumer-groups
+  name: Describe consumer group
+  intent: describe_consumer_group
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --describe --group <group>
+  description: >
+    Describes a consumer group showing detailed information including the
+    current offset, log end offset, and lag for each partition assigned to
+    the group. Also shows the consumer ID, host, and client ID of each
+    group member.
+  tags:
+    - consumer-groups
+    - describe
+    - lag
+    - offsets
+  aliases:
+    - describe consumer group
+    - show consumer group details
+    - check consumer group lag
+    - consumer group offsets
+    - get consumer group info
+    - inspect consumer group
+    - show group lag
+  examples:
+    - query: "describe the consumer group my-app-group"
+    - query: "show lag for consumer group order-processor"
+    - query: "check offsets of the consumer group"
+    - query: "what is the lag for my consumer group"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-consumer-group-members
+  technology: kafka
+  category: consumer-groups
+  name: List consumer group members
+  intent: list_consumer_group_members
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --describe --group <group> --members
+  description: >
+    Lists the members of a consumer group including their consumer IDs,
+    host addresses, client IDs, and the number of partitions assigned
+    to each member. Useful for checking consumer distribution and balance.
+  tags:
+    - consumer-groups
+    - members
+    - consumers
+    - balance
+  aliases:
+    - list consumer group members
+    - show group members
+    - who is in the consumer group
+    - consumer group membership
+    - show consumers in group
+    - list group consumers
+  examples:
+    - query: "list members of consumer group my-app-group"
+    - query: "show who is consuming in the group"
+    - query: "check consumer group membership"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-consumer-group-lag
+  technology: kafka
+  category: consumer-groups
+  name: Check consumer lag
+  intent: check_consumer_lag
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --describe --group <group> --verbose
+  description: >
+    Checks the consumer lag for a consumer group with verbose output. Shows
+    the current offset, log end offset, and lag for each topic-partition
+    assigned to the group. High lag indicates consumers are falling behind.
+  tags:
+    - consumer-groups
+    - lag
+    - monitoring
+    - offsets
+  aliases:
+    - check consumer lag
+    - show consumer group lag
+    - monitor consumer lag
+    - how far behind is the consumer
+    - kafka lag check
+    - consumer falling behind
+    - check group offset lag
+  examples:
+    - query: "check the lag for consumer group order-processor"
+    - query: "is my consumer group falling behind"
+    - query: "show consumer lag for my-app-group"
+    - query: "monitor consumer lag"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-delete-consumer-group
+  technology: kafka
+  category: consumer-groups
+  name: Delete consumer group
+  intent: delete_consumer_group
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --delete --group <group>
+  description: >
+    Deletes a consumer group and all its committed offsets. The consumer
+    group must have no active members (all consumers must be stopped).
+    This operation is irreversible.
+  tags:
+    - consumer-groups
+    - delete
+    - destructive
+  aliases:
+    - delete consumer group
+    - remove consumer group
+    - drop consumer group
+    - destroy consumer group
+    - clean up consumer group
+  examples:
+    - query: "delete the consumer group old-processor"
+    - query: "remove the inactive consumer group"
+    - query: "clean up the unused consumer group"
+  risk: dangerous
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-reset-offsets-to-earliest
+  technology: kafka
+  category: consumer-groups
+  name: Reset offsets to earliest
+  intent: reset_offsets_to_earliest
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --group <group> --reset-offsets --to-earliest --topic <topic> --execute
+  description: >
+    Resets consumer group offsets to the earliest available offset for the
+    specified topic. This causes the consumer group to re-consume all
+    available messages from the beginning. The consumer group must be inactive.
+  tags:
+    - consumer-groups
+    - reset
+    - offsets
+    - replay
+  aliases:
+    - reset offsets to earliest
+    - rewind consumer to beginning
+    - reset to start
+    - replay from earliest
+    - reset consumer group to earliest
+    - reprocess all messages
+  examples:
+    - query: "reset offsets to earliest for group my-app on topic orders"
+    - query: "rewind consumer group to the beginning"
+    - query: "replay all messages for the consumer group"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-reset-offsets-to-latest
+  technology: kafka
+  category: consumer-groups
+  name: Reset offsets to latest
+  intent: reset_offsets_to_latest
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --group <group> --reset-offsets --to-latest --topic <topic> --execute
+  description: >
+    Resets consumer group offsets to the latest offset for the specified topic.
+    This causes the consumer group to skip all existing messages and only
+    consume new messages going forward. The consumer group must be inactive.
+  tags:
+    - consumer-groups
+    - reset
+    - offsets
+    - skip
+  aliases:
+    - reset offsets to latest
+    - skip to end of topic
+    - reset to latest
+    - jump to newest messages
+    - skip all pending messages
+    - fast forward consumer group
+  examples:
+    - query: "reset offsets to latest for group my-app on topic orders"
+    - query: "skip to the end of the topic for the consumer group"
+    - query: "jump to the latest offset"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-reset-offsets-to-timestamp
+  technology: kafka
+  category: consumer-groups
+  name: Reset offsets to timestamp
+  intent: reset_offsets_to_timestamp
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --group <group> --reset-offsets --to-datetime <YYYY-MM-DDTHH:mm:SS.sss> --topic <topic> --execute
+  description: >
+    Resets consumer group offsets to the offset corresponding to the given
+    timestamp. Messages produced after this timestamp will be reconsumed.
+    The timestamp format is ISO 8601. The consumer group must be inactive.
+  tags:
+    - consumer-groups
+    - reset
+    - offsets
+    - timestamp
+    - time-based
+  aliases:
+    - reset offsets to timestamp
+    - reset to date time
+    - rewind to specific time
+    - consume from timestamp
+    - reset offsets by time
+    - replay from date
+  examples:
+    - query: "reset offsets to 2026-01-15T10:00:00.000 for the consumer group"
+    - query: "rewind consumer to messages from yesterday"
+    - query: "reset offsets to a specific timestamp"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-reset-offsets-to-offset
+  technology: kafka
+  category: consumer-groups
+  name: Reset offsets to specific offset
+  intent: reset_offsets_to_offset
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --group <group> --reset-offsets --to-offset <offset> --topic <topic> --execute
+  description: >
+    Resets consumer group offsets to a specific offset value for the specified
+    topic. This sets the same offset for all partitions of the topic.
+    The consumer group must be inactive.
+  tags:
+    - consumer-groups
+    - reset
+    - offsets
+    - specific
+  aliases:
+    - reset offsets to specific offset
+    - set offset to exact value
+    - reset to offset number
+    - move consumer to offset
+    - jump to specific offset
+  examples:
+    - query: "reset offsets to offset 1000 for group my-app"
+    - query: "set the consumer group offset to 500"
+    - query: "move consumer to a specific offset"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-reset-offsets-by-duration
+  technology: kafka
+  category: consumer-groups
+  name: Reset offsets by duration
+  intent: reset_offsets_by_duration
+  command: kafka-consumer-groups.sh --bootstrap-server <broker>:<port> --group <group> --reset-offsets --by-duration <PnDTnHnMnS> --topic <topic> --execute
+  description: >
+    Resets consumer group offsets by subtracting the specified duration from
+    the current time. Uses ISO 8601 duration format (e.g., PT1H for 1 hour,
+    P1D for 1 day, PT30M for 30 minutes). The consumer group must be inactive.
+  tags:
+    - consumer-groups
+    - reset
+    - offsets
+    - duration
+    - time-based
+  aliases:
+    - reset offsets by duration
+    - rewind by time period
+    - go back in time
+    - reset offset by hours
+    - replay last N hours
+    - shift offsets back by duration
+  examples:
+    - query: "reset offsets by 2 hours for the consumer group"
+    - query: "rewind the consumer group by 1 day"
+    - query: "replay the last 30 minutes of messages"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_consumer_group
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-topic-config
+  technology: kafka
+  category: configuration
+  name: Describe topic configuration
+  intent: describe_topic_config
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type topics --entity-name <topic> --describe
+  description: >
+    Describes all configuration overrides for a specific topic. Shows only
+    the configs that differ from the broker defaults. Useful for auditing
+    topic-level settings like retention, cleanup policy, and compression.
+  tags:
+    - configuration
+    - topics
+    - describe
+    - audit
+  aliases:
+    - describe topic config
+    - show topic configuration
+    - get topic settings
+    - what is the topic retention
+    - check topic config
+    - list topic overrides
+    - audit topic configuration
+  examples:
+    - query: "describe the configuration of topic orders"
+    - query: "what are the config overrides for the events topic"
+    - query: "check the retention setting for my topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-alter-topic-config
+  technology: kafka
+  category: configuration
+  name: Alter topic configuration
+  intent: alter_topic_config
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type topics --entity-name <topic> --alter --add-config <key>=<value>
+  description: >
+    Modifies a configuration property for a specific topic. Common configs
+    include retention.ms, cleanup.policy, max.message.bytes, compression.type,
+    and segment.bytes. Multiple configs can be set by comma-separating them.
+  tags:
+    - configuration
+    - topics
+    - alter
+    - retention
+  aliases:
+    - alter topic config
+    - change topic configuration
+    - set topic retention
+    - modify topic settings
+    - update topic config
+    - change cleanup policy
+    - set topic compression
+  examples:
+    - query: "set retention to 7 days for the orders topic"
+    - query: "change the cleanup policy to compact for topic user-profiles"
+    - query: "set max message size to 10MB for the events topic"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-broker-config
+  technology: kafka
+  category: configuration
+  name: Describe broker configuration
+  intent: describe_broker_config
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type brokers --entity-name <broker_id> --describe
+  description: >
+    Describes the dynamic configuration overrides for a specific broker.
+    Shows only the configs that have been dynamically changed from the
+    static broker defaults. Use --entity-default for cluster-wide defaults.
+  tags:
+    - configuration
+    - broker
+    - describe
+    - admin
+  aliases:
+    - describe broker config
+    - show broker configuration
+    - get broker settings
+    - check broker config
+    - list broker overrides
+    - inspect broker configuration
+  examples:
+    - query: "describe the configuration of broker 0"
+    - query: "show dynamic config for broker 1"
+    - query: "what are the broker configuration overrides"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#brokerconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-alter-broker-config
+  technology: kafka
+  category: configuration
+  name: Alter broker configuration
+  intent: alter_broker_config
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type brokers --entity-name <broker_id> --alter --add-config <key>=<value>
+  description: >
+    Dynamically modifies a configuration property for a specific broker
+    without requiring a restart. Common dynamic configs include
+    log.retention.ms, log.retention.bytes, and num.io.threads. Not all
+    broker configs can be changed dynamically.
+  tags:
+    - configuration
+    - broker
+    - alter
+    - dynamic
+  aliases:
+    - alter broker config
+    - change broker configuration
+    - modify broker settings
+    - update broker config dynamically
+    - set broker property
+  examples:
+    - query: "change the log retention on broker 0"
+    - query: "dynamically update broker configuration"
+    - query: "set a broker config without restart"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#brokerConfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-cluster
+  technology: kafka
+  category: administration
+  name: Describe cluster
+  intent: describe_cluster
+  command: kafka-metadata.sh --snapshot <metadata_log_path> --cluster-id
+  description: >
+    Describes the Kafka cluster metadata including cluster ID, controller,
+    and broker information. For KRaft-based clusters, use kafka-metadata.sh.
+    Alternatively, kafka-broker-api-versions.sh can show broker API versions.
+  tags:
+    - cluster
+    - administration
+    - metadata
+    - info
+  aliases:
+    - describe kafka cluster
+    - show cluster info
+    - get cluster metadata
+    - cluster details
+    - show cluster id
+    - kafka cluster information
+  examples:
+    - query: "describe the kafka cluster"
+    - query: "show me the cluster metadata"
+    - query: "what is the cluster ID"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_cluster_info
+  verified_at: "2026-08-01"
+
+- id: kafka-list-acls
+  technology: kafka
+  category: security
+  name: List ACLs
+  intent: list_acls
+  command: kafka-acls.sh --bootstrap-server <broker>:<port> --list
+  description: >
+    Lists all Access Control Lists (ACLs) configured in the Kafka cluster.
+    Shows which principals have which permissions on which resources
+    (topics, groups, cluster, transactional IDs).
+  tags:
+    - security
+    - acls
+    - authorization
+    - list
+  aliases:
+    - list kafka acls
+    - show access control lists
+    - get kafka permissions
+    - display acls
+    - show who has access
+    - list kafka authorization
+    - check kafka acls
+  examples:
+    - query: "list all ACLs in the cluster"
+    - query: "show me the kafka access control lists"
+    - query: "what permissions are configured"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#security_authz_cli
+  verified_at: "2026-08-01"
+
+- id: kafka-add-acl
+  technology: kafka
+  category: security
+  name: Add ACL
+  intent: add_acl
+  command: kafka-acls.sh --bootstrap-server <broker>:<port> --add --allow-principal User:<principal> --operation <operation> --topic <topic>
+  description: >
+    Adds an Access Control List (ACL) entry to allow a principal to perform
+    a specific operation on a resource. Common operations include Read, Write,
+    Create, Delete, Alter, Describe, and All.
+  tags:
+    - security
+    - acls
+    - authorization
+    - add
+    - permissions
+  aliases:
+    - add kafka acl
+    - grant kafka permission
+    - allow user access
+    - create acl entry
+    - grant topic access
+    - add kafka authorization
+    - permit user operation
+  examples:
+    - query: "grant read access on topic orders to user app-consumer"
+    - query: "add write permission for user producer-app on topic events"
+    - query: "allow user admin to read from all topics"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#security_authz_cli
+  verified_at: "2026-08-01"
+
+- id: kafka-remove-acl
+  technology: kafka
+  category: security
+  name: Remove ACL
+  intent: remove_acl
+  command: kafka-acls.sh --bootstrap-server <broker>:<port> --remove --allow-principal User:<principal> --operation <operation> --topic <topic>
+  description: >
+    Removes an Access Control List (ACL) entry, revoking a principal's
+    permission to perform the specified operation on the resource. Use
+    with caution as it may break applications that depend on the permission.
+  tags:
+    - security
+    - acls
+    - authorization
+    - remove
+    - revoke
+  aliases:
+    - remove kafka acl
+    - revoke kafka permission
+    - delete acl entry
+    - remove user access
+    - revoke topic access
+    - remove kafka authorization
+  examples:
+    - query: "remove read access on topic orders from user old-consumer"
+    - query: "revoke write permission from user on the events topic"
+    - query: "delete the ACL for user test-app"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#security_authz_cli
+  verified_at: "2026-08-01"
+
+- id: kafka-reassign-partitions-generate
+  technology: kafka
+  category: administration
+  name: Generate partition reassignment plan
+  intent: generate_partition_reassignment
+  command: kafka-reassign-partitions.sh --bootstrap-server <broker>:<port> --topics-to-move-json-file <topics_json_file> --broker-list <broker_ids> --generate
+  description: >
+    Generates a partition reassignment plan for moving topic partitions to
+    the specified brokers. Outputs the current assignment and a proposed
+    new assignment. The topics JSON file should contain a list of topics
+    to move in the format {"topics":[{"topic":"t1"}],"version":1}.
+  tags:
+    - administration
+    - partitions
+    - reassignment
+    - rebalance
+  aliases:
+    - generate reassignment plan
+    - plan partition move
+    - rebalance partitions
+    - generate partition migration
+    - plan broker rebalance
+    - create reassignment plan
+  examples:
+    - query: "generate a partition reassignment plan for brokers 0,1,2"
+    - query: "plan to move topic partitions to new brokers"
+    - query: "create a rebalance plan for the cluster"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_automigrate
+  verified_at: "2026-08-01"
+
+- id: kafka-reassign-partitions-execute
+  technology: kafka
+  category: administration
+  name: Execute partition reassignment
+  intent: execute_partition_reassignment
+  command: kafka-reassign-partitions.sh --bootstrap-server <broker>:<port> --reassignment-json-file <reassignment_json_file> --execute
+  description: >
+    Executes a partition reassignment plan, moving partitions to the brokers
+    specified in the reassignment JSON file. This triggers data replication
+    across brokers and may impact cluster performance during the process.
+  tags:
+    - administration
+    - partitions
+    - reassignment
+    - migration
+  aliases:
+    - execute reassignment
+    - run partition reassignment
+    - move partitions
+    - execute rebalance
+    - apply reassignment plan
+    - migrate partitions
+  examples:
+    - query: "execute the partition reassignment plan"
+    - query: "move the partitions according to the plan"
+    - query: "apply the reassignment JSON"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_automigrate
+  verified_at: "2026-08-01"
+
+- id: kafka-reassign-partitions-verify
+  technology: kafka
+  category: administration
+  name: Verify partition reassignment
+  intent: verify_partition_reassignment
+  command: kafka-reassign-partitions.sh --bootstrap-server <broker>:<port> --reassignment-json-file <reassignment_json_file> --verify
+  description: >
+    Verifies the status of a partition reassignment. Shows whether the
+    reassignment is still in progress, completed successfully, or failed.
+    Should be run after executing a reassignment to confirm completion.
+  tags:
+    - administration
+    - partitions
+    - reassignment
+    - verify
+    - status
+  aliases:
+    - verify reassignment
+    - check reassignment status
+    - is reassignment complete
+    - verify partition move
+    - check rebalance progress
+    - reassignment status
+  examples:
+    - query: "verify the partition reassignment status"
+    - query: "check if the reassignment is complete"
+    - query: "is the partition move done"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_automigrate
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-log-dirs
+  technology: kafka
+  category: administration
+  name: Describe log directories
+  intent: describe_log_dirs
+  command: kafka-log-dirs.sh --bootstrap-server <broker>:<port> --describe --broker-list <broker_ids>
+  description: >
+    Describes the log directories on the specified brokers, including the
+    size of each topic-partition replica. Useful for monitoring disk usage
+    and identifying large topics that consume significant storage.
+  tags:
+    - administration
+    - log-dirs
+    - disk
+    - storage
+    - monitoring
+  aliases:
+    - describe log directories
+    - show log dirs
+    - check disk usage
+    - kafka storage info
+    - broker disk usage
+    - show partition sizes
+    - check log directory space
+  examples:
+    - query: "describe log directories on brokers 0,1,2"
+    - query: "check disk usage on the kafka brokers"
+    - query: "how much storage is each topic using"
+    - query: "show log directory sizes"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_logdir
+  verified_at: "2026-08-01"
+
+- id: kafka-dump-log
+  technology: kafka
+  category: administration
+  name: Inspect log segments
+  intent: dump_log_segments
+  command: kafka-dump-log.sh --files <log_segment_file> --print-data-log
+  description: >
+    Inspects Kafka log segment files on disk, displaying the contents of
+    messages stored in the segment. Useful for low-level debugging and
+    forensic analysis of message data. The --print-data-log flag shows
+    the actual message payloads.
+  tags:
+    - administration
+    - log-segments
+    - debug
+    - forensics
+    - inspection
+  aliases:
+    - dump log segments
+    - inspect kafka logs
+    - read log segment file
+    - analyze kafka segment
+    - view raw kafka data
+    - debug log files
+  examples:
+    - query: "inspect the kafka log segment file"
+    - query: "dump the contents of a log segment"
+    - query: "read raw messages from a kafka log file"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#basic_ops_dump_log
+  verified_at: "2026-08-01"
+
+- id: kafka-describe-topic-config-all
+  technology: kafka
+  category: configuration
+  name: Describe all topic configs
+  intent: describe_all_topic_configs
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type topics --entity-name <topic> --describe --all
+  description: >
+    Describes all configuration properties for a topic, including both
+    overridden values and default values inherited from broker configuration.
+    The --all flag shows every config property and its source.
+  tags:
+    - configuration
+    - topics
+    - describe
+    - comprehensive
+  aliases:
+    - show all topic configs
+    - describe complete topic configuration
+    - list all topic settings
+    - get full topic config
+    - show all topic properties
+    - complete topic config dump
+  examples:
+    - query: "show all configuration properties for the orders topic"
+    - query: "list every config for my topic including defaults"
+    - query: "get the full configuration dump for a topic"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-delete-topic-config
+  technology: kafka
+  category: configuration
+  name: Delete topic configuration override
+  intent: delete_topic_config
+  command: kafka-configs.sh --bootstrap-server <broker>:<port> --entity-type topics --entity-name <topic> --alter --delete-config <key>
+  description: >
+    Removes a configuration override from a topic, reverting it to the
+    broker default value. Useful for cleaning up custom topic configurations
+    that are no longer needed.
+  tags:
+    - configuration
+    - topics
+    - delete
+    - revert
+  aliases:
+    - delete topic config
+    - remove topic configuration
+    - revert topic config to default
+    - unset topic setting
+    - clear topic config override
+    - reset topic config
+  examples:
+    - query: "remove the retention.ms override from the orders topic"
+    - query: "revert topic config to broker default"
+    - query: "delete the custom cleanup.policy setting"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#topicconfigs
+  verified_at: "2026-08-01"
+
+- id: kafka-create-topic-with-config
+  technology: kafka
+  category: topics
+  name: Create topic with custom configuration
+  intent: create_topic_with_config
+  command: kafka-topics.sh --bootstrap-server <broker>:<port> --create --topic <topic> --partitions <num_partitions> --replication-factor <replication_factor> --config <key>=<value>
+  description: >
+    Creates a new Kafka topic with custom configuration properties set at
+    creation time. Multiple --config flags can be used to set several
+    properties. Common configs include retention.ms, cleanup.policy,
+    compression.type, and max.message.bytes.
+  tags:
+    - topics
+    - create
+    - configuration
+    - custom
+  aliases:
+    - create topic with config
+    - make topic with retention
+    - create compacted topic
+    - new topic with custom settings
+    - create topic with compression
+    - create topic with custom config
+  examples:
+    - query: "create a topic with 7 day retention and 3 partitions"
+    - query: "make a compacted topic for user profiles"
+    - query: "create a topic with snappy compression"
+  risk: warning
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_createtopic
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-with-group
+  technology: kafka
+  category: consumers
+  name: Consume with consumer group
+  intent: consume_with_group
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --group <group>
+  description: >
+    Consumes messages from a topic as part of a specific consumer group.
+    Offsets are committed automatically for the group, enabling resumption
+    from where the consumer left off. Multiple consumers with the same
+    group ID share the partitions.
+  tags:
+    - consumer
+    - consumer-group
+    - coordinated
+    - offsets
+  aliases:
+    - consume with group
+    - read with consumer group
+    - consume as group member
+    - join consumer group
+    - consume and commit offsets
+    - grouped consumption
+  examples:
+    - query: "consume from orders topic as part of group my-app"
+    - query: "read messages with consumer group order-processor"
+    - query: "consume and track offsets with a group"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"
+
+- id: kafka-consume-max-messages
+  technology: kafka
+  category: consumers
+  name: Consume limited number of messages
+  intent: consume_max_messages
+  command: kafka-console-consumer.sh --bootstrap-server <broker>:<port> --topic <topic> --from-beginning --max-messages <count>
+  description: >
+    Consumes a specific number of messages from a topic and then exits.
+    Useful for sampling data or verifying message contents without running
+    a continuous consumer.
+  tags:
+    - consumer
+    - sample
+    - limited
+    - count
+  aliases:
+    - consume N messages
+    - read limited messages
+    - sample messages from topic
+    - get N messages from kafka
+    - consume and stop after count
+    - read a few messages
+  examples:
+    - query: "consume 10 messages from the orders topic"
+    - query: "sample 5 messages from the events topic"
+    - query: "read just 100 messages and stop"
+  risk: safe
+  documentation:
+    url: https://kafka.apache.org/documentation/#quickstart_consume
+  verified_at: "2026-08-01"

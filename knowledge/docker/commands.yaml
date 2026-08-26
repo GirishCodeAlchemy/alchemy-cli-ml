@@ -1,0 +1,1997 @@
+# AlchemyCLI AI - Docker Commands
+
+# =============================================================================
+# Containers - ps, run, exec, logs, inspect, stats, cp, start/stop/restart, rm
+# =============================================================================
+
+- id: docker-list-running-containers
+  technology: docker
+  category: containers
+  name: List Running Containers
+  intent: list_running_containers
+  command: docker ps
+  description: >
+    List all currently running containers with their IDs, names, images, ports, and status.
+  tags:
+    - containers
+    - list
+    - running
+    - status
+  aliases:
+    - show running containers
+    - list active containers
+    - what containers are running
+    - docker ps
+    - running containers
+  examples:
+    - query: "show me all running containers"
+    - query: "what docker containers are currently active"
+    - query: "list running containers"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-list-all-containers
+  technology: docker
+  category: containers
+  name: List All Containers
+  intent: list_all_containers
+  command: docker ps -a
+  description: >
+    List all containers including stopped ones, showing their IDs, names, images, status, and ports.
+  tags:
+    - containers
+    - list
+    - all
+    - stopped
+  aliases:
+    - show all containers
+    - list all containers including stopped
+    - show stopped containers
+    - docker ps all
+    - every container
+  examples:
+    - query: "show all containers including stopped ones"
+    - query: "list every docker container"
+    - query: "show containers that have exited"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-list-containers-filtered
+  technology: docker
+  category: containers
+  name: List Containers with Filter
+  intent: list_containers_filtered
+  command: docker ps -a --filter "status=<status>"
+  description: >
+    List containers filtered by a specific status such as running, exited, paused, or created.
+  tags:
+    - containers
+    - list
+    - filter
+    - status
+  aliases:
+    - filter containers by status
+    - show exited containers
+    - list paused containers
+    - containers with specific status
+    - filter docker ps
+  examples:
+    - query: "show me all exited containers"
+    - query: "filter containers by status running"
+    - query: "list containers that are paused"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/ls/#filter
+  verified_at: "2026-08-01"
+
+- id: docker-run-basic
+  technology: docker
+  category: containers
+  name: Run Container
+  intent: run_container
+  command: docker run <image>
+  description: >
+    Create and start a new container from the specified image in the foreground.
+  tags:
+    - containers
+    - run
+    - create
+    - start
+  aliases:
+    - run a docker container
+    - start a container from image
+    - create and run container
+    - docker run
+    - launch container
+  examples:
+    - query: "run an nginx container"
+    - query: "start a container from ubuntu image"
+    - query: "how to run a docker container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/
+  verified_at: "2026-08-01"
+
+- id: docker-run-detached
+  technology: docker
+  category: containers
+  name: Run Container Detached
+  intent: run_container_detached
+  command: docker run -d <image>
+  description: >
+    Run a container in detached mode (in the background), returning the container ID.
+  tags:
+    - containers
+    - run
+    - detached
+    - background
+    - daemon
+  aliases:
+    - run container in background
+    - start detached container
+    - run container as daemon
+    - docker run detached
+    - background container
+  examples:
+    - query: "run nginx in the background"
+    - query: "start a container in detached mode"
+    - query: "run a docker container as a daemon"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/#detach
+  verified_at: "2026-08-01"
+
+- id: docker-run-with-ports
+  technology: docker
+  category: containers
+  name: Run Container with Port Mapping
+  intent: run_container_with_ports
+  command: docker run -d -p <host_port>:<container_port> <image>
+  description: >
+    Run a container in detached mode and map a host port to a container port for network access.
+  tags:
+    - containers
+    - run
+    - ports
+    - publish
+    - mapping
+  aliases:
+    - run container with port mapping
+    - expose container port
+    - map ports for container
+    - docker run with ports
+    - publish container port
+    - port forwarding
+  examples:
+    - query: "run nginx and expose port 80 on host port 8080"
+    - query: "start a container with port mapping"
+    - query: "how to map ports when running a docker container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/#publish
+  verified_at: "2026-08-01"
+
+- id: docker-run-with-volume
+  technology: docker
+  category: containers
+  name: Run Container with Volume Mount
+  intent: run_container_with_volume
+  command: docker run -d -v <host_path>:<container_path> <image>
+  description: >
+    Run a container with a bind mount or volume, mapping a host directory or named volume to a path inside the container.
+  tags:
+    - containers
+    - run
+    - volume
+    - mount
+    - bind
+  aliases:
+    - run container with volume
+    - mount directory in container
+    - bind mount a folder
+    - docker run with volume
+    - attach storage to container
+  examples:
+    - query: "run a container and mount a local directory"
+    - query: "how to persist data with docker run"
+    - query: "run mysql with a volume for data persistence"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/#volume
+  verified_at: "2026-08-01"
+
+- id: docker-run-with-env
+  technology: docker
+  category: containers
+  name: Run Container with Environment Variables
+  intent: run_container_with_env
+  command: docker run -d -e <KEY>=<VALUE> <image>
+  description: >
+    Run a container with one or more environment variables set using the -e flag.
+  tags:
+    - containers
+    - run
+    - environment
+    - variables
+    - env
+  aliases:
+    - run container with env vars
+    - set environment variable in container
+    - pass env to container
+    - docker run with environment
+    - container environment variables
+  examples:
+    - query: "run a postgres container with POSTGRES_PASSWORD set"
+    - query: "how to pass environment variables to a docker container"
+    - query: "start container with custom env vars"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/#env
+  verified_at: "2026-08-01"
+
+- id: docker-run-with-name
+  technology: docker
+  category: containers
+  name: Run Container with Custom Name
+  intent: run_container_with_name
+  command: docker run -d --name <name> <image>
+  description: >
+    Run a container with a custom name for easier identification and management.
+  tags:
+    - containers
+    - run
+    - name
+    - label
+  aliases:
+    - name a docker container
+    - run container with specific name
+    - assign name to container
+    - docker run named
+    - give container a name
+  examples:
+    - query: "run an nginx container named web-server"
+    - query: "how to name a docker container"
+    - query: "start a container with a custom name"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/run/#name
+  verified_at: "2026-08-01"
+
+- id: docker-view-logs
+  technology: docker
+  category: containers
+  name: View Container Logs
+  intent: view_logs
+  command: docker logs <container>
+  description: >
+    Fetch and display the logs output from a running or stopped container.
+  tags:
+    - containers
+    - logs
+    - output
+    - debug
+  aliases:
+    - show container logs
+    - view docker logs
+    - get container output
+    - docker logs
+    - check container logs
+  examples:
+    - query: "show logs for my nginx container"
+    - query: "view the output of a container"
+    - query: "how to check docker container logs"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-follow-logs
+  technology: docker
+  category: containers
+  name: Follow Container Logs
+  intent: follow_logs
+  command: docker logs -f <container>
+  description: >
+    Stream container logs in real time, similar to tail -f, continuously showing new log output.
+  tags:
+    - containers
+    - logs
+    - follow
+    - stream
+    - tail
+  aliases:
+    - follow container logs
+    - stream docker logs
+    - tail container logs live
+    - docker logs follow
+    - watch container output
+  examples:
+    - query: "follow logs from my web container in real time"
+    - query: "stream logs for a running container"
+    - query: "tail docker logs live"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-logs-tail
+  technology: docker
+  category: containers
+  name: View Last N Lines of Logs
+  intent: tail_logs
+  command: docker logs --tail <number> <container>
+  description: >
+    Display only the last N lines of a container's log output.
+  tags:
+    - containers
+    - logs
+    - tail
+    - recent
+  aliases:
+    - show last n lines of logs
+    - tail docker logs
+    - recent container logs
+    - last lines of container output
+    - docker logs tail
+  examples:
+    - query: "show the last 100 lines of logs for my container"
+    - query: "tail 50 lines of docker logs"
+    - query: "get recent logs from container"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-logs-timestamps
+  technology: docker
+  category: containers
+  name: View Logs with Timestamps
+  intent: logs_with_timestamps
+  command: docker logs -t <container>
+  description: >
+    Display container logs with timestamps prepended to each log line.
+  tags:
+    - containers
+    - logs
+    - timestamps
+    - time
+  aliases:
+    - show logs with timestamps
+    - docker logs timestamps
+    - container logs with time
+    - timestamped logs
+  examples:
+    - query: "show container logs with timestamps"
+    - query: "view docker logs with time information"
+    - query: "get timestamped logs from my container"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-logs-since
+  technology: docker
+  category: containers
+  name: View Logs Since Timestamp
+  intent: logs_since
+  command: docker logs --since <timestamp> <container>
+  description: >
+    Display container logs generated since a specific timestamp or relative time (e.g., 1h, 30m).
+  tags:
+    - containers
+    - logs
+    - since
+    - time-range
+  aliases:
+    - show logs since time
+    - docker logs from specific time
+    - container logs after timestamp
+    - recent logs since
+    - logs from last hour
+  examples:
+    - query: "show logs from the last 30 minutes"
+    - query: "get container logs since 2 hours ago"
+    - query: "view docker logs since a specific timestamp"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-exec-shell
+  technology: docker
+  category: containers
+  name: Execute Interactive Shell in Container
+  intent: exec_shell
+  command: docker exec -it <container> /bin/sh
+  description: >
+    Start an interactive shell session inside a running container for debugging or administration.
+  tags:
+    - containers
+    - exec
+    - shell
+    - interactive
+    - debug
+  aliases:
+    - open shell in container
+    - exec into container
+    - enter a running container
+    - docker exec bash
+    - interactive shell in container
+    - ssh into container
+  examples:
+    - query: "open a shell inside my running container"
+    - query: "how to exec into a docker container"
+    - query: "get a bash shell in a container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/exec/
+  verified_at: "2026-08-01"
+
+- id: docker-exec-command
+  technology: docker
+  category: containers
+  name: Execute Command in Container
+  intent: exec_command
+  command: docker exec <container> <command>
+  description: >
+    Run a specific command inside a running container without starting an interactive session.
+  tags:
+    - containers
+    - exec
+    - command
+    - run
+  aliases:
+    - run command in container
+    - execute command inside container
+    - docker exec command
+    - run a process in container
+    - container command execution
+  examples:
+    - query: "run ls inside a container"
+    - query: "execute a command in a running container"
+    - query: "check the hostname of a container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/exec/
+  verified_at: "2026-08-01"
+
+- id: docker-inspect-container
+  technology: docker
+  category: containers
+  name: Inspect Container
+  intent: inspect_container
+  command: docker inspect <container>
+  description: >
+    Display detailed low-level information about a container in JSON format including configuration,
+    state, network settings, and mounts.
+  tags:
+    - containers
+    - inspect
+    - details
+    - metadata
+    - json
+  aliases:
+    - inspect a container
+    - show container details
+    - container configuration
+    - docker inspect
+    - detailed container info
+  examples:
+    - query: "show detailed info about a container"
+    - query: "inspect my nginx container"
+    - query: "get the IP address of a container"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/inspect/
+  verified_at: "2026-08-01"
+
+- id: docker-container-stats
+  technology: docker
+  category: containers
+  name: View Container Resource Usage
+  intent: container_stats
+  command: docker stats
+  description: >
+    Display a live stream of resource usage statistics for all running containers including
+    CPU, memory, network I/O, and block I/O.
+  tags:
+    - containers
+    - stats
+    - resources
+    - cpu
+    - memory
+    - monitoring
+  aliases:
+    - show container resource usage
+    - docker stats
+    - container cpu usage
+    - memory usage of containers
+    - monitor container resources
+    - container performance
+  examples:
+    - query: "show resource usage for all running containers"
+    - query: "how much CPU and memory are my containers using"
+    - query: "monitor docker container performance"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/stats/
+  verified_at: "2026-08-01"
+
+- id: docker-container-stats-no-stream
+  technology: docker
+  category: containers
+  name: View Container Stats Snapshot
+  intent: container_stats_snapshot
+  command: docker stats --no-stream
+  description: >
+    Display a one-time snapshot of resource usage for all running containers without continuous streaming.
+  tags:
+    - containers
+    - stats
+    - snapshot
+    - resources
+  aliases:
+    - container stats one-time
+    - docker stats snapshot
+    - current resource usage
+    - stats without streaming
+  examples:
+    - query: "show current container resource usage without streaming"
+    - query: "get a snapshot of docker stats"
+    - query: "one-time container resource check"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/stats/
+  verified_at: "2026-08-01"
+
+- id: docker-stop-container
+  technology: docker
+  category: containers
+  name: Stop Container
+  intent: stop_container
+  command: docker stop <container>
+  description: >
+    Gracefully stop a running container by sending SIGTERM followed by SIGKILL after a grace period.
+  tags:
+    - containers
+    - stop
+    - shutdown
+    - graceful
+  aliases:
+    - stop a container
+    - shut down container
+    - docker stop
+    - halt container
+    - gracefully stop container
+  examples:
+    - query: "stop my running nginx container"
+    - query: "how to stop a docker container"
+    - query: "shut down a container gracefully"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/stop/
+  verified_at: "2026-08-01"
+
+- id: docker-start-container
+  technology: docker
+  category: containers
+  name: Start Container
+  intent: start_container
+  command: docker start <container>
+  description: >
+    Start one or more stopped containers.
+  tags:
+    - containers
+    - start
+    - resume
+  aliases:
+    - start a stopped container
+    - docker start
+    - resume container
+    - bring container back up
+    - restart stopped container
+  examples:
+    - query: "start a stopped container"
+    - query: "bring my container back up"
+    - query: "how to start a docker container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/start/
+  verified_at: "2026-08-01"
+
+- id: docker-restart-container
+  technology: docker
+  category: containers
+  name: Restart Container
+  intent: restart_container
+  command: docker restart <container>
+  description: >
+    Stop and then start a container, effectively restarting it.
+  tags:
+    - containers
+    - restart
+    - reboot
+  aliases:
+    - restart a container
+    - docker restart
+    - reboot container
+    - cycle container
+    - stop and start container
+  examples:
+    - query: "restart my web container"
+    - query: "how to restart a docker container"
+    - query: "reboot a running container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/restart/
+  verified_at: "2026-08-01"
+
+- id: docker-remove-container
+  technology: docker
+  category: containers
+  name: Remove Container
+  intent: remove_container
+  command: docker rm <container>
+  description: >
+    Remove one or more stopped containers. The container must be stopped before removal unless the force flag is used.
+  tags:
+    - containers
+    - remove
+    - delete
+    - cleanup
+  aliases:
+    - remove a container
+    - delete container
+    - docker rm
+    - clean up container
+    - destroy container
+  examples:
+    - query: "remove a stopped container"
+    - query: "delete a docker container"
+    - query: "how to remove an old container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/rm/
+  verified_at: "2026-08-01"
+
+- id: docker-force-remove-container
+  technology: docker
+  category: containers
+  name: Force Remove Container
+  intent: force_remove_container
+  command: docker rm -f <container>
+  description: >
+    Forcefully remove a container, even if it is currently running, by sending SIGKILL.
+  tags:
+    - containers
+    - remove
+    - force
+    - kill
+  aliases:
+    - force remove container
+    - force delete running container
+    - docker rm force
+    - kill and remove container
+    - forcefully delete container
+  examples:
+    - query: "force remove a running container"
+    - query: "kill and delete a container"
+    - query: "remove a container that won't stop"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/rm/
+  verified_at: "2026-08-01"
+
+- id: docker-copy-to-container
+  technology: docker
+  category: containers
+  name: Copy Files to Container
+  intent: copy_to_container
+  command: docker cp <file> <container>:<path>
+  description: >
+    Copy files or directories from the local filesystem into a running or stopped container.
+  tags:
+    - containers
+    - copy
+    - transfer
+    - files
+  aliases:
+    - copy file to container
+    - transfer file into container
+    - docker cp to container
+    - upload file to container
+    - send file to container
+  examples:
+    - query: "copy a config file into my running container"
+    - query: "how to transfer files to a docker container"
+    - query: "upload a file into a container"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/cp/
+  verified_at: "2026-08-01"
+
+- id: docker-copy-from-container
+  technology: docker
+  category: containers
+  name: Copy Files from Container
+  intent: copy_from_container
+  command: docker cp <container>:<path> <file>
+  description: >
+    Copy files or directories from a container to the local filesystem.
+  tags:
+    - containers
+    - copy
+    - extract
+    - download
+    - files
+  aliases:
+    - copy file from container
+    - extract file from container
+    - docker cp from container
+    - download file from container
+    - get file from container
+  examples:
+    - query: "copy a log file from my container to the host"
+    - query: "extract files from a docker container"
+    - query: "download a file from a running container"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/cp/
+  verified_at: "2026-08-01"
+
+- id: docker-export-container
+  technology: docker
+  category: containers
+  name: Export Container Filesystem
+  intent: export_container
+  command: docker export <container> -o <file>.tar
+  description: >
+    Export a container's filesystem as a tar archive. This does not include volumes or image layer history.
+  tags:
+    - containers
+    - export
+    - filesystem
+    - tar
+    - archive
+  aliases:
+    - export container filesystem
+    - save container as tar
+    - docker export
+    - archive container filesystem
+    - dump container to file
+  examples:
+    - query: "export my container's filesystem as a tar file"
+    - query: "save the container filesystem to an archive"
+    - query: "how to export a docker container"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/export/
+  verified_at: "2026-08-01"
+
+- id: docker-import-container
+  technology: docker
+  category: containers
+  name: Import Container Filesystem
+  intent: import_container
+  command: docker import <file>.tar <image>:<tag>
+  description: >
+    Create a new image from a tarball archive previously exported from a container.
+  tags:
+    - containers
+    - import
+    - filesystem
+    - tar
+    - image
+  aliases:
+    - import container filesystem
+    - create image from tar
+    - docker import
+    - load container archive
+    - import tar as image
+  examples:
+    - query: "import a container filesystem tar as a new image"
+    - query: "create a docker image from an exported tar"
+    - query: "how to import a container archive"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/import/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# Images - list, pull, build, tag, push, inspect, history, save, load, rm
+# =============================================================================
+
+- id: docker-list-images
+  technology: docker
+  category: images
+  name: List Images
+  intent: list_images
+  command: docker images
+  description: >
+    List all locally available Docker images with their repository, tag, image ID, creation date, and size.
+  tags:
+    - images
+    - list
+    - local
+  aliases:
+    - list docker images
+    - show local images
+    - docker images
+    - what images do I have
+    - available images
+  examples:
+    - query: "show all docker images on my machine"
+    - query: "list local docker images"
+    - query: "what images are available locally"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-list-dangling-images
+  technology: docker
+  category: images
+  name: List Dangling Images
+  intent: list_dangling_images
+  command: docker images -f "dangling=true"
+  description: >
+    List images that are not tagged and not referenced by any container, often leftover from builds.
+  tags:
+    - images
+    - dangling
+    - unused
+    - cleanup
+  aliases:
+    - show dangling images
+    - list untagged images
+    - find orphan images
+    - docker dangling images
+    - unused docker images
+  examples:
+    - query: "show all dangling docker images"
+    - query: "find untagged images taking up space"
+    - query: "list orphaned docker images"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/ls/#filter
+  verified_at: "2026-08-01"
+
+- id: docker-pull-image
+  technology: docker
+  category: images
+  name: Pull Image
+  intent: pull_image
+  command: docker pull <image>:<tag>
+  description: >
+    Download a Docker image from a registry (default: Docker Hub) to the local machine.
+  tags:
+    - images
+    - pull
+    - download
+    - registry
+  aliases:
+    - pull docker image
+    - download image
+    - docker pull
+    - fetch image from registry
+    - get docker image
+  examples:
+    - query: "pull the latest nginx image"
+    - query: "download ubuntu 22.04 image"
+    - query: "how to pull a docker image"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/pull/
+  verified_at: "2026-08-01"
+
+- id: docker-build-image
+  technology: docker
+  category: images
+  name: Build Image
+  intent: build_image
+  command: docker build -t <image>:<tag> <path>
+  description: >
+    Build a Docker image from a Dockerfile in the specified build context directory.
+  tags:
+    - images
+    - build
+    - dockerfile
+    - create
+  aliases:
+    - build docker image
+    - create image from dockerfile
+    - docker build
+    - compile docker image
+    - build image with tag
+  examples:
+    - query: "build a docker image from the current directory"
+    - query: "create an image tagged myapp:latest"
+    - query: "how to build a docker image from a Dockerfile"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/build/
+  verified_at: "2026-08-01"
+
+- id: docker-tag-image
+  technology: docker
+  category: images
+  name: Tag Image
+  intent: tag_image
+  command: docker tag <source_image>:<tag> <target_image>:<tag>
+  description: >
+    Create a new tag for an existing Docker image, typically used before pushing to a registry.
+  tags:
+    - images
+    - tag
+    - rename
+    - label
+  aliases:
+    - tag a docker image
+    - rename docker image
+    - docker tag
+    - retag image
+    - add tag to image
+  examples:
+    - query: "tag my image for pushing to a private registry"
+    - query: "rename a docker image"
+    - query: "how to tag a docker image"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/tag/
+  verified_at: "2026-08-01"
+
+- id: docker-push-image
+  technology: docker
+  category: images
+  name: Push Image
+  intent: push_image
+  command: docker push <image>:<tag>
+  description: >
+    Upload a local Docker image to a container registry such as Docker Hub or a private registry.
+  tags:
+    - images
+    - push
+    - upload
+    - registry
+    - publish
+  aliases:
+    - push docker image
+    - upload image to registry
+    - docker push
+    - publish image
+    - share docker image
+  examples:
+    - query: "push my image to Docker Hub"
+    - query: "upload a docker image to a private registry"
+    - query: "how to push a docker image"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/push/
+  verified_at: "2026-08-01"
+
+- id: docker-remove-image
+  technology: docker
+  category: images
+  name: Remove Image
+  intent: remove_image
+  command: docker rmi <image>
+  description: >
+    Remove one or more local Docker images. The image must not be referenced by any existing container.
+  tags:
+    - images
+    - remove
+    - delete
+    - cleanup
+  aliases:
+    - remove docker image
+    - delete image
+    - docker rmi
+    - clean up images
+    - destroy image
+  examples:
+    - query: "remove an unused docker image"
+    - query: "delete a local docker image"
+    - query: "how to remove a docker image"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/rm/
+  verified_at: "2026-08-01"
+
+- id: docker-inspect-image
+  technology: docker
+  category: images
+  name: Inspect Image
+  intent: inspect_image
+  command: docker inspect <image>
+  description: >
+    Display detailed low-level information about a Docker image in JSON format including layers,
+    configuration, environment variables, and entrypoint.
+  tags:
+    - images
+    - inspect
+    - details
+    - metadata
+  aliases:
+    - inspect docker image
+    - show image details
+    - image metadata
+    - docker inspect image
+    - image configuration
+  examples:
+    - query: "inspect the nginx image"
+    - query: "show details of a docker image"
+    - query: "what layers does this image have"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/inspect/
+  verified_at: "2026-08-01"
+
+- id: docker-image-history
+  technology: docker
+  category: images
+  name: View Image History
+  intent: image_history
+  command: docker history <image>
+  description: >
+    Show the history of an image including each layer, the command that created it, and its size.
+  tags:
+    - images
+    - history
+    - layers
+    - dockerfile
+  aliases:
+    - show image history
+    - view image layers
+    - docker history
+    - image build history
+    - inspect image layers
+  examples:
+    - query: "show the layer history of an image"
+    - query: "view how an image was built"
+    - query: "what commands created this docker image"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/history/
+  verified_at: "2026-08-01"
+
+- id: docker-save-image
+  technology: docker
+  category: images
+  name: Save Image to Tar
+  intent: save_image
+  command: docker save -o <file>.tar <image>:<tag>
+  description: >
+    Save one or more Docker images to a tar archive file for offline transfer or backup.
+  tags:
+    - images
+    - save
+    - export
+    - tar
+    - backup
+    - archive
+  aliases:
+    - save docker image
+    - export image to tar
+    - docker save
+    - backup docker image
+    - archive image
+    - image to file
+  examples:
+    - query: "save a docker image to a tar file"
+    - query: "export an image for offline transfer"
+    - query: "backup a docker image to disk"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/save/
+  verified_at: "2026-08-01"
+
+- id: docker-load-image
+  technology: docker
+  category: images
+  name: Load Image from Tar
+  intent: load_image
+  command: docker load -i <file>.tar
+  description: >
+    Load a Docker image from a tar archive that was previously created with docker save.
+  tags:
+    - images
+    - load
+    - import
+    - tar
+    - restore
+  aliases:
+    - load docker image from tar
+    - import image from file
+    - docker load
+    - restore image from backup
+    - import tar image
+  examples:
+    - query: "load a docker image from a tar file"
+    - query: "import an image from an archive"
+    - query: "restore a backed up docker image"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/load/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# Networks - create, ls, inspect, connect, disconnect, rm
+# =============================================================================
+
+- id: docker-list-networks
+  technology: docker
+  category: networks
+  name: List Networks
+  intent: list_networks
+  command: docker network ls
+  description: >
+    List all Docker networks including their IDs, names, drivers, and scope.
+  tags:
+    - networks
+    - list
+  aliases:
+    - list docker networks
+    - show networks
+    - docker network ls
+    - available networks
+    - what networks exist
+  examples:
+    - query: "list all docker networks"
+    - query: "show available networks"
+    - query: "what docker networks are configured"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-create-network
+  technology: docker
+  category: networks
+  name: Create Network
+  intent: create_network
+  command: docker network create <network>
+  description: >
+    Create a new Docker network with the default bridge driver for container-to-container communication.
+  tags:
+    - networks
+    - create
+    - bridge
+  aliases:
+    - create docker network
+    - new network
+    - docker network create
+    - add network
+    - make network
+  examples:
+    - query: "create a new docker network"
+    - query: "set up a bridge network for my containers"
+    - query: "how to create a docker network"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/create/
+  verified_at: "2026-08-01"
+
+- id: docker-inspect-network
+  technology: docker
+  category: networks
+  name: Inspect Network
+  intent: inspect_network
+  command: docker network inspect <network>
+  description: >
+    Display detailed information about a Docker network including connected containers, subnet,
+    gateway, and driver configuration.
+  tags:
+    - networks
+    - inspect
+    - details
+    - subnet
+  aliases:
+    - inspect docker network
+    - show network details
+    - network configuration
+    - docker network inspect
+    - network info
+  examples:
+    - query: "inspect the bridge network"
+    - query: "show details of a docker network"
+    - query: "what containers are connected to this network"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/inspect/
+  verified_at: "2026-08-01"
+
+- id: docker-connect-network
+  technology: docker
+  category: networks
+  name: Connect Container to Network
+  intent: connect_network
+  command: docker network connect <network> <container>
+  description: >
+    Connect a running container to an existing Docker network, enabling communication with other
+    containers on that network.
+  tags:
+    - networks
+    - connect
+    - attach
+    - container
+  aliases:
+    - connect container to network
+    - attach container to network
+    - docker network connect
+    - join network
+    - add container to network
+  examples:
+    - query: "connect my container to a custom network"
+    - query: "attach a running container to a network"
+    - query: "how to join a container to a docker network"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/connect/
+  verified_at: "2026-08-01"
+
+- id: docker-disconnect-network
+  technology: docker
+  category: networks
+  name: Disconnect Container from Network
+  intent: disconnect_network
+  command: docker network disconnect <network> <container>
+  description: >
+    Disconnect a container from a Docker network.
+  tags:
+    - networks
+    - disconnect
+    - detach
+    - container
+  aliases:
+    - disconnect container from network
+    - detach container from network
+    - docker network disconnect
+    - remove container from network
+    - leave network
+  examples:
+    - query: "disconnect a container from a network"
+    - query: "remove my container from the bridge network"
+    - query: "detach container from docker network"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/disconnect/
+  verified_at: "2026-08-01"
+
+- id: docker-remove-network
+  technology: docker
+  category: networks
+  name: Remove Network
+  intent: remove_network
+  command: docker network rm <network>
+  description: >
+    Remove one or more Docker networks. The network must have no connected containers.
+  tags:
+    - networks
+    - remove
+    - delete
+    - cleanup
+  aliases:
+    - remove docker network
+    - delete network
+    - docker network rm
+    - destroy network
+    - clean up network
+  examples:
+    - query: "remove a docker network"
+    - query: "delete an unused network"
+    - query: "how to remove a docker network"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/network/rm/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# Volumes - create, ls, inspect, rm, prune
+# =============================================================================
+
+- id: docker-list-volumes
+  technology: docker
+  category: volumes
+  name: List Volumes
+  intent: list_volumes
+  command: docker volume ls
+  description: >
+    List all Docker volumes including their driver and name.
+  tags:
+    - volumes
+    - list
+    - storage
+  aliases:
+    - list docker volumes
+    - show volumes
+    - docker volume ls
+    - available volumes
+    - what volumes exist
+  examples:
+    - query: "list all docker volumes"
+    - query: "show available volumes"
+    - query: "what docker volumes are configured"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/volume/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-create-volume
+  technology: docker
+  category: volumes
+  name: Create Volume
+  intent: create_volume
+  command: docker volume create <volume>
+  description: >
+    Create a named Docker volume for persistent data storage that survives container lifecycle.
+  tags:
+    - volumes
+    - create
+    - storage
+    - persistent
+  aliases:
+    - create docker volume
+    - new volume
+    - docker volume create
+    - add volume
+    - make persistent volume
+  examples:
+    - query: "create a new docker volume"
+    - query: "set up persistent storage for my container"
+    - query: "how to create a docker volume"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/volume/create/
+  verified_at: "2026-08-01"
+
+- id: docker-inspect-volume
+  technology: docker
+  category: volumes
+  name: Inspect Volume
+  intent: inspect_volume
+  command: docker volume inspect <volume>
+  description: >
+    Display detailed information about a Docker volume including its mount point, driver, and labels.
+  tags:
+    - volumes
+    - inspect
+    - details
+    - mountpoint
+  aliases:
+    - inspect docker volume
+    - show volume details
+    - volume info
+    - docker volume inspect
+    - volume mount point
+  examples:
+    - query: "inspect a docker volume"
+    - query: "where is a docker volume stored on disk"
+    - query: "show details of a volume"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/volume/inspect/
+  verified_at: "2026-08-01"
+
+- id: docker-remove-volume
+  technology: docker
+  category: volumes
+  name: Remove Volume
+  intent: remove_volume
+  command: docker volume rm <volume>
+  description: >
+    Remove one or more Docker volumes. The volume must not be in use by any container.
+  tags:
+    - volumes
+    - remove
+    - delete
+    - cleanup
+  aliases:
+    - remove docker volume
+    - delete volume
+    - docker volume rm
+    - destroy volume
+    - clean up volume
+  examples:
+    - query: "remove an unused docker volume"
+    - query: "delete a docker volume"
+    - query: "how to remove a docker volume"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/volume/rm/
+  verified_at: "2026-08-01"
+
+- id: docker-prune-volumes
+  technology: docker
+  category: volumes
+  name: Prune Unused Volumes
+  intent: prune_volumes
+  command: docker volume prune
+  description: >
+    Remove all unused local volumes that are not referenced by any container. Prompts for confirmation.
+  tags:
+    - volumes
+    - prune
+    - cleanup
+    - unused
+    - disk-space
+  aliases:
+    - prune docker volumes
+    - remove unused volumes
+    - clean up volumes
+    - docker volume prune
+    - free volume disk space
+  examples:
+    - query: "remove all unused docker volumes"
+    - query: "clean up unused volumes to free disk space"
+    - query: "prune dangling docker volumes"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/volume/prune/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# System - info, df, events, prune
+# =============================================================================
+
+- id: docker-system-info
+  technology: docker
+  category: system
+  name: System Info
+  intent: system_info
+  command: docker system info
+  description: >
+    Display system-wide information about the Docker installation including server version,
+    storage driver, kernel version, total memory, and number of containers and images.
+  tags:
+    - system
+    - info
+    - version
+    - configuration
+  aliases:
+    - docker system info
+    - show docker info
+    - docker installation info
+    - docker version details
+    - docker environment info
+    - system information
+  examples:
+    - query: "show docker system information"
+    - query: "what version of docker am I running"
+    - query: "display docker installation details"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/system/info/
+  verified_at: "2026-08-01"
+
+- id: docker-system-disk-usage
+  technology: docker
+  category: system
+  name: System Disk Usage
+  intent: system_disk_usage
+  command: docker system df
+  description: >
+    Show Docker disk usage breakdown by images, containers, volumes, and build cache.
+  tags:
+    - system
+    - disk
+    - usage
+    - storage
+    - space
+  aliases:
+    - docker disk usage
+    - how much disk space is docker using
+    - docker system df
+    - storage usage
+    - docker space consumption
+  examples:
+    - query: "how much disk space is Docker using"
+    - query: "show docker disk usage"
+    - query: "check docker storage consumption"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/system/df/
+  verified_at: "2026-08-01"
+
+- id: docker-system-events
+  technology: docker
+  category: system
+  name: System Events
+  intent: system_events
+  command: docker system events
+  description: >
+    Stream real-time events from the Docker daemon including container start, stop, die, and image pull events.
+  tags:
+    - system
+    - events
+    - stream
+    - monitoring
+    - real-time
+  aliases:
+    - docker events
+    - stream docker events
+    - monitor docker activity
+    - docker system events
+    - watch docker events
+    - real-time docker events
+  examples:
+    - query: "stream docker events in real time"
+    - query: "monitor docker daemon events"
+    - query: "watch for container start and stop events"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/system/events/
+  verified_at: "2026-08-01"
+
+- id: docker-prune-containers
+  technology: docker
+  category: system
+  name: Prune Stopped Containers
+  intent: prune_containers
+  command: docker container prune
+  description: >
+    Remove all stopped containers. Prompts for confirmation before deleting.
+  tags:
+    - system
+    - prune
+    - containers
+    - cleanup
+    - stopped
+  aliases:
+    - prune stopped containers
+    - remove all stopped containers
+    - clean up dead containers
+    - docker container prune
+    - delete exited containers
+  examples:
+    - query: "remove all stopped containers"
+    - query: "clean up dead docker containers"
+    - query: "prune exited containers"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/container/prune/
+  verified_at: "2026-08-01"
+
+- id: docker-prune-images
+  technology: docker
+  category: system
+  name: Prune Unused Images
+  intent: prune_images
+  command: docker image prune
+  description: >
+    Remove dangling (untagged) images that are not used by any container. Use -a to also remove
+    all images not referenced by any container.
+  tags:
+    - system
+    - prune
+    - images
+    - cleanup
+    - dangling
+  aliases:
+    - prune docker images
+    - remove unused images
+    - clean up dangling images
+    - docker image prune
+    - delete old images
+  examples:
+    - query: "remove all dangling docker images"
+    - query: "clean up unused images"
+    - query: "prune docker images to free space"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/image/prune/
+  verified_at: "2026-08-01"
+
+- id: docker-system-prune
+  technology: docker
+  category: system
+  name: System Prune
+  intent: system_prune
+  command: docker system prune
+  description: >
+    Remove all unused data including stopped containers, dangling images, unused networks,
+    and optionally unused volumes. Prompts for confirmation.
+  tags:
+    - system
+    - prune
+    - cleanup
+    - all
+    - disk-space
+  aliases:
+    - docker system prune
+    - clean up everything
+    - remove all unused docker data
+    - free docker disk space
+    - docker full cleanup
+    - nuclear cleanup
+  examples:
+    - query: "clean up all unused docker resources"
+    - query: "free up disk space used by docker"
+    - query: "remove all stopped containers, dangling images, and unused networks"
+  risk: dangerous
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/system/prune/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# Compose - up, down, logs, restart, build, ps, exec, pull, config
+# =============================================================================
+
+- id: docker-compose-up
+  technology: docker
+  category: compose
+  name: Compose Up
+  intent: compose_up
+  command: docker compose up -d
+  description: >
+    Create and start all services defined in the docker-compose.yml file in detached mode.
+  tags:
+    - compose
+    - up
+    - start
+    - services
+    - detached
+  aliases:
+    - docker compose up
+    - start compose services
+    - bring up compose
+    - launch compose stack
+    - start docker compose
+    - spin up services
+  examples:
+    - query: "start all services with docker compose"
+    - query: "bring up the compose stack in the background"
+    - query: "how to run docker compose up"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/up/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-down
+  technology: docker
+  category: compose
+  name: Compose Down
+  intent: compose_down
+  command: docker compose down
+  description: >
+    Stop and remove all containers, networks, and default volumes created by docker compose up.
+  tags:
+    - compose
+    - down
+    - stop
+    - teardown
+    - cleanup
+  aliases:
+    - docker compose down
+    - stop compose services
+    - tear down compose
+    - shut down compose stack
+    - stop docker compose
+    - destroy compose
+  examples:
+    - query: "stop all docker compose services"
+    - query: "tear down the compose stack"
+    - query: "how to shut down docker compose"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/down/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-logs
+  technology: docker
+  category: compose
+  name: Compose Logs
+  intent: compose_logs
+  command: docker compose logs -f <service>
+  description: >
+    View and follow log output from a specific service or all services in the compose stack.
+  tags:
+    - compose
+    - logs
+    - follow
+    - output
+  aliases:
+    - docker compose logs
+    - view compose service logs
+    - follow compose logs
+    - compose log output
+    - stream compose logs
+  examples:
+    - query: "follow logs for a compose service"
+    - query: "view docker compose logs"
+    - query: "stream output from compose services"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/logs/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-restart
+  technology: docker
+  category: compose
+  name: Compose Restart
+  intent: compose_restart
+  command: docker compose restart <service>
+  description: >
+    Restart one or more services in the compose stack without recreating containers.
+  tags:
+    - compose
+    - restart
+    - service
+  aliases:
+    - docker compose restart
+    - restart compose service
+    - reboot compose service
+    - cycle compose service
+  examples:
+    - query: "restart a specific compose service"
+    - query: "docker compose restart the web service"
+    - query: "reboot my compose service"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/restart/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-build
+  technology: docker
+  category: compose
+  name: Compose Build
+  intent: compose_build
+  command: docker compose build
+  description: >
+    Build or rebuild all service images defined in the docker-compose.yml file.
+  tags:
+    - compose
+    - build
+    - images
+    - rebuild
+  aliases:
+    - docker compose build
+    - build compose images
+    - rebuild compose services
+    - compile compose
+    - build all services
+  examples:
+    - query: "build all docker compose service images"
+    - query: "rebuild docker compose images"
+    - query: "how to build compose services"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/build/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-ps
+  technology: docker
+  category: compose
+  name: Compose List Services
+  intent: compose_ps
+  command: docker compose ps
+  description: >
+    List containers for all services defined in the compose file with their status and ports.
+  tags:
+    - compose
+    - ps
+    - list
+    - services
+    - status
+  aliases:
+    - docker compose ps
+    - list compose services
+    - show compose containers
+    - compose service status
+    - running compose services
+  examples:
+    - query: "list all running compose services"
+    - query: "show the status of compose containers"
+    - query: "what compose services are running"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/ps/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-exec
+  technology: docker
+  category: compose
+  name: Compose Exec
+  intent: compose_exec
+  command: docker compose exec <service> <command>
+  description: >
+    Execute a command inside a running compose service container.
+  tags:
+    - compose
+    - exec
+    - command
+    - shell
+  aliases:
+    - docker compose exec
+    - exec into compose service
+    - run command in compose service
+    - compose shell
+    - enter compose container
+  examples:
+    - query: "open a shell in a compose service"
+    - query: "run a command inside a compose service container"
+    - query: "exec into the web service of my compose stack"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/exec/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-pull
+  technology: docker
+  category: compose
+  name: Compose Pull
+  intent: compose_pull
+  command: docker compose pull
+  description: >
+    Pull the latest images for all services defined in the docker-compose.yml file.
+  tags:
+    - compose
+    - pull
+    - update
+    - images
+  aliases:
+    - docker compose pull
+    - pull compose images
+    - update compose images
+    - fetch latest compose images
+    - download compose service images
+  examples:
+    - query: "pull the latest images for all compose services"
+    - query: "update docker compose images"
+    - query: "download fresh images for compose"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/pull/
+  verified_at: "2026-08-01"
+
+- id: docker-compose-config
+  technology: docker
+  category: compose
+  name: Compose Config Validate
+  intent: compose_config
+  command: docker compose config
+  description: >
+    Validate and display the resolved compose configuration after processing variables,
+    merges, and overrides.
+  tags:
+    - compose
+    - config
+    - validate
+    - verify
+    - yaml
+  aliases:
+    - docker compose config
+    - validate compose file
+    - check compose yaml
+    - verify compose configuration
+    - show resolved compose config
+  examples:
+    - query: "validate my docker-compose.yml file"
+    - query: "show the resolved compose configuration"
+    - query: "check if my compose file is valid"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/compose/config/
+  verified_at: "2026-08-01"
+
+# =============================================================================
+# Buildx - build multi-platform, create builder, ls, use
+# =============================================================================
+
+- id: docker-buildx-build
+  technology: docker
+  category: buildx
+  name: Buildx Multi-Platform Build
+  intent: buildx_build_multiplatform
+  command: docker buildx build --platform linux/amd64,linux/arm64 -t <image>:<tag> --push .
+  description: >
+    Build a Docker image for multiple CPU architectures (e.g., amd64 and arm64) simultaneously
+    using BuildKit and push the results to a registry.
+  tags:
+    - buildx
+    - build
+    - multi-platform
+    - arm
+    - amd64
+    - cross-compile
+  aliases:
+    - build multi-platform image
+    - cross-platform docker build
+    - docker buildx build
+    - build for arm and amd64
+    - multi-arch build
+    - build for multiple architectures
+  examples:
+    - query: "build a docker image for both amd64 and arm64"
+    - query: "create a multi-platform docker image"
+    - query: "how to build for multiple architectures with docker"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/buildx/build/
+  verified_at: "2026-08-01"
+
+- id: docker-buildx-create-builder
+  technology: docker
+  category: buildx
+  name: Create Buildx Builder
+  intent: buildx_create_builder
+  command: docker buildx create --name <builder> --use
+  description: >
+    Create a new buildx builder instance with a custom name and set it as the active builder.
+  tags:
+    - buildx
+    - builder
+    - create
+    - buildkit
+  aliases:
+    - create buildx builder
+    - new docker builder
+    - docker buildx create
+    - set up buildx
+    - configure buildkit builder
+  examples:
+    - query: "create a new buildx builder"
+    - query: "set up a buildx builder for multi-platform builds"
+    - query: "how to create a docker buildx builder"
+  risk: warning
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/buildx/create/
+  verified_at: "2026-08-01"
+
+- id: docker-buildx-list-builders
+  technology: docker
+  category: buildx
+  name: List Buildx Builders
+  intent: buildx_list_builders
+  command: docker buildx ls
+  description: >
+    List all available buildx builder instances and their status.
+  tags:
+    - buildx
+    - list
+    - builders
+  aliases:
+    - list buildx builders
+    - show builders
+    - docker buildx ls
+    - available builders
+    - what builders exist
+  examples:
+    - query: "list all buildx builders"
+    - query: "show available docker builders"
+    - query: "what buildx builders are configured"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/buildx/ls/
+  verified_at: "2026-08-01"
+
+- id: docker-buildx-use
+  technology: docker
+  category: buildx
+  name: Switch Buildx Builder
+  intent: buildx_use_builder
+  command: docker buildx use <builder>
+  description: >
+    Switch to a specific buildx builder instance as the active builder for subsequent builds.
+  tags:
+    - buildx
+    - use
+    - switch
+    - builder
+  aliases:
+    - switch buildx builder
+    - use a specific builder
+    - docker buildx use
+    - change active builder
+    - select builder
+  examples:
+    - query: "switch to a different buildx builder"
+    - query: "use my custom builder for builds"
+    - query: "how to select a buildx builder"
+  risk: safe
+  documentation:
+    url: https://docs.docker.com/reference/cli/docker/buildx/use/
+  verified_at: "2026-08-01"

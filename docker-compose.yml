@@ -1,0 +1,34 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./knowledge:/app/knowledge:ro
+      - model-data:/app/ml/models
+      - index-data:/app/ml/data/processed
+    environment:
+      - ALCHEMYAI_API_HOST=0.0.0.0
+      - ALCHEMYAI_API_PORT=8000
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    environment:
+      - VITE_API_URL=http://api:8000
+
+volumes:
+  model-data:
+  index-data:

@@ -1,0 +1,1509 @@
+# AlchemyCLI AI - Linux Commands
+
+- id: linux-find-files
+  technology: linux
+  category: file_search
+  name: Find files by name
+  intent: find_files
+  command: find <path> -name "<pattern>"
+  description: >
+    Search for files matching a name pattern recursively.
+  tags: [find, search, files, name, pattern]
+  aliases:
+    - find a file
+    - search for file
+    - locate file by name
+  examples:
+    - query: "how do I find a file by name"
+    - query: "search for files matching pattern"
+    - query: "find files named config"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/find.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-find-directories
+  technology: linux
+  category: file_search
+  name: Find directories
+  intent: find_directories
+  command: find <path> -type d -name "<pattern>"
+  description: >
+    Search for directories matching a name pattern.
+  tags: [find, directories, folders, search]
+  aliases:
+    - find directory
+    - search for folder
+    - locate directory
+  examples:
+    - query: "find directories named src"
+    - query: "search for folders"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/find.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-find-large-files
+  technology: linux
+  category: file_search
+  name: Find large files
+  intent: find_large_files
+  command: find <path> -type f -size +<size> -exec ls -lh {} +
+  description: >
+    Find files larger than a specified size.
+  tags: [find, large, files, size, disk]
+  aliases:
+    - find big files
+    - find files over size
+    - large files on disk
+  examples:
+    - query: "find files larger than 100MB"
+    - query: "what files are taking up space"
+    - query: "find large files on disk"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/find.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-find-recent-files
+  technology: linux
+  category: file_search
+  name: Find recently modified files
+  intent: find_recent_files
+  command: find <path> -type f -mtime -<days>
+  description: >
+    Find files modified within the last N days.
+  tags: [find, recent, modified, files, time]
+  aliases:
+    - recently modified files
+    - files changed today
+    - find new files
+  examples:
+    - query: "find files modified in the last 24 hours"
+    - query: "what files changed recently"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/find.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-grep-text
+  technology: linux
+  category: text_search
+  name: Search text in files
+  intent: search_text
+  command: grep -rn "<pattern>" <path>
+  description: >
+    Recursively search for a text pattern in files, showing line numbers.
+  tags: [grep, search, text, pattern, recursive]
+  aliases:
+    - grep for text
+    - search in files
+    - find text in files
+    - search string in files
+  examples:
+    - query: "search for a string in all files"
+    - query: "grep recursively for pattern"
+    - query: "find text in source code"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/grep.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-grep-ignore-case
+  technology: linux
+  category: text_search
+  name: Case-insensitive text search
+  intent: search_text_insensitive
+  command: grep -rni "<pattern>" <path>
+  description: >
+    Search for text ignoring case.
+  tags: [grep, search, case, insensitive]
+  aliases:
+    - case insensitive grep
+    - search ignoring case
+  examples:
+    - query: "search for text ignoring case"
+    - query: "case insensitive search in files"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/grep.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-sed-replace
+  technology: linux
+  category: text_processing
+  name: Find and replace in file
+  intent: find_replace
+  command: sed -i 's/<old>/<new>/g' <file>
+  description: >
+    Find and replace text in a file in-place.
+  tags: [sed, replace, substitute, text, edit]
+  aliases:
+    - replace text in file
+    - sed substitute
+    - find and replace
+  examples:
+    - query: "replace a string in a file"
+    - query: "how do I find and replace in a file"
+    - query: "sed replace text"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/sed.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-awk-print-column
+  technology: linux
+  category: text_processing
+  name: Print specific column
+  intent: print_column
+  command: awk '{print $<N>}' <file>
+  description: >
+    Print a specific column from a file or command output.
+  tags: [awk, column, print, field, text]
+  aliases:
+    - extract column
+    - print field
+    - awk column
+  examples:
+    - query: "print the second column of a file"
+    - query: "extract a specific field from output"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/awk.1p.html
+  verified_at: "2026-08-01"
+
+- id: linux-sort-file
+  technology: linux
+  category: text_processing
+  name: Sort file contents
+  intent: sort_file
+  command: sort <file>
+  description: >
+    Sort lines of a file alphabetically.
+  tags: [sort, order, alphabetical, lines]
+  aliases:
+    - sort lines
+    - sort file
+    - order file contents
+  examples:
+    - query: "sort a file alphabetically"
+    - query: "sort lines in a file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/sort.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-sort-numeric
+  technology: linux
+  category: text_processing
+  name: Sort numerically
+  intent: sort_numeric
+  command: sort -n <file>
+  description: >
+    Sort lines numerically instead of alphabetically.
+  tags: [sort, numeric, number, order]
+  aliases:
+    - numeric sort
+    - sort by number
+  examples:
+    - query: "sort numbers in a file"
+    - query: "numeric sort"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/sort.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-uniq
+  technology: linux
+  category: text_processing
+  name: Remove duplicate lines
+  intent: remove_duplicates
+  command: sort <file> | uniq
+  description: >
+    Remove duplicate adjacent lines. Input must be sorted first.
+  tags: [uniq, unique, duplicates, deduplicate]
+  aliases:
+    - remove duplicates
+    - unique lines
+    - deduplicate lines
+  examples:
+    - query: "remove duplicate lines from a file"
+    - query: "get unique lines"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/uniq.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-uniq-count
+  technology: linux
+  category: text_processing
+  name: Count duplicate lines
+  intent: count_duplicates
+  command: sort <file> | uniq -c | sort -rn
+  description: >
+    Count occurrences of each unique line, sorted by count.
+  tags: [uniq, count, frequency, duplicates]
+  aliases:
+    - count occurrences
+    - frequency count
+    - count duplicate lines
+  examples:
+    - query: "count how many times each line appears"
+    - query: "frequency of lines in a file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/uniq.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-cut-field
+  technology: linux
+  category: text_processing
+  name: Cut fields from text
+  intent: cut_fields
+  command: cut -d'<delimiter>' -f<fields> <file>
+  description: >
+    Extract specific fields from delimited text.
+  tags: [cut, field, delimiter, extract, column]
+  aliases:
+    - extract field
+    - cut column from csv
+    - split by delimiter
+  examples:
+    - query: "extract the second column from a CSV"
+    - query: "cut fields from delimited file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/cut.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-xargs
+  technology: linux
+  category: text_processing
+  name: Build commands from input
+  intent: xargs
+  command: <command> | xargs <action>
+  description: >
+    Build and execute commands from standard input.
+  tags: [xargs, pipe, build, execute, parallel]
+  aliases:
+    - pipe to command
+    - xargs parallel
+    - build command from input
+  examples:
+    - query: "run a command on each line of output"
+    - query: "pipe output to another command using xargs"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/xargs.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-head
+  technology: linux
+  category: text_processing
+  name: Show first lines
+  intent: show_first_lines
+  command: head -n <count> <file>
+  description: >
+    Display the first N lines of a file.
+  tags: [head, first, lines, beginning, top]
+  aliases:
+    - first lines
+    - beginning of file
+    - top of file
+  examples:
+    - query: "show first 10 lines of a file"
+    - query: "display beginning of file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/head.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-tail
+  technology: linux
+  category: text_processing
+  name: Show last lines
+  intent: show_last_lines
+  command: tail -n <count> <file>
+  description: >
+    Display the last N lines of a file.
+  tags: [tail, last, lines, end, bottom]
+  aliases:
+    - last lines
+    - end of file
+    - bottom of file
+  examples:
+    - query: "show last 20 lines of a file"
+    - query: "display end of file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/tail.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-tail-follow
+  technology: linux
+  category: text_processing
+  name: Follow a log file
+  intent: follow_log
+  command: tail -f <file>
+  description: >
+    Follow a file as it grows, showing new lines in real time.
+  tags: [tail, follow, log, realtime, stream, watch]
+  aliases:
+    - follow log
+    - watch log file
+    - stream log
+    - live log
+    - tail follow
+  examples:
+    - query: "follow a log file in real time"
+    - query: "watch logs as they are written"
+    - query: "stream log output"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/tail.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-wc
+  technology: linux
+  category: text_processing
+  name: Count lines, words, characters
+  intent: word_count
+  command: wc -l <file>
+  description: >
+    Count lines, words, and characters in a file. -l for lines only.
+  tags: [wc, count, lines, words, characters]
+  aliases:
+    - count lines
+    - count words
+    - line count
+    - word count
+  examples:
+    - query: "how many lines in a file"
+    - query: "count lines in a file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/wc.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-tee
+  technology: linux
+  category: text_processing
+  name: Write to file and stdout
+  intent: tee_output
+  command: <command> | tee <file>
+  description: >
+    Read from stdin and write to both stdout and a file.
+  tags: [tee, output, file, pipe, redirect]
+  aliases:
+    - write to file and screen
+    - tee command
+    - save and display output
+  examples:
+    - query: "save command output to file while displaying it"
+    - query: "write to file and stdout"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/tee.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-df
+  technology: linux
+  category: disk
+  name: Check disk space
+  intent: check_disk_space
+  command: df -h
+  description: >
+    Display disk space usage in human-readable format.
+  tags: [df, disk, space, usage, filesystem, storage]
+  aliases:
+    - disk space
+    - check disk usage
+    - free disk space
+    - storage usage
+    - disk full
+  examples:
+    - query: "check how much disk space is available"
+    - query: "show disk usage"
+    - query: "is my disk full"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/df.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-du
+  technology: linux
+  category: disk
+  name: Directory size
+  intent: directory_size
+  command: du -sh <path>
+  description: >
+    Show the total size of a directory in human-readable format.
+  tags: [du, directory, size, folder, space]
+  aliases:
+    - directory size
+    - folder size
+    - how big is directory
+  examples:
+    - query: "check the size of a directory"
+    - query: "how big is this folder"
+    - query: "show directory size"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/du.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-du-top-dirs
+  technology: linux
+  category: disk
+  name: Largest directories
+  intent: largest_directories
+  command: du -h --max-depth=1 <path> | sort -hr | head -20
+  description: >
+    Find the largest subdirectories sorted by size.
+  tags: [du, largest, directories, size, sort]
+  aliases:
+    - biggest directories
+    - largest folders
+    - what is using disk space
+  examples:
+    - query: "find the biggest directories"
+    - query: "what is taking up disk space"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/du.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-free
+  technology: linux
+  category: memory
+  name: Check memory usage
+  intent: check_memory
+  command: free -h
+  description: >
+    Display memory usage including RAM and swap in human-readable format.
+  tags: [free, memory, ram, swap, usage]
+  aliases:
+    - memory usage
+    - check RAM
+    - how much memory
+    - available memory
+    - ram usage
+  examples:
+    - query: "check how much memory is available"
+    - query: "show RAM usage"
+    - query: "how much memory is being used"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/free.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ps-aux
+  technology: linux
+  category: processes
+  name: List all processes
+  intent: list_processes
+  command: ps aux
+  description: >
+    List all running processes with CPU and memory usage.
+  tags: [ps, process, list, running, cpu, memory]
+  aliases:
+    - list processes
+    - show running processes
+    - all processes
+    - process list
+  examples:
+    - query: "show all running processes"
+    - query: "list processes"
+    - query: "what processes are running"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/ps.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ps-top-memory
+  technology: linux
+  category: processes
+  name: Processes using most memory
+  intent: top_memory_processes
+  command: ps aux --sort=-%mem | head
+  description: >
+    Show processes sorted by memory usage, highest first.
+  tags: [ps, process, memory, sort, top, ram]
+  aliases:
+    - top memory processes
+    - processes using most memory
+    - memory hogs
+    - what is using memory
+  examples:
+    - query: "what processes are using the most memory"
+    - query: "find memory-hungry processes"
+    - query: "which process is eating all the memory"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/ps.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ps-top-cpu
+  technology: linux
+  category: processes
+  name: Processes using most CPU
+  intent: top_cpu_processes
+  command: ps aux --sort=-%cpu | head
+  description: >
+    Show processes sorted by CPU usage, highest first.
+  tags: [ps, process, cpu, sort, top]
+  aliases:
+    - top CPU processes
+    - processes using most CPU
+    - CPU hogs
+    - what is using CPU
+  examples:
+    - query: "what processes are using the most CPU"
+    - query: "find CPU-intensive processes"
+    - query: "which process is using all the CPU"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/ps.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-top
+  technology: linux
+  category: processes
+  name: Interactive process viewer
+  intent: interactive_processes
+  command: top
+  description: >
+    Interactive real-time process viewer showing CPU, memory, and more.
+  tags: [top, process, monitor, realtime, cpu, memory]
+  aliases:
+    - process monitor
+    - system monitor
+    - real-time processes
+  examples:
+    - query: "monitor processes in real time"
+    - query: "interactive process viewer"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/top.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-lsof-port
+  technology: linux
+  category: network
+  name: Find process using a port
+  intent: find_process_on_port
+  command: lsof -i :<port>
+  description: >
+    Find which process is listening on or using a specific port.
+  tags: [lsof, port, process, listen, network, socket]
+  aliases:
+    - what is using port
+    - process on port
+    - find port usage
+    - who is listening on port
+    - port in use
+  examples:
+    - query: "what process is using port 8080"
+    - query: "find which process is listening on port 3000"
+    - query: "port 80 is in use, what is using it"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man8/lsof.8.html
+  verified_at: "2026-08-01"
+
+- id: linux-ss-listening
+  technology: linux
+  category: network
+  name: Show listening ports
+  intent: show_listening_ports
+  command: ss -tlnp
+  description: >
+    Show all TCP ports currently listening with process info.
+  tags: [ss, ports, listening, tcp, network, socket]
+  aliases:
+    - listening ports
+    - open ports
+    - show ports
+    - what ports are open
+  examples:
+    - query: "show all listening ports"
+    - query: "what ports are open"
+    - query: "list open network ports"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man8/ss.8.html
+  verified_at: "2026-08-01"
+
+- id: linux-netstat-connections
+  technology: linux
+  category: network
+  name: Show network connections
+  intent: show_connections
+  command: netstat -tunap
+  description: >
+    Display all active network connections with process IDs.
+  tags: [netstat, connections, network, tcp, udp]
+  aliases:
+    - network connections
+    - active connections
+    - show connections
+  examples:
+    - query: "show active network connections"
+    - query: "list all TCP connections"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man8/netstat.8.html
+  verified_at: "2026-08-01"
+
+- id: linux-kill-process
+  technology: linux
+  category: processes
+  name: Kill a process
+  intent: kill_process
+  command: kill <pid>
+  description: >
+    Send a termination signal to a process by PID.
+  tags: [kill, process, terminate, signal, stop]
+  aliases:
+    - kill process
+    - stop process
+    - terminate process
+  examples:
+    - query: "kill a process"
+    - query: "stop a running process"
+    - query: "terminate process by PID"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/kill.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-kill-force
+  technology: linux
+  category: processes
+  name: Force kill a process
+  intent: force_kill_process
+  command: kill -9 <pid>
+  description: >
+    Send SIGKILL to forcefully terminate an unresponsive process.
+  tags: [kill, force, sigkill, process, terminate]
+  aliases:
+    - force kill process
+    - kill -9
+    - sigkill
+  examples:
+    - query: "force kill a process"
+    - query: "kill an unresponsive process"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/kill.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-kill-by-name
+  technology: linux
+  category: processes
+  name: Kill process by name
+  intent: kill_by_name
+  command: pkill <name>
+  description: >
+    Kill processes matching a name pattern.
+  tags: [pkill, kill, process, name]
+  aliases:
+    - kill by name
+    - pkill process
+  examples:
+    - query: "kill all processes named nginx"
+    - query: "kill process by name"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/pkill.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-env-vars
+  technology: linux
+  category: environment
+  name: Show environment variables
+  intent: show_env_vars
+  command: env
+  description: >
+    Display all environment variables.
+  tags: [env, environment, variables, printenv]
+  aliases:
+    - environment variables
+    - show env
+    - print env
+    - list env vars
+  examples:
+    - query: "show all environment variables"
+    - query: "list env vars"
+    - query: "print environment"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/env.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-export-var
+  technology: linux
+  category: environment
+  name: Set environment variable
+  intent: set_env_var
+  command: export <VAR>=<value>
+  description: >
+    Set an environment variable for the current shell session.
+  tags: [export, environment, variable, set]
+  aliases:
+    - set env var
+    - export variable
+    - set environment variable
+  examples:
+    - query: "set an environment variable"
+    - query: "export a variable"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/export.1p.html
+  verified_at: "2026-08-01"
+
+- id: linux-chmod
+  technology: linux
+  category: permissions
+  name: Change file permissions
+  intent: change_permissions
+  command: chmod <mode> <file>
+  description: >
+    Change file or directory permissions using numeric or symbolic mode.
+  tags: [chmod, permissions, access, mode, executable]
+  aliases:
+    - change permissions
+    - make executable
+    - set permissions
+    - file permissions
+  examples:
+    - query: "make a file executable"
+    - query: "change file permissions"
+    - query: "chmod a script"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/chmod.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-chown
+  technology: linux
+  category: permissions
+  name: Change file ownership
+  intent: change_ownership
+  command: chown <user>:<group> <file>
+  description: >
+    Change the owner and group of a file or directory.
+  tags: [chown, ownership, owner, group, permissions]
+  aliases:
+    - change owner
+    - change file ownership
+    - set file owner
+  examples:
+    - query: "change the owner of a file"
+    - query: "set file ownership"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/chown.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-status
+  technology: linux
+  category: services
+  name: Check service status
+  intent: service_status
+  command: systemctl status <service>
+  description: >
+    Show the current status of a systemd service.
+  tags: [systemctl, service, status, systemd, running]
+  aliases:
+    - service status
+    - check if service is running
+    - systemctl status
+    - is service running
+  examples:
+    - query: "check if nginx is running"
+    - query: "service status"
+    - query: "is my service running"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-start
+  technology: linux
+  category: services
+  name: Start a service
+  intent: start_service
+  command: systemctl start <service>
+  description: >
+    Start a systemd service.
+  tags: [systemctl, service, start, systemd]
+  aliases:
+    - start service
+    - systemctl start
+    - launch service
+  examples:
+    - query: "start a service"
+    - query: "start nginx"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-stop
+  technology: linux
+  category: services
+  name: Stop a service
+  intent: stop_service
+  command: systemctl stop <service>
+  description: >
+    Stop a running systemd service.
+  tags: [systemctl, service, stop, systemd]
+  aliases:
+    - stop service
+    - systemctl stop
+    - halt service
+  examples:
+    - query: "stop a service"
+    - query: "stop nginx"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-restart
+  technology: linux
+  category: services
+  name: Restart a service
+  intent: restart_service
+  command: systemctl restart <service>
+  description: >
+    Restart a systemd service (stop then start).
+  tags: [systemctl, service, restart, systemd]
+  aliases:
+    - restart service
+    - systemctl restart
+    - bounce service
+  examples:
+    - query: "restart a service"
+    - query: "restart nginx"
+    - query: "bounce the service"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-enable
+  technology: linux
+  category: services
+  name: Enable service on boot
+  intent: enable_service
+  command: systemctl enable <service>
+  description: >
+    Enable a service to start automatically on boot.
+  tags: [systemctl, service, enable, boot, startup]
+  aliases:
+    - enable service
+    - start on boot
+    - auto start service
+  examples:
+    - query: "enable a service to start on boot"
+    - query: "make service start automatically"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-systemctl-list
+  technology: linux
+  category: services
+  name: List running services
+  intent: list_services
+  command: systemctl list-units --type=service --state=running
+  description: >
+    List all currently running systemd services.
+  tags: [systemctl, service, list, running]
+  aliases:
+    - list services
+    - running services
+    - show services
+  examples:
+    - query: "list all running services"
+    - query: "show active services"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/systemctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-journalctl
+  technology: linux
+  category: services
+  name: View service logs
+  intent: service_logs
+  command: journalctl -u <service> -f
+  description: >
+    View and follow systemd service logs.
+  tags: [journalctl, logs, service, systemd, journal]
+  aliases:
+    - service logs
+    - journalctl follow
+    - systemd logs
+    - view journal
+  examples:
+    - query: "view logs for a service"
+    - query: "follow service logs"
+    - query: "journalctl for nginx"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/journalctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-journalctl-since
+  technology: linux
+  category: services
+  name: View logs since time
+  intent: logs_since
+  command: journalctl --since "<time>"
+  description: >
+    View systemd logs since a specific time.
+  tags: [journalctl, logs, time, since, filter]
+  aliases:
+    - logs since
+    - recent logs
+    - logs from time
+  examples:
+    - query: "show logs from the last hour"
+    - query: "view logs since yesterday"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/journalctl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-curl-get
+  technology: linux
+  category: network
+  name: HTTP GET request
+  intent: http_get
+  command: curl -s <url>
+  description: >
+    Make an HTTP GET request and display the response.
+  tags: [curl, http, get, request, api, web]
+  aliases:
+    - curl get
+    - http request
+    - fetch url
+    - download url
+  examples:
+    - query: "make an HTTP GET request"
+    - query: "curl a URL"
+    - query: "fetch data from API"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/curl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-curl-post
+  technology: linux
+  category: network
+  name: HTTP POST request
+  intent: http_post
+  command: 'curl -X POST -H "Content-Type: application/json" -d ''<json>'' <url>'
+  description: >
+    Make an HTTP POST request with a JSON body.
+  tags: [curl, http, post, request, api, json]
+  aliases:
+    - curl post
+    - post request
+    - send json
+    - http post
+  examples:
+    - query: "make a POST request with JSON body"
+    - query: "send data to an API"
+    - query: "curl POST with JSON"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/curl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-curl-headers
+  technology: linux
+  category: network
+  name: Show HTTP response headers
+  intent: http_headers
+  command: curl -I <url>
+  description: >
+    Fetch only the HTTP response headers.
+  tags: [curl, http, headers, head, response]
+  aliases:
+    - response headers
+    - curl headers
+    - http head
+  examples:
+    - query: "show HTTP response headers"
+    - query: "check HTTP headers"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/curl.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-wget-download
+  technology: linux
+  category: network
+  name: Download a file
+  intent: download_file
+  command: wget <url>
+  description: >
+    Download a file from a URL.
+  tags: [wget, download, file, http, fetch]
+  aliases:
+    - download file
+    - wget file
+    - fetch file
+  examples:
+    - query: "download a file from a URL"
+    - query: "wget a file"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/wget.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-tar-create
+  technology: linux
+  category: archive
+  name: Create tar archive
+  intent: create_archive
+  command: tar -czf <archive>.tar.gz <path>
+  description: >
+    Create a gzip-compressed tar archive.
+  tags: [tar, archive, compress, gzip, backup]
+  aliases:
+    - create tar
+    - compress files
+    - make archive
+    - tar gzip
+  examples:
+    - query: "create a tar.gz archive"
+    - query: "compress a directory"
+    - query: "tar and gzip files"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/tar.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-tar-extract
+  technology: linux
+  category: archive
+  name: Extract tar archive
+  intent: extract_archive
+  command: tar -xzf <archive>.tar.gz
+  description: >
+    Extract a gzip-compressed tar archive.
+  tags: [tar, extract, decompress, untar, archive]
+  aliases:
+    - extract tar
+    - untar
+    - decompress archive
+    - extract tar.gz
+  examples:
+    - query: "extract a tar.gz file"
+    - query: "untar an archive"
+    - query: "decompress tar gzip"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/tar.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-zip
+  technology: linux
+  category: archive
+  name: Create zip archive
+  intent: create_zip
+  command: zip -r <archive>.zip <path>
+  description: >
+    Create a zip archive recursively.
+  tags: [zip, archive, compress, recursive]
+  aliases:
+    - create zip
+    - zip files
+    - compress to zip
+  examples:
+    - query: "create a zip file"
+    - query: "zip a directory"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/zip.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-unzip
+  technology: linux
+  category: archive
+  name: Extract zip archive
+  intent: extract_zip
+  command: unzip <archive>.zip
+  description: >
+    Extract a zip archive.
+  tags: [unzip, extract, decompress, archive]
+  aliases:
+    - extract zip
+    - unzip file
+    - decompress zip
+  examples:
+    - query: "extract a zip file"
+    - query: "unzip an archive"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/unzip.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ssh-connect
+  technology: linux
+  category: remote
+  name: SSH to remote server
+  intent: ssh_connect
+  command: ssh <user>@<host>
+  description: >
+    Connect to a remote server via SSH.
+  tags: [ssh, remote, connect, server, login]
+  aliases:
+    - ssh to server
+    - connect to server
+    - remote login
+    - ssh login
+  examples:
+    - query: "connect to a remote server via SSH"
+    - query: "SSH into a server"
+    - query: "remote login to server"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/ssh.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ssh-key
+  technology: linux
+  category: remote
+  name: SSH with key file
+  intent: ssh_key_connect
+  command: ssh -i <key_file> <user>@<host>
+  description: >
+    Connect to a remote server using a specific SSH key file.
+  tags: [ssh, key, identity, remote, connect]
+  aliases:
+    - ssh with key
+    - ssh identity file
+    - connect with ssh key
+  examples:
+    - query: "SSH using a specific key file"
+    - query: "connect with SSH key"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/ssh.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-scp-upload
+  technology: linux
+  category: remote
+  name: Copy file to remote server
+  intent: scp_upload
+  command: scp <local_file> <user>@<host>:<remote_path>
+  description: >
+    Copy a file from local machine to a remote server via SCP.
+  tags: [scp, copy, upload, remote, transfer, file]
+  aliases:
+    - upload file to server
+    - scp to remote
+    - copy file to server
+  examples:
+    - query: "copy a file to a remote server"
+    - query: "upload file via SCP"
+    - query: "scp file to server"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/scp.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-scp-download
+  technology: linux
+  category: remote
+  name: Copy file from remote server
+  intent: scp_download
+  command: scp <user>@<host>:<remote_file> <local_path>
+  description: >
+    Copy a file from a remote server to the local machine via SCP.
+  tags: [scp, copy, download, remote, transfer, file]
+  aliases:
+    - download file from server
+    - scp from remote
+    - copy file from server
+  examples:
+    - query: "download a file from a remote server"
+    - query: "scp from server to local"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/scp.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-rsync
+  technology: linux
+  category: remote
+  name: Sync files with remote
+  intent: rsync_files
+  command: rsync -avz <source> <user>@<host>:<dest>
+  description: >
+    Sync files between local and remote, transferring only changes.
+  tags: [rsync, sync, transfer, remote, backup, incremental]
+  aliases:
+    - sync files
+    - rsync to server
+    - incremental copy
+    - backup files
+  examples:
+    - query: "sync files to a remote server"
+    - query: "rsync directory to server"
+    - query: "incremental file transfer"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/rsync.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ip-address
+  technology: linux
+  category: network
+  name: Show IP address
+  intent: show_ip_address
+  command: ip addr show
+  description: >
+    Display all network interfaces and their IP addresses.
+  tags: [ip, address, network, interface, ifconfig]
+  aliases:
+    - ip address
+    - show ip
+    - network interfaces
+    - what is my IP
+  examples:
+    - query: "show my IP address"
+    - query: "list network interfaces"
+    - query: "what is my IP"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man8/ip-address.8.html
+  verified_at: "2026-08-01"
+
+- id: linux-dig
+  technology: linux
+  category: network
+  name: DNS lookup
+  intent: dns_lookup
+  command: dig <domain>
+  description: >
+    Perform a DNS lookup for a domain name.
+  tags: [dig, dns, lookup, resolve, domain, nslookup]
+  aliases:
+    - dns lookup
+    - resolve domain
+    - dig domain
+    - nslookup
+  examples:
+    - query: "look up DNS for a domain"
+    - query: "resolve a domain name"
+    - query: "DNS query"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/dig.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-ping
+  technology: linux
+  category: network
+  name: Ping a host
+  intent: ping_host
+  command: ping -c 4 <host>
+  description: >
+    Send ICMP echo requests to test network connectivity.
+  tags: [ping, network, connectivity, icmp, test]
+  aliases:
+    - ping host
+    - test connectivity
+    - check if host is reachable
+  examples:
+    - query: "ping a server"
+    - query: "test network connectivity"
+    - query: "check if a host is reachable"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man8/ping.8.html
+  verified_at: "2026-08-01"
+
+- id: linux-hostname
+  technology: linux
+  category: system
+  name: Show hostname
+  intent: show_hostname
+  command: hostname
+  description: >
+    Display the system hostname.
+  tags: [hostname, system, name, identity]
+  aliases:
+    - show hostname
+    - system name
+    - what is my hostname
+  examples:
+    - query: "show hostname"
+    - query: "what is the hostname"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/hostname.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-watch
+  technology: linux
+  category: system
+  name: Run command periodically
+  intent: watch_command
+  command: watch -n <seconds> <command>
+  description: >
+    Run a command repeatedly at a fixed interval and display output.
+  tags: [watch, repeat, interval, monitor, periodic]
+  aliases:
+    - watch command
+    - run periodically
+    - monitor command
+    - repeat command
+  examples:
+    - query: "run a command every 2 seconds"
+    - query: "watch a command output"
+    - query: "monitor command repeatedly"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/watch.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-crontab-list
+  technology: linux
+  category: scheduling
+  name: List cron jobs
+  intent: list_cron
+  command: crontab -l
+  description: >
+    List all scheduled cron jobs for the current user.
+  tags: [crontab, cron, schedule, jobs, list]
+  aliases:
+    - list cron jobs
+    - show scheduled tasks
+    - crontab list
+  examples:
+    - query: "list my cron jobs"
+    - query: "show scheduled tasks"
+    - query: "what cron jobs are running"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/crontab.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-crontab-edit
+  technology: linux
+  category: scheduling
+  name: Edit cron jobs
+  intent: edit_cron
+  command: crontab -e
+  description: >
+    Edit the cron job schedule for the current user.
+  tags: [crontab, cron, schedule, edit, add]
+  aliases:
+    - edit crontab
+    - add cron job
+    - schedule a task
+  examples:
+    - query: "add a cron job"
+    - query: "edit my crontab"
+    - query: "schedule a recurring task"
+  risk: warning
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/crontab.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-rm-rf
+  technology: linux
+  category: file_management
+  name: Remove directory recursively
+  intent: remove_directory
+  command: rm -rf <path>
+  description: >
+    Remove a directory and all its contents recursively and forcefully.
+  tags: [rm, remove, delete, directory, recursive, force]
+  aliases:
+    - delete directory
+    - remove folder
+    - rm -rf
+    - force delete
+  examples:
+    - query: "delete a directory and all its contents"
+    - query: "remove a folder recursively"
+    - query: "force delete directory"
+  risk: dangerous
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/rm.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-uptime
+  technology: linux
+  category: system
+  name: Show system uptime
+  intent: system_uptime
+  command: uptime
+  description: >
+    Show how long the system has been running, load averages, and users.
+  tags: [uptime, system, load, running]
+  aliases:
+    - system uptime
+    - how long running
+    - load average
+  examples:
+    - query: "how long has the system been running"
+    - query: "show system uptime"
+    - query: "check load average"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/uptime.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-who
+  technology: linux
+  category: system
+  name: Show logged-in users
+  intent: logged_in_users
+  command: who
+  description: >
+    Show who is currently logged in to the system.
+  tags: [who, users, logged, login, sessions]
+  aliases:
+    - who is logged in
+    - show users
+    - logged in users
+  examples:
+    - query: "who is logged into the server"
+    - query: "show logged in users"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man1/who.1.html
+  verified_at: "2026-08-01"
+
+- id: linux-history
+  technology: linux
+  category: shell
+  name: Show command history
+  intent: command_history
+  command: history
+  description: >
+    Display the command history for the current shell session.
+  tags: [history, commands, previous, shell]
+  aliases:
+    - command history
+    - previous commands
+    - show history
+  examples:
+    - query: "show my command history"
+    - query: "list previous commands"
+  risk: safe
+  documentation:
+    url: https://man7.org/linux/man-pages/man3/history.3.html
+  verified_at: "2026-08-01"

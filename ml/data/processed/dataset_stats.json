@@ -1,0 +1,8 @@
+{
+  "total_commands": 558,
+  "total_examples": 13800,
+  "train_examples": 9699,
+  "val_examples": 2043,
+  "test_examples": 2058,
+  "technologies": 9
+}

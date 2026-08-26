@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+*.whl
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env
+
+# ML models and data
+ml/models/embedding/*/
+ml/models/classifier/*/
+ml/data/processed/*.faiss
+ml/data/processed/*.npy
+ml/data/processed/*.pkl
+*.onnx
+*.pt
+*.bin
+*.safetensors
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node
+node_modules/
+web/dist/
+web/.env.local
+
+# Docker
+docker-compose.override.yml
+
+# Reports
+ml/reports/*.png
+ml/reports/*.html
+
+# User config
+.config/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# pytest
+.pytest_cache/
+
+# mypy
+.mypy_cache/
+
+# ruff
+.ruff_cache/
+
+# uv
+.python-version
+
+# Experiments (keep structure, ignore large files)
+ml/experiments/*.json
+!ml/experiments/.gitkeep
+
+# Feedback
+ml/data/feedback/*.jsonl
+
+# Sentence transformers cache
+.cache/
+
+# GitHub instructions
+.github/instructions/wmt-copilot.instructions.md

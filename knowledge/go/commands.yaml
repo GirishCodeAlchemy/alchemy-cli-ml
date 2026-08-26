@@ -1,0 +1,1167 @@
+# AlchemyCLI AI - Go Commands
+
+- id: go-check-version
+  technology: go
+  category: runtime
+  name: Check Go Version
+  intent: check_version
+  command: go version
+  description: >
+    Displays the installed Go version, including the version number, operating system,
+    and architecture. Useful for verifying your Go installation and ensuring compatibility.
+  tags:
+    - version
+    - installation
+    - info
+  aliases:
+    - check go version
+    - what version of go is installed
+    - show go version
+    - go version number
+    - which go version
+  examples:
+    - query: "What version of Go do I have?"
+    - query: "Check my Go installation version"
+    - query: "Show the installed Go version"
+  risk: safe
+  documentation:
+    url: https://go.dev/ref/mod#go-version
+  verified_at: "2026-08-01"
+
+- id: go-run-file
+  technology: go
+  category: runtime
+  name: Run Go File
+  intent: run_file
+  command: go run <file>
+  description: >
+    Compiles and runs a Go source file directly without producing a binary artifact.
+    Ideal for quick testing and development iteration. Can accept multiple files or
+    a package path.
+  tags:
+    - run
+    - execute
+    - development
+  aliases:
+    - run a go file
+    - execute go program
+    - run go script
+    - go run main.go
+    - quickly run go code
+  examples:
+    - query: "How do I run a Go file?"
+    - query: "Run main.go directly"
+    - query: "Execute a Go program without building"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Compile_and_run_Go_program
+  verified_at: "2026-08-01"
+
+- id: go-build-basic
+  technology: go
+  category: build
+  name: Build Go Binary
+  intent: build_binary
+  command: go build ./...
+  description: >
+    Compiles Go packages and their dependencies into a binary executable.
+    When run in a module root, it builds the package in the current directory.
+    The ./... pattern builds all packages in the module.
+  tags:
+    - build
+    - compile
+    - binary
+  aliases:
+    - build go project
+    - compile go code
+    - create go binary
+    - go build all packages
+    - build go application
+  examples:
+    - query: "How do I build a Go project?"
+    - query: "Compile my Go application"
+    - query: "Build all packages in my Go module"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Compile_packages_and_dependencies
+  verified_at: "2026-08-01"
+
+- id: go-build-output
+  technology: go
+  category: build
+  name: Build with Output Path
+  intent: build_binary_output
+  command: go build -o <output> .
+  description: >
+    Compiles a Go package and writes the resulting binary to the specified output
+    path. The -o flag sets the output file name or directory. Useful for controlling
+    where the built binary is placed.
+  tags:
+    - build
+    - compile
+    - output
+    - binary
+  aliases:
+    - build go binary with custom name
+    - go build output to specific file
+    - compile go with output path
+    - name the go binary
+    - build go to a specific directory
+  examples:
+    - query: "Build a Go binary with a custom output name"
+    - query: "How to specify the output file for go build?"
+    - query: "Compile Go and save binary to a specific path"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Compile_packages_and_dependencies
+  verified_at: "2026-08-01"
+
+- id: go-build-ldflags
+  technology: go
+  category: build
+  name: Build with Linker Flags
+  intent: build_binary_ldflags
+  command: go build -ldflags "-X main.version=<value>" -o <output> .
+  description: >
+    Compiles a Go binary with linker flags to inject values at build time. The -X flag
+    sets the value of a string variable at link time, commonly used for embedding
+    version information, commit hashes, and build timestamps into binaries.
+  tags:
+    - build
+    - ldflags
+    - version
+    - embed
+    - linker
+  aliases:
+    - build go with version info
+    - embed version in go binary
+    - go build with ldflags
+    - inject build variables in go
+    - set version at compile time
+    - go build with linker flags
+  examples:
+    - query: "How do I embed a version string in a Go binary?"
+    - query: "Build Go with ldflags to set version"
+    - query: "Inject commit hash into Go binary at build time"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/link
+  verified_at: "2026-08-01"
+
+- id: go-test-basic
+  technology: go
+  category: test
+  name: Run Tests
+  intent: run_tests
+  command: go test ./...
+  description: >
+    Runs all tests in the current module. The ./... pattern matches all packages
+    in the current module. Tests are functions named TestXxx in files ending with
+    _test.go.
+  tags:
+    - test
+    - testing
+    - unit test
+  aliases:
+    - run go tests
+    - test go project
+    - run all tests
+    - go test all packages
+    - execute go test suite
+  examples:
+    - query: "How do I run all Go tests?"
+    - query: "Run the test suite for my Go project"
+    - query: "Test all packages in my module"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Test_packages
+  verified_at: "2026-08-01"
+
+- id: go-test-verbose
+  technology: go
+  category: test
+  name: Run Tests Verbose
+  intent: run_tests_verbose
+  command: go test -v ./...
+  description: >
+    Runs all tests with verbose output, printing the name and status of each
+    individual test function as it runs. Useful for debugging and seeing which
+    tests pass or fail.
+  tags:
+    - test
+    - verbose
+    - debug
+  aliases:
+    - run go tests with verbose output
+    - go test verbose mode
+    - show detailed test results
+    - see all test names while running
+    - verbose go testing
+  examples:
+    - query: "Run Go tests with detailed output"
+    - query: "How to see individual test results in Go?"
+    - query: "Run verbose tests to see which ones pass"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Test_packages
+  verified_at: "2026-08-01"
+
+- id: go-test-specific
+  technology: go
+  category: test
+  name: Run Specific Test
+  intent: run_specific_test
+  command: go test -run <function> ./...
+  description: >
+    Runs only the test functions whose names match the given regular expression.
+    The -run flag accepts a regex pattern. For example, -run TestAdd will run
+    TestAdd, TestAddition, etc.
+  tags:
+    - test
+    - specific
+    - filter
+    - regex
+  aliases:
+    - run a specific go test
+    - run single test function
+    - filter go tests by name
+    - run one test in go
+    - go test with regex filter
+    - run matching tests
+  examples:
+    - query: "How do I run a single test function in Go?"
+    - query: "Run only TestCalculate in my project"
+    - query: "Filter tests by name pattern"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Test_packages
+  verified_at: "2026-08-01"
+
+- id: go-test-coverage
+  technology: go
+  category: test
+  name: Run Tests with Coverage
+  intent: run_tests_coverage
+  command: go test -cover ./...
+  description: >
+    Runs tests and reports the percentage of code covered by tests for each package.
+    The -cover flag enables coverage analysis and prints a summary showing the
+    percentage of statements covered.
+  tags:
+    - test
+    - coverage
+    - quality
+  aliases:
+    - check test coverage in go
+    - go test with coverage
+    - see code coverage percentage
+    - run coverage analysis
+    - measure test coverage
+  examples:
+    - query: "What is my Go test coverage?"
+    - query: "Run tests and show coverage percentage"
+    - query: "Check how much code is covered by tests"
+  risk: safe
+  documentation:
+    url: https://go.dev/blog/cover
+  verified_at: "2026-08-01"
+
+- id: go-test-coverage-profile
+  technology: go
+  category: test
+  name: Generate Coverage Profile
+  intent: generate_coverage_profile
+  command: go test -coverprofile=coverage.out ./...
+  description: >
+    Runs tests and writes a coverage profile to the specified file. The coverage
+    profile can then be used to generate detailed reports in various formats
+    including HTML. The output file contains per-statement coverage data.
+  tags:
+    - test
+    - coverage
+    - profile
+    - report
+  aliases:
+    - generate go coverage profile
+    - save coverage data to file
+    - create coverage report file
+    - export test coverage
+    - go test coverage output file
+  examples:
+    - query: "Generate a coverage profile for my Go tests"
+    - query: "Save test coverage data to a file"
+    - query: "Create a coverage.out file from Go tests"
+  risk: safe
+  documentation:
+    url: https://go.dev/blog/cover
+  verified_at: "2026-08-01"
+
+- id: go-test-coverage-html
+  technology: go
+  category: test
+  name: View Coverage in Browser
+  intent: view_coverage_html
+  command: go tool cover -html=coverage.out
+  description: >
+    Opens an HTML visualization of the coverage profile in the default web browser.
+    The report highlights covered and uncovered code with color coding, making it
+    easy to identify untested code paths. Requires a coverage profile generated
+    by go test -coverprofile.
+  tags:
+    - test
+    - coverage
+    - html
+    - visualization
+  aliases:
+    - view coverage in browser
+    - open coverage html report
+    - visualize go test coverage
+    - html coverage report
+    - see coverage heatmap
+  examples:
+    - query: "View Go test coverage in the browser"
+    - query: "Generate an HTML coverage report"
+    - query: "Visualize which lines are covered by tests"
+  risk: safe
+  documentation:
+    url: https://go.dev/blog/cover
+  verified_at: "2026-08-01"
+
+- id: go-fmt
+  technology: go
+  category: tools
+  name: Format Go Code
+  intent: format_code
+  command: go fmt ./...
+  description: >
+    Formats Go source code according to the standard Go formatting conventions
+    using gofmt. Applies to all packages in the current module when using ./...
+    pattern. This modifies files in place.
+  tags:
+    - format
+    - style
+    - gofmt
+    - lint
+  aliases:
+    - format go code
+    - run go fmt
+    - auto format go files
+    - apply go style formatting
+    - gofmt all files
+    - fix go code formatting
+  examples:
+    - query: "How do I format Go code?"
+    - query: "Auto-format all Go files in the project"
+    - query: "Apply standard Go formatting"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/gofmt
+  verified_at: "2026-08-01"
+
+- id: go-vet
+  technology: go
+  category: analysis
+  name: Vet Go Code
+  intent: vet_code
+  command: go vet ./...
+  description: >
+    Runs the Go vet tool to examine Go source code and report suspicious constructs
+    that the compiler might not catch. Detects issues like unreachable code, incorrect
+    format strings, and misuse of sync primitives.
+  tags:
+    - vet
+    - static analysis
+    - lint
+    - bugs
+  aliases:
+    - run go vet
+    - check go code for issues
+    - static analysis on go code
+    - find bugs in go code
+    - go code inspection
+    - detect suspicious go code
+  examples:
+    - query: "Run static analysis on my Go code"
+    - query: "Check for common mistakes in Go"
+    - query: "Find potential bugs with go vet"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/vet
+  verified_at: "2026-08-01"
+
+- id: go-mod-init
+  technology: go
+  category: modules
+  name: Initialize Go Module
+  intent: init_module
+  command: go mod init <module>
+  description: >
+    Initializes a new Go module in the current directory by creating a go.mod file.
+    The module path argument typically follows the pattern of a repository URL, such
+    as github.com/user/project. This is the first step when starting a new Go project.
+  tags:
+    - module
+    - init
+    - project
+    - setup
+  aliases:
+    - create new go module
+    - initialize go project
+    - start new go module
+    - go mod init
+    - create go.mod file
+    - set up go module
+  examples:
+    - query: "How do I start a new Go module?"
+    - query: "Initialize a Go module with a module path"
+    - query: "Create a go.mod file for my project"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-mod-init
+  verified_at: "2026-08-01"
+
+- id: go-mod-tidy
+  technology: go
+  category: modules
+  name: Tidy Module Dependencies
+  intent: tidy_modules
+  command: go mod tidy
+  description: >
+    Ensures the go.mod file matches the source code in the module. It adds any
+    missing module requirements necessary to build the current module's packages
+    and removes requirements on modules that don't provide any relevant packages.
+    Also updates go.sum.
+  tags:
+    - module
+    - dependencies
+    - cleanup
+    - tidy
+  aliases:
+    - clean up go dependencies
+    - tidy go modules
+    - remove unused go dependencies
+    - sync go.mod with code
+    - fix go module dependencies
+    - update go.mod and go.sum
+  examples:
+    - query: "Clean up unused dependencies in go.mod"
+    - query: "Sync go.mod with my source code"
+    - query: "Remove unused modules from go.mod"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-mod-tidy
+  verified_at: "2026-08-01"
+
+- id: go-mod-download
+  technology: go
+  category: modules
+  name: Download Module Dependencies
+  intent: download_modules
+  command: go mod download
+  description: >
+    Downloads the modules specified in go.mod into the local module cache.
+    This is useful for pre-fetching dependencies, such as in CI/CD pipelines
+    or Docker builds. Downloaded modules are cached in $GOPATH/pkg/mod/cache.
+  tags:
+    - module
+    - download
+    - dependencies
+    - cache
+  aliases:
+    - download go dependencies
+    - fetch go modules
+    - pre-download go dependencies
+    - cache go modules locally
+    - pull go module dependencies
+  examples:
+    - query: "Download all Go module dependencies"
+    - query: "Pre-fetch Go dependencies for CI"
+    - query: "Cache Go modules locally"
+  risk: safe
+  documentation:
+    url: https://go.dev/ref/mod#go-mod-download
+  verified_at: "2026-08-01"
+
+- id: go-mod-vendor
+  technology: go
+  category: modules
+  name: Vendor Dependencies
+  intent: vendor_modules
+  command: go mod vendor
+  description: >
+    Copies all dependencies into a vendor directory within the module. This allows
+    builds to use the vendored copies instead of downloading from the module cache.
+    Useful for reproducible builds and environments without network access.
+  tags:
+    - module
+    - vendor
+    - dependencies
+    - offline
+  aliases:
+    - vendor go dependencies
+    - copy dependencies to vendor folder
+    - create vendor directory in go
+    - go vendor mode
+    - offline go dependencies
+    - bundle go dependencies
+  examples:
+    - query: "How do I vendor Go dependencies?"
+    - query: "Copy all dependencies into a vendor directory"
+    - query: "Set up vendored dependencies for offline builds"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-mod-vendor
+  verified_at: "2026-08-01"
+
+- id: go-mod-graph
+  technology: go
+  category: modules
+  name: Print Module Dependency Graph
+  intent: module_graph
+  command: go mod graph
+  description: >
+    Prints the module dependency graph in text form. Each line shows a module
+    and one of its requirements, formatted as module@version requirement@version.
+    Useful for understanding and debugging dependency relationships.
+  tags:
+    - module
+    - graph
+    - dependencies
+    - debug
+  aliases:
+    - show go dependency graph
+    - print module dependencies
+    - view go module graph
+    - list dependency tree in go
+    - go dependency visualization
+  examples:
+    - query: "Show the dependency graph for my Go module"
+    - query: "Print all module dependencies as a graph"
+    - query: "Visualize Go dependency relationships"
+  risk: safe
+  documentation:
+    url: https://go.dev/ref/mod#go-mod-graph
+  verified_at: "2026-08-01"
+
+- id: go-get-package
+  technology: go
+  category: modules
+  name: Add Dependency
+  intent: add_dependency
+  command: go get <package>
+  description: >
+    Adds a new dependency to the current module or updates an existing one.
+    Updates go.mod and go.sum with the specified package and its transitive
+    dependencies. Can specify a version with @version suffix, e.g., @v1.2.3
+    or @latest.
+  tags:
+    - module
+    - dependency
+    - install
+    - package
+  aliases:
+    - add go dependency
+    - install go package
+    - go get a package
+    - add a library to go project
+    - import external go package
+    - download and add go dependency
+  examples:
+    - query: "Add a new dependency to my Go project"
+    - query: "Install a package with go get"
+    - query: "How do I add a third-party library in Go?"
+    - query: "Get a specific version of a Go package"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-get
+  verified_at: "2026-08-01"
+
+- id: go-list-packages
+  technology: go
+  category: tools
+  name: List Packages
+  intent: list_packages
+  command: go list ./...
+  description: >
+    Lists all packages in the current module. The ./... pattern matches all
+    packages under the current directory. Each line of output shows the import
+    path of a package.
+  tags:
+    - list
+    - packages
+    - info
+  aliases:
+    - list all go packages
+    - show go packages in project
+    - list packages in module
+    - go list all packages
+    - enumerate go packages
+  examples:
+    - query: "List all packages in my Go module"
+    - query: "Show all Go packages in this project"
+    - query: "What packages does my Go project have?"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-List_packages_or_modules
+  verified_at: "2026-08-01"
+
+- id: go-list-modules
+  technology: go
+  category: modules
+  name: List Module Dependencies
+  intent: list_modules
+  command: go list -m all
+  description: >
+    Lists all modules in the current module's dependency graph, including the
+    main module and all its direct and indirect dependencies. The -m flag causes
+    list to work with modules instead of packages.
+  tags:
+    - list
+    - modules
+    - dependencies
+    - info
+  aliases:
+    - list all go module dependencies
+    - show all dependencies in go
+    - list go modules
+    - view all module requirements
+    - show dependency list
+  examples:
+    - query: "List all module dependencies in my Go project"
+    - query: "Show every module my project depends on"
+    - query: "What modules does my Go project use?"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-List_packages_or_modules
+  verified_at: "2026-08-01"
+
+- id: go-env-show
+  technology: go
+  category: runtime
+  name: Show Go Environment
+  intent: show_environment
+  command: go env
+  description: >
+    Prints all Go environment variables and their current values, including
+    GOPATH, GOROOT, GOOS, GOARCH, and module-related settings. Useful for
+    debugging build and configuration issues.
+  tags:
+    - env
+    - environment
+    - config
+    - info
+  aliases:
+    - show go environment variables
+    - print go env
+    - check go environment
+    - view go configuration
+    - display gopath and goroot
+  examples:
+    - query: "Show all Go environment variables"
+    - query: "What is my GOPATH set to?"
+    - query: "Check the Go environment configuration"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Print_Go_environment_information
+  verified_at: "2026-08-01"
+
+- id: go-env-specific
+  technology: go
+  category: runtime
+  name: Show Specific Go Env Variable
+  intent: show_env_variable
+  command: go env <variable>
+  description: >
+    Prints the value of a specific Go environment variable. Common variables
+    include GOPATH, GOROOT, GOOS, GOARCH, GOMODCACHE, GOBIN, and GOPROXY.
+    More efficient than printing all variables when you need a specific value.
+  tags:
+    - env
+    - environment
+    - variable
+    - info
+  aliases:
+    - get specific go env value
+    - check gopath value
+    - show goroot
+    - print go environment variable
+    - what is my go env variable
+  examples:
+    - query: "What is my GOPATH?"
+    - query: "Show the value of GOROOT"
+    - query: "Check the GOPROXY setting"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Print_Go_environment_information
+  verified_at: "2026-08-01"
+
+- id: go-env-set
+  technology: go
+  category: runtime
+  name: Set Go Environment Variable
+  intent: set_env_variable
+  command: go env -w <variable>=<value>
+  description: >
+    Persistently sets a Go environment variable. The -w flag writes the value
+    to the Go environment configuration file (typically $HOME/.config/go/env).
+    Changes persist across shell sessions unlike shell-level environment variables.
+  tags:
+    - env
+    - environment
+    - config
+    - set
+  aliases:
+    - set go environment variable
+    - configure go env
+    - change go env setting
+    - persist go env variable
+    - write go env value
+    - go env -w
+  examples:
+    - query: "How do I set GOPROXY permanently?"
+    - query: "Persistently set a Go environment variable"
+    - query: "Configure GOBIN to a custom path"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Print_Go_environment_information
+  verified_at: "2026-08-01"
+
+- id: go-install-package
+  technology: go
+  category: build
+  name: Install Go Package
+  intent: install_package
+  command: go install <package>@latest
+  description: >
+    Compiles and installs a Go package or command binary into $GOBIN or
+    $GOPATH/bin. When used with a versioned module path (package@version),
+    it installs the command in module-aware mode without affecting the
+    current module's go.mod.
+  tags:
+    - install
+    - binary
+    - tools
+    - global
+  aliases:
+    - install go tool globally
+    - go install a binary
+    - install go command line tool
+    - add go tool to path
+    - install go package binary
+    - install go cli tool
+  examples:
+    - query: "Install a Go CLI tool globally"
+    - query: "How to install a Go binary with go install?"
+    - query: "Install the latest version of a Go tool"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Compile_and_install_packages_and_dependencies
+  verified_at: "2026-08-01"
+
+- id: go-doc
+  technology: go
+  category: tools
+  name: View Package Documentation
+  intent: view_documentation
+  command: go doc <package>
+  description: >
+    Displays documentation for a Go package, function, type, or method.
+    Can show documentation for the current package, a specific symbol,
+    or an imported package. Renders godoc comments from source code.
+  tags:
+    - doc
+    - documentation
+    - help
+    - reference
+  aliases:
+    - view go package docs
+    - show go documentation
+    - read go doc comments
+    - go doc for a function
+    - get go package help
+    - look up go documentation
+  examples:
+    - query: "View documentation for a Go package"
+    - query: "Show docs for fmt.Println"
+    - query: "Read the documentation for a Go type"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Show_documentation_for_package_or_symbol
+  verified_at: "2026-08-01"
+
+- id: go-tool-pprof
+  technology: go
+  category: analysis
+  name: Profile with pprof
+  intent: profile_pprof
+  command: go tool pprof <profile>
+  description: >
+    Opens the pprof interactive tool to analyze performance profiles. Accepts
+    CPU profiles, memory profiles, and other runtime profiles in pprof format.
+    Supports commands like top, list, web, and flame for visualizing hotspots
+    and resource usage.
+  tags:
+    - profiling
+    - performance
+    - pprof
+    - analysis
+    - debug
+  aliases:
+    - profile go application
+    - analyze go performance
+    - go pprof analysis
+    - cpu profiling in go
+    - memory profiling go
+    - open pprof profile
+  examples:
+    - query: "How do I profile a Go application?"
+    - query: "Analyze a CPU profile with pprof"
+    - query: "Open a memory profile in pprof"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/pprof
+  verified_at: "2026-08-01"
+
+- id: go-generate
+  technology: go
+  category: tools
+  name: Run Go Generate
+  intent: run_generate
+  command: go generate ./...
+  description: >
+    Scans Go source files for //go:generate directives and runs the specified
+    commands. Commonly used to generate code from templates, protocol buffers,
+    mock implementations, string methods for enums, and other automated code
+    generation tasks.
+  tags:
+    - generate
+    - codegen
+    - automation
+    - directives
+  aliases:
+    - run go generate
+    - execute go generate directives
+    - generate code in go
+    - run code generation
+    - go generate all packages
+    - trigger go generate commands
+  examples:
+    - query: "Run go generate for all packages"
+    - query: "How do I use go generate?"
+    - query: "Execute code generation directives"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Generate_Go_files_by_processing_source
+  verified_at: "2026-08-01"
+
+- id: go-cross-compile
+  technology: go
+  category: build
+  name: Cross Compile Binary
+  intent: cross_compile
+  command: GOOS=<os> GOARCH=<arch> go build -o <output> .
+  description: >
+    Cross-compiles a Go binary for a different operating system and/or
+    architecture. Common GOOS values include linux, darwin, windows. Common
+    GOARCH values include amd64, arm64, arm. Go's built-in cross-compilation
+    requires no external toolchains for pure Go code.
+  tags:
+    - build
+    - cross-compile
+    - platform
+    - architecture
+  aliases:
+    - cross compile go binary
+    - build go for linux
+    - compile go for different os
+    - build go for arm
+    - go cross platform build
+    - build go for windows from mac
+    - compile for different architecture
+  examples:
+    - query: "Cross-compile a Go binary for Linux"
+    - query: "Build Go binary for Windows from macOS"
+    - query: "Compile Go for ARM64 architecture"
+    - query: "How do I build for a different platform?"
+  risk: safe
+  documentation:
+    url: https://go.dev/doc/install/source#environment
+  verified_at: "2026-08-01"
+
+- id: go-build-tags
+  technology: go
+  category: build
+  name: Build with Tags
+  intent: build_with_tags
+  command: go build -tags <tag> .
+  description: >
+    Builds Go source code with the specified build tags (build constraints).
+    Build tags control which files are included in a build. Multiple tags can
+    be specified as a comma-separated list. Commonly used for conditional
+    compilation, integration tests, and feature flags.
+  tags:
+    - build
+    - tags
+    - conditional
+    - constraints
+  aliases:
+    - build go with tags
+    - conditional compilation in go
+    - go build constraints
+    - use build tags in go
+    - compile with specific tags
+    - go build -tags flag
+  examples:
+    - query: "Build Go with specific build tags"
+    - query: "How do I use build tags in Go?"
+    - query: "Compile Go with integration tag"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Build_constraints
+  verified_at: "2026-08-01"
+
+- id: go-test-bench
+  technology: go
+  category: test
+  name: Run Benchmarks
+  intent: run_benchmarks
+  command: go test -bench=. -benchmem ./...
+  description: >
+    Runs benchmark functions in test files. The -bench flag accepts a regex
+    to match benchmark names; -bench=. runs all benchmarks. The -benchmem flag
+    prints memory allocation statistics for each benchmark. Benchmark functions
+    are named BenchmarkXxx and receive a *testing.B parameter.
+  tags:
+    - test
+    - benchmark
+    - performance
+    - memory
+  aliases:
+    - run go benchmarks
+    - benchmark go code
+    - performance test in go
+    - go bench all
+    - measure go performance
+    - run benchmark with memory stats
+  examples:
+    - query: "Run all benchmarks in my Go project"
+    - query: "How do I benchmark Go code?"
+    - query: "Run benchmarks with memory allocation stats"
+  risk: safe
+  documentation:
+    url: https://pkg.go.dev/testing#hdr-Benchmarks
+  verified_at: "2026-08-01"
+
+- id: go-test-race
+  technology: go
+  category: test
+  name: Run Tests with Race Detector
+  intent: run_tests_race
+  command: go test -race ./...
+  description: >
+    Runs tests with the Go race detector enabled. The race detector instruments
+    memory accesses at compile time and detects unsynchronized access to shared
+    variables at runtime. Essential for finding concurrency bugs in Go programs.
+  tags:
+    - test
+    - race
+    - concurrency
+    - data race
+    - debug
+  aliases:
+    - detect data races in go
+    - run go tests with race detector
+    - find race conditions in go
+    - go test race detection
+    - check for concurrency bugs
+    - enable race detector
+  examples:
+    - query: "Run Go tests with the race detector"
+    - query: "How do I detect data races in Go?"
+    - query: "Check for concurrency bugs in my Go code"
+  risk: safe
+  documentation:
+    url: https://go.dev/doc/articles/race_detector
+  verified_at: "2026-08-01"
+
+- id: go-run-race
+  technology: go
+  category: runtime
+  name: Run with Race Detector
+  intent: run_with_race
+  command: go run -race <file>
+  description: >
+    Compiles and runs a Go program with the race detector enabled. The race
+    detector detects data races during execution and reports them with stack
+    traces. Useful for development-time detection of concurrency issues.
+  tags:
+    - run
+    - race
+    - concurrency
+    - debug
+  aliases:
+    - run go with race detector
+    - execute go program with race detection
+    - go run race mode
+    - detect races while running go
+    - run go file with race checker
+  examples:
+    - query: "Run a Go file with the race detector"
+    - query: "Execute my Go program and check for data races"
+    - query: "How to detect race conditions at runtime?"
+  risk: safe
+  documentation:
+    url: https://go.dev/doc/articles/race_detector
+  verified_at: "2026-08-01"
+
+- id: go-clean-cache
+  technology: go
+  category: tools
+  name: Clean Build Cache
+  intent: clean_cache
+  command: go clean -cache
+  description: >
+    Removes all cached build artifacts from the Go build cache. The build cache
+    stores compiled packages and other build outputs to speed up future builds.
+    Cleaning it forces a full rebuild on the next build command.
+  tags:
+    - clean
+    - cache
+    - build
+    - maintenance
+  aliases:
+    - clear go build cache
+    - clean go cache
+    - remove go build artifacts
+    - purge go cache
+    - reset go build cache
+  examples:
+    - query: "Clear the Go build cache"
+    - query: "How do I clean the Go cache?"
+    - query: "Remove cached build artifacts"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Remove_object_files_and_cached_files
+  verified_at: "2026-08-01"
+
+- id: go-clean-testcache
+  technology: go
+  category: tools
+  name: Clean Test Cache
+  intent: clean_testcache
+  command: go clean -testcache
+  description: >
+    Removes all cached test results from the Go test cache. After cleaning,
+    subsequent test runs will execute all tests instead of using cached results.
+    Useful when tests depend on external state that may have changed.
+  tags:
+    - clean
+    - test
+    - cache
+    - maintenance
+  aliases:
+    - clear go test cache
+    - invalidate cached test results
+    - force rerun go tests
+    - remove test cache
+    - reset go test cache
+  examples:
+    - query: "Clear the Go test cache"
+    - query: "Force all tests to rerun"
+    - query: "Invalidate cached test results"
+  risk: warning
+  documentation:
+    url: https://pkg.go.dev/cmd/go#hdr-Remove_object_files_and_cached_files
+  verified_at: "2026-08-01"
+
+- id: go-work-init
+  technology: go
+  category: modules
+  name: Initialize Workspace
+  intent: init_workspace
+  command: go work init <module-directory>
+  description: >
+    Initializes a new Go workspace by creating a go.work file in the current
+    directory. Workspaces allow working with multiple modules simultaneously,
+    enabling local development across module boundaries without modifying
+    go.mod replace directives.
+  tags:
+    - workspace
+    - multi-module
+    - development
+    - setup
+  aliases:
+    - create go workspace
+    - initialize go work
+    - set up multi-module workspace
+    - start go workspace mode
+    - go work init
+    - create go.work file
+  examples:
+    - query: "How do I create a Go workspace?"
+    - query: "Initialize a multi-module workspace"
+    - query: "Set up go work for multiple modules"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-work-init
+  verified_at: "2026-08-01"
+
+- id: go-work-use
+  technology: go
+  category: modules
+  name: Add Module to Workspace
+  intent: workspace_use
+  command: go work use <module-directory>
+  description: >
+    Adds a module directory to the go.work file, including it in the workspace.
+    The specified directory must contain a go.mod file. Multiple directories
+    can be added in a single command.
+  tags:
+    - workspace
+    - multi-module
+    - development
+  aliases:
+    - add module to go workspace
+    - include module in workspace
+    - go work use directory
+    - add directory to go.work
+    - register module in workspace
+  examples:
+    - query: "Add a module to my Go workspace"
+    - query: "Include another module directory in the workspace"
+    - query: "How do I add a local module to go.work?"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-work-use
+  verified_at: "2026-08-01"
+
+- id: go-work-sync
+  technology: go
+  category: modules
+  name: Sync Workspace Dependencies
+  intent: workspace_sync
+  command: go work sync
+  description: >
+    Synchronizes the workspace's build list back to the go.mod files of each
+    module in the workspace. Ensures that each module's go.mod file contains
+    the versions that the workspace uses, making them consistent when building
+    outside the workspace context.
+  tags:
+    - workspace
+    - sync
+    - dependencies
+    - multi-module
+  aliases:
+    - sync go workspace
+    - synchronize workspace modules
+    - update workspace dependencies
+    - go work sync dependencies
+    - align workspace module versions
+  examples:
+    - query: "Sync dependencies across my Go workspace"
+    - query: "How do I synchronize workspace modules?"
+    - query: "Align module versions in the workspace"
+  risk: warning
+  documentation:
+    url: https://go.dev/ref/mod#go-work-sync
+  verified_at: "2026-08-01"

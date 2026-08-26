@@ -1,0 +1,64 @@
+{"query": "how do I restart a kubernetes deployment", "command_id": "kubernetes-rollout-restart", "technology": "kubernetes", "intent": "restart_deployment"}
+{"query": "how do I view pod logs", "command_id": "kubernetes-pod-logs", "technology": "kubernetes", "intent": "view_logs"}
+{"query": "how do I see previous container logs", "command_id": "kubernetes-pod-logs-previous", "technology": "kubernetes", "intent": "view_previous_logs"}
+{"query": "how do I find pods using the most memory", "command_id": "kubernetes-top-pods", "technology": "kubernetes", "intent": "top_pods"}
+{"query": "how do I port forward to a pod", "command_id": "kubernetes-port-forward", "technology": "kubernetes", "intent": "port_forward"}
+{"query": "how do I execute a command inside a pod", "command_id": "kubernetes-exec", "technology": "kubernetes", "intent": "exec_pod"}
+{"query": "how do I scale a deployment", "command_id": "kubernetes-scale-deployment", "technology": "kubernetes", "intent": "scale_deployment"}
+{"query": "how do I rollback a deployment", "command_id": "kubernetes-rollout-undo", "technology": "kubernetes", "intent": "rollback_deployment"}
+{"query": "how do I see running containers", "command_id": "docker-ps-running", "technology": "docker", "intent": "list_running_containers"}
+{"query": "how do I see container logs", "command_id": "docker-logs", "technology": "docker", "intent": "container_logs"}
+{"query": "how do I enter a container", "command_id": "docker-exec", "technology": "docker", "intent": "exec_container"}
+{"query": "how do I see docker memory usage", "command_id": "docker-stats", "technology": "docker", "intent": "container_stats"}
+{"query": "how do I remove unused docker images", "command_id": "docker-image-prune", "technology": "docker", "intent": "prune_images"}
+{"query": "how do I restart a container", "command_id": "docker-restart", "technology": "docker", "intent": "restart_container"}
+{"query": "how do I undo the last commit", "command_id": "git-reset-soft", "technology": "git", "intent": "undo_commit"}
+{"query": "how do I undo the last commit but keep changes", "command_id": "git-reset-soft", "technology": "git", "intent": "undo_commit_keep_changes"}
+{"query": "how do I stash changes", "command_id": "git-stash", "technology": "git", "intent": "stash"}
+{"query": "how do I see git history", "command_id": "git-log", "technology": "git", "intent": "view_log"}
+{"query": "how do I create a branch", "command_id": "git-branch-create", "technology": "git", "intent": "create_branch"}
+{"query": "how do I delete a branch", "command_id": "git-branch-delete", "technology": "git", "intent": "delete_branch"}
+{"query": "what process is using port 8080", "command_id": "linux-lsof-port", "technology": "linux", "intent": "find_process_on_port"}
+{"query": "how do I find large files", "command_id": "linux-find-large-files", "technology": "linux", "intent": "find_large_files"}
+{"query": "how do I check disk usage", "command_id": "linux-df", "technology": "linux", "intent": "check_disk_space"}
+{"query": "how do I check memory", "command_id": "linux-free", "technology": "linux", "intent": "check_memory"}
+{"query": "how do I follow a log", "command_id": "linux-tail-follow", "technology": "linux", "intent": "follow_log"}
+{"query": "how do I find a process", "command_id": "linux-ps-aux", "technology": "linux", "intent": "list_processes"}
+{"query": "how do I create a virtual environment", "command_id": "python-venv-create", "technology": "python", "intent": "create_venv"}
+{"query": "how do I install a package", "command_id": "python-pip-install", "technology": "python", "intent": "install_package"}
+{"query": "how do I freeze requirements", "command_id": "python-pip-freeze", "technology": "python", "intent": "freeze_requirements"}
+{"query": "how do I create a rust project", "command_id": "rust-cargo-new", "technology": "rust", "intent": "create_project"}
+{"query": "how do I build rust in release mode", "command_id": "rust-cargo-build-release", "technology": "rust", "intent": "build_release"}
+{"query": "how do I run rust tests", "command_id": "rust-cargo-test", "technology": "rust", "intent": "run_tests"}
+{"query": "how do I run clippy", "command_id": "rust-cargo-clippy", "technology": "rust", "intent": "run_clippy"}
+{"query": "how do I create a go module", "command_id": "go-mod-init", "technology": "go", "intent": "init_module"}
+{"query": "how do I run go tests", "command_id": "go-test", "technology": "go", "intent": "run_tests"}
+{"query": "how do I build a go binary", "command_id": "go-build", "technology": "go", "intent": "build"}
+{"query": "how do I update go dependencies", "command_id": "go-mod-tidy", "technology": "go", "intent": "tidy_modules"}
+{"query": "how do I see kafka consumer lag", "command_id": "kafka-consumer-group-lag", "technology": "kafka", "intent": "consumer_lag"}
+{"query": "how do I list kafka topics", "command_id": "kafka-list-topics", "technology": "kafka", "intent": "list_topics"}
+{"query": "how do I describe a kafka topic", "command_id": "kafka-describe-topic", "technology": "kafka", "intent": "describe_topic"}
+{"query": "how do I reset kafka consumer offsets", "command_id": "kafka-reset-offsets", "technology": "kafka", "intent": "reset_offsets"}
+{"query": "terraform init", "command_id": "terraform-init", "technology": "terraform", "intent": "init"}
+{"query": "terraform plan", "command_id": "terraform-plan", "technology": "terraform", "intent": "plan"}
+{"query": "terraform apply", "command_id": "terraform-apply", "technology": "terraform", "intent": "apply"}
+{"query": "terraform destroy", "command_id": "terraform-destroy", "technology": "terraform", "intent": "destroy"}
+{"query": "restart k8s deployment", "command_id": "kubernetes-rollout-restart", "technology": "kubernetes", "intent": "restart_deployment"}
+{"query": "k8s pods using most memory", "command_id": "kubernetes-top-pods", "technology": "kubernetes", "intent": "top_pods"}
+{"query": "docker ps", "command_id": "docker-ps-running", "technology": "docker", "intent": "list_running_containers"}
+{"query": "git log graph", "command_id": "git-log-graph", "technology": "git", "intent": "view_log_graph"}
+{"query": "find which process is listening on port 3000", "command_id": "linux-lsof-port", "technology": "linux", "intent": "find_process_on_port"}
+{"query": "show pods using too much memory", "command_id": "kubernetes-top-pods", "technology": "kubernetes", "intent": "top_pods"}
+{"query": "undo last commit keep changes", "command_id": "git-reset-soft", "technology": "git", "intent": "undo_commit_keep_changes"}
+{"query": "consumer group lag", "command_id": "kafka-consumer-group-lag", "technology": "kafka", "intent": "consumer_lag"}
+{"query": "python environment", "command_id": "python-venv-create", "technology": "python", "intent": "create_venv"}
+{"query": "rust optimized build", "command_id": "rust-cargo-build-release", "technology": "rust", "intent": "build_release"}
+{"query": "docker containers eating cpu", "command_id": "docker-stats", "technology": "docker", "intent": "container_stats"}
+{"query": "what is eating all the memory on my linux server", "command_id": "linux-ps-top-memory", "technology": "linux", "intent": "top_memory_processes"}
+{"query": "which process is listening on 8080", "command_id": "linux-lsof-port", "technology": "linux", "intent": "find_process_on_port"}
+{"query": "kubectl top pods all namespaces sort by memory", "command_id": "kubernetes-top-pods", "technology": "kubernetes", "intent": "top_pods"}
+{"query": "how can I recreate the pods for a deployment", "command_id": "kubernetes-rollout-restart", "technology": "kubernetes", "intent": "restart_deployment"}
+{"query": "grep for text in all files recursively", "command_id": "linux-grep-text", "technology": "linux", "intent": "search_text"}
+{"query": "compress a directory", "command_id": "linux-tar-create", "technology": "linux", "intent": "create_archive"}
+{"query": "rsync files to server", "command_id": "linux-rsync", "technology": "linux", "intent": "rsync_files"}
+{"query": "show service status systemd", "command_id": "linux-systemctl-status", "technology": "linux", "intent": "service_status"}

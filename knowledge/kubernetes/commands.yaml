@@ -1,0 +1,2842 @@
+# AlchemyCLI AI - Kubernetes Commands
+# Comprehensive kubectl command reference for natural language CLI assistance
+# Total commands: 80
+
+- id: kubernetes-get-pods
+  technology: kubernetes
+  category: pods
+  name: List Pods
+  intent: get_pods
+  command: kubectl get pods -n <namespace>
+  description: >
+    Lists all pods in the specified namespace showing their status, restarts, and age.
+  tags:
+    - pods
+    - list
+    - status
+  aliases:
+    - list all pods
+    - show pods in namespace
+    - get running pods
+    - what pods are running
+    - display pods
+    - check pod status
+  examples:
+    - query: "show me all pods in the default namespace"
+    - query: "list pods in production namespace"
+    - query: "what pods are running right now"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pods-all-namespaces
+  technology: kubernetes
+  category: pods
+  name: List Pods Across All Namespaces
+  intent: get_pods_all_namespaces
+  command: kubectl get pods --all-namespaces
+  description: >
+    Lists all pods across every namespace in the cluster, useful for cluster-wide overview.
+  tags:
+    - pods
+    - list
+    - all-namespaces
+  aliases:
+    - show all pods in all namespaces
+    - list pods everywhere
+    - get pods cluster wide
+    - show every pod in the cluster
+    - pods across all namespaces
+  examples:
+    - query: "show all pods across all namespaces"
+    - query: "list every pod in the cluster"
+    - query: "get pods from all namespaces"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pods-wide
+  technology: kubernetes
+  category: pods
+  name: List Pods with Extended Details
+  intent: get_pods_wide
+  command: kubectl get pods -n <namespace> -o wide
+  description: >
+    Lists pods with additional details including node assignment, IP addresses, and nominated node.
+  tags:
+    - pods
+    - list
+    - wide
+    - details
+  aliases:
+    - show pods with node info
+    - list pods with IP addresses
+    - get pods wide output
+    - pods with extra details
+    - show pod node assignment
+  examples:
+    - query: "show me pods with their IP addresses and nodes"
+    - query: "list pods with wide output"
+    - query: "which node is each pod running on"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-pod
+  technology: kubernetes
+  category: pods
+  name: Describe Pod
+  intent: describe_pod
+  command: kubectl describe pod <pod> -n <namespace>
+  description: >
+    Shows detailed information about a pod including events, conditions, containers, volumes, and resource usage.
+  tags:
+    - pods
+    - describe
+    - details
+    - troubleshoot
+  aliases:
+    - describe a pod
+    - show pod details
+    - get pod information
+    - pod events and conditions
+    - inspect pod
+    - why is my pod failing
+  examples:
+    - query: "describe the pod my-app-abc123"
+    - query: "show me detailed info about a pod"
+    - query: "why is my pod in CrashLoopBackOff"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-deployments
+  technology: kubernetes
+  category: deployments
+  name: List Deployments
+  intent: get_deployments
+  command: kubectl get deployments -n <namespace>
+  description: >
+    Lists all deployments in the specified namespace showing desired, current, up-to-date, and available replicas.
+  tags:
+    - deployments
+    - list
+    - replicas
+  aliases:
+    - list all deployments
+    - show deployments
+    - get deployments in namespace
+    - what deployments are running
+    - display deployments
+  examples:
+    - query: "show me all deployments in production"
+    - query: "list deployments in the default namespace"
+    - query: "what deployments exist"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-deployment
+  technology: kubernetes
+  category: deployments
+  name: Describe Deployment
+  intent: describe_deployment
+  command: kubectl describe deployment <deployment> -n <namespace>
+  description: >
+    Shows detailed information about a deployment including strategy, replicas, conditions, and events.
+  tags:
+    - deployments
+    - describe
+    - details
+  aliases:
+    - describe a deployment
+    - show deployment details
+    - get deployment info
+    - inspect deployment
+    - deployment configuration
+  examples:
+    - query: "describe the nginx deployment"
+    - query: "show me details of deployment my-app"
+    - query: "what is the deployment strategy for my-service"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-services
+  technology: kubernetes
+  category: services
+  name: List Services
+  intent: get_services
+  command: kubectl get services -n <namespace>
+  description: >
+    Lists all services in the specified namespace showing type, cluster IP, external IP, and ports.
+  tags:
+    - services
+    - list
+    - networking
+  aliases:
+    - list all services
+    - show services
+    - get services in namespace
+    - what services are available
+    - display kubernetes services
+  examples:
+    - query: "show me all services in the namespace"
+    - query: "list kubernetes services"
+    - query: "what services are running in production"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-service
+  technology: kubernetes
+  category: services
+  name: Describe Service
+  intent: describe_service
+  command: kubectl describe service <service> -n <namespace>
+  description: >
+    Shows detailed information about a service including endpoints, selectors, ports, and type.
+  tags:
+    - services
+    - describe
+    - details
+    - networking
+  aliases:
+    - describe a service
+    - show service details
+    - get service endpoints
+    - inspect service
+    - service configuration
+  examples:
+    - query: "describe the frontend service"
+    - query: "show me service endpoints for my-api"
+    - query: "what pods is this service routing to"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-nodes
+  technology: kubernetes
+  category: nodes
+  name: List Nodes
+  intent: get_nodes
+  command: kubectl get nodes
+  description: >
+    Lists all nodes in the cluster showing their status, roles, age, and Kubernetes version.
+  tags:
+    - nodes
+    - list
+    - cluster
+  aliases:
+    - list all nodes
+    - show cluster nodes
+    - get nodes
+    - what nodes are in the cluster
+    - display nodes
+    - check node status
+  examples:
+    - query: "show me all nodes in the cluster"
+    - query: "list cluster nodes"
+    - query: "are all nodes ready"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-node
+  technology: kubernetes
+  category: nodes
+  name: Describe Node
+  intent: describe_node
+  command: kubectl describe node <node>
+  description: >
+    Shows detailed information about a node including capacity, allocatable resources, conditions, and running pods.
+  tags:
+    - nodes
+    - describe
+    - resources
+    - capacity
+  aliases:
+    - describe a node
+    - show node details
+    - get node capacity
+    - inspect node resources
+    - node conditions
+    - check node health
+  examples:
+    - query: "describe the node worker-1"
+    - query: "show me node capacity and allocatable resources"
+    - query: "what pods are running on this node"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_describe/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-namespaces
+  technology: kubernetes
+  category: namespaces
+  name: List Namespaces
+  intent: get_namespaces
+  command: kubectl get namespaces
+  description: >
+    Lists all namespaces in the cluster with their status and age.
+  tags:
+    - namespaces
+    - list
+    - cluster
+  aliases:
+    - list all namespaces
+    - show namespaces
+    - get namespaces
+    - what namespaces exist
+    - display namespaces
+  examples:
+    - query: "show me all namespaces"
+    - query: "list cluster namespaces"
+    - query: "what namespaces are available"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-view-logs
+  technology: kubernetes
+  category: logs
+  name: View Pod Logs
+  intent: view_logs
+  command: kubectl logs <pod> -n <namespace>
+  description: >
+    Displays the stdout/stderr logs from a pod. For multi-container pods, specify -c <container>.
+  tags:
+    - logs
+    - troubleshoot
+    - debugging
+  aliases:
+    - show pod logs
+    - get logs from pod
+    - view container logs
+    - check pod output
+    - display logs
+    - print pod logs
+  examples:
+    - query: "show me the logs for pod my-app-abc123"
+    - query: "get logs from the web server pod"
+    - query: "view container logs in production"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-view-logs-previous
+  technology: kubernetes
+  category: logs
+  name: View Previous Container Logs
+  intent: view_logs_previous
+  command: kubectl logs <pod> -n <namespace> --previous
+  description: >
+    Displays logs from the previous terminated instance of a container, useful for debugging crash loops.
+  tags:
+    - logs
+    - previous
+    - troubleshoot
+    - crash
+  aliases:
+    - show previous pod logs
+    - get crashed container logs
+    - view logs from previous container
+    - logs before crash
+    - previous container output
+  examples:
+    - query: "show logs from the previous crashed container"
+    - query: "get logs before the pod restarted"
+    - query: "view previous container logs for debugging"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-follow-logs
+  technology: kubernetes
+  category: logs
+  name: Follow Pod Logs
+  intent: follow_logs
+  command: kubectl logs -f <pod> -n <namespace>
+  description: >
+    Streams pod logs in real time, similar to tail -f. Use Ctrl+C to stop following.
+  tags:
+    - logs
+    - follow
+    - stream
+    - realtime
+  aliases:
+    - tail pod logs
+    - stream logs in real time
+    - follow pod output
+    - watch logs live
+    - live log stream
+  examples:
+    - query: "follow the logs of my-app pod in real time"
+    - query: "tail the logs for the api server"
+    - query: "stream live logs from the container"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-logs-container
+  technology: kubernetes
+  category: logs
+  name: View Specific Container Logs
+  intent: view_logs_container
+  command: kubectl logs <pod> -c <container> -n <namespace>
+  description: >
+    Displays logs from a specific container within a multi-container pod.
+  tags:
+    - logs
+    - container
+    - multi-container
+  aliases:
+    - logs for specific container
+    - show container logs in a pod
+    - get logs from sidecar
+    - view init container logs
+    - specific container output
+  examples:
+    - query: "show logs from the sidecar container in my pod"
+    - query: "get logs from the nginx container"
+    - query: "view init container logs"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-exec-into-pod
+  technology: kubernetes
+  category: exec
+  name: Execute Command in Pod
+  intent: exec_into_pod
+  command: kubectl exec -it <pod> -n <namespace> -- /bin/sh
+  description: >
+    Opens an interactive shell session inside a running pod for debugging and inspection.
+  tags:
+    - exec
+    - shell
+    - interactive
+    - debugging
+  aliases:
+    - exec into a pod
+    - shell into pod
+    - open terminal in pod
+    - connect to pod shell
+    - ssh into pod
+    - get a shell in the container
+    - enter pod
+  examples:
+    - query: "exec into the my-app pod"
+    - query: "open a shell inside the container"
+    - query: "ssh into the running pod"
+    - query: "get a bash shell in the pod"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_exec/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-exec-command
+  technology: kubernetes
+  category: exec
+  name: Run Single Command in Pod
+  intent: exec_command
+  command: kubectl exec <pod> -n <namespace> -- <command>
+  description: >
+    Executes a single command inside a running pod and returns the output without starting an interactive session.
+  tags:
+    - exec
+    - command
+    - non-interactive
+  aliases:
+    - run command in pod
+    - execute a command in container
+    - run a single command in pod
+    - pod command execution
+  examples:
+    - query: "run ls in the pod"
+    - query: "check the environment variables inside the container"
+    - query: "execute a curl command in the pod"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_exec/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-port-forward
+  technology: kubernetes
+  category: networking
+  name: Port Forward to Pod
+  intent: port_forward
+  command: kubectl port-forward <pod> <local-port>:<pod-port> -n <namespace>
+  description: >
+    Forwards a local port to a port on a pod, enabling local access to services running inside the cluster.
+  tags:
+    - port-forward
+    - networking
+    - local-access
+    - debugging
+  aliases:
+    - forward port to pod
+    - port forward
+    - access pod locally
+    - tunnel to pod
+    - expose pod port locally
+    - local port forwarding
+  examples:
+    - query: "forward local port 8080 to pod port 80"
+    - query: "port forward to the database pod"
+    - query: "access the pod service on my localhost"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-port-forward-service
+  technology: kubernetes
+  category: networking
+  name: Port Forward to Service
+  intent: port_forward_service
+  command: kubectl port-forward service/<service> <local-port>:<service-port> -n <namespace>
+  description: >
+    Forwards a local port to a port on a service, allowing local access through the service abstraction.
+  tags:
+    - port-forward
+    - service
+    - networking
+  aliases:
+    - forward port to service
+    - port forward service
+    - access service locally
+    - tunnel to service
+  examples:
+    - query: "port forward to the my-api service"
+    - query: "forward local port 3000 to service port 80"
+    - query: "access the service from my machine"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_port-forward/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-cp-from-pod
+  technology: kubernetes
+  category: pods
+  name: Copy Files from Pod
+  intent: cp_from_pod
+  command: kubectl cp <namespace>/<pod>:<remote-path> <local-path>
+  description: >
+    Copies files or directories from a container in a pod to the local filesystem. Requires tar in the container.
+  tags:
+    - copy
+    - files
+    - transfer
+  aliases:
+    - copy file from pod
+    - download file from container
+    - get file from pod
+    - extract file from pod
+    - transfer file from container
+  examples:
+    - query: "copy a log file from the pod to my machine"
+    - query: "download /var/log/app.log from the container"
+    - query: "get the config file from inside the pod"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cp/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-cp-to-pod
+  technology: kubernetes
+  category: pods
+  name: Copy Files to Pod
+  intent: cp_to_pod
+  command: kubectl cp <local-path> <namespace>/<pod>:<remote-path>
+  description: >
+    Copies files or directories from the local filesystem into a container in a pod. Requires tar in the container.
+  tags:
+    - copy
+    - files
+    - upload
+    - transfer
+  aliases:
+    - copy file to pod
+    - upload file to container
+    - send file to pod
+    - transfer file to container
+  examples:
+    - query: "copy a config file into the pod"
+    - query: "upload a script to the container"
+    - query: "send local file to the running pod"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cp/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-rollout-restart
+  technology: kubernetes
+  category: deployments
+  name: Rollout Restart Deployment
+  intent: rollout_restart
+  command: kubectl rollout restart deployment/<deployment> -n <namespace>
+  description: >
+    Triggers a rolling restart of all pods in a deployment without changing the spec. Useful for picking up ConfigMap or Secret changes.
+  tags:
+    - rollout
+    - restart
+    - deployment
+  aliases:
+    - restart deployment
+    - rolling restart
+    - restart all pods in deployment
+    - redeploy pods
+    - cycle deployment pods
+    - bounce deployment
+  examples:
+    - query: "restart the nginx deployment"
+    - query: "do a rolling restart of my-app"
+    - query: "restart pods to pick up new config"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_restart/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-rollout-status
+  technology: kubernetes
+  category: deployments
+  name: Check Rollout Status
+  intent: rollout_status
+  command: kubectl rollout status deployment/<deployment> -n <namespace>
+  description: >
+    Shows the status of a deployment rollout, indicating if it has completed successfully or is still progressing.
+  tags:
+    - rollout
+    - status
+    - deployment
+  aliases:
+    - check rollout status
+    - is deployment rollout complete
+    - deployment progress
+    - rollout status check
+    - is the deployment done
+  examples:
+    - query: "check the rollout status of my deployment"
+    - query: "is the deployment rollout complete"
+    - query: "has the new version finished deploying"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_status/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-rollout-history
+  technology: kubernetes
+  category: deployments
+  name: View Rollout History
+  intent: rollout_history
+  command: kubectl rollout history deployment/<deployment> -n <namespace>
+  description: >
+    Displays the revision history of a deployment, showing all previous rollout revisions.
+  tags:
+    - rollout
+    - history
+    - revisions
+    - deployment
+  aliases:
+    - show rollout history
+    - deployment revision history
+    - list deployment versions
+    - previous deployments
+    - rollout revisions
+  examples:
+    - query: "show the rollout history for my deployment"
+    - query: "list previous revisions of the deployment"
+    - query: "how many revisions does this deployment have"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_history/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-rollout-undo
+  technology: kubernetes
+  category: deployments
+  name: Undo Rollout
+  intent: rollout_undo
+  command: kubectl rollout undo deployment/<deployment> -n <namespace>
+  description: >
+    Rolls back a deployment to the previous revision. Use --to-revision=N to roll back to a specific revision.
+  tags:
+    - rollout
+    - undo
+    - rollback
+    - deployment
+  aliases:
+    - rollback deployment
+    - undo deployment
+    - revert deployment
+    - go back to previous version
+    - roll back to last version
+    - undo last deploy
+  examples:
+    - query: "rollback the deployment to the previous version"
+    - query: "undo the last deployment"
+    - query: "revert the deployment to revision 3"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_rollout/kubectl_rollout_undo/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-scale-deployment
+  technology: kubernetes
+  category: deployments
+  name: Scale Deployment
+  intent: scale_deployment
+  command: kubectl scale deployment/<deployment> --replicas=<count> -n <namespace>
+  description: >
+    Scales a deployment to the specified number of replicas by adjusting the desired pod count.
+  tags:
+    - scale
+    - replicas
+    - deployment
+  aliases:
+    - scale deployment
+    - change replica count
+    - increase replicas
+    - decrease replicas
+    - set number of pods
+    - scale up deployment
+    - scale down deployment
+  examples:
+    - query: "scale my-app deployment to 5 replicas"
+    - query: "increase the number of pods to 10"
+    - query: "scale down the deployment to 1 replica"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_scale/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-pod
+  technology: kubernetes
+  category: pods
+  name: Delete Pod
+  intent: delete_pod
+  command: kubectl delete pod <pod> -n <namespace>
+  description: >
+    Deletes a specific pod. If managed by a controller (Deployment, ReplicaSet), a new pod will be created automatically.
+  tags:
+    - delete
+    - pod
+    - remove
+  aliases:
+    - delete a pod
+    - remove pod
+    - kill pod
+    - terminate pod
+    - force restart pod
+    - destroy pod
+  examples:
+    - query: "delete the pod my-app-abc123"
+    - query: "remove the stuck pod"
+    - query: "kill the crashing pod"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-deployment
+  technology: kubernetes
+  category: deployments
+  name: Delete Deployment
+  intent: delete_deployment
+  command: kubectl delete deployment <deployment> -n <namespace>
+  description: >
+    Deletes a deployment and all its associated pods and ReplicaSets. This action is irreversible.
+  tags:
+    - delete
+    - deployment
+    - remove
+    - destructive
+  aliases:
+    - delete deployment
+    - remove deployment
+    - destroy deployment
+    - remove deployment and pods
+    - delete deployment entirely
+  examples:
+    - query: "delete the deployment my-app"
+    - query: "remove the deployment and all its pods"
+    - query: "destroy the old deployment"
+  risk: dangerous
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-apply
+  technology: kubernetes
+  category: configuration
+  name: Apply Configuration
+  intent: apply_config
+  command: kubectl apply -f <file-or-directory>
+  description: >
+    Applies a configuration from a file or directory to create or update resources declaratively.
+  tags:
+    - apply
+    - create
+    - update
+    - declarative
+    - configuration
+  aliases:
+    - apply manifest
+    - apply yaml file
+    - deploy from file
+    - apply kubernetes config
+    - create resources from file
+    - apply configuration
+  examples:
+    - query: "apply the deployment.yaml file"
+    - query: "deploy resources from the manifests directory"
+    - query: "apply the kubernetes configuration"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-diff
+  technology: kubernetes
+  category: configuration
+  name: Diff Configuration
+  intent: diff_config
+  command: kubectl diff -f <file>
+  description: >
+    Shows a diff between the current live state and the configuration in the provided file, without applying changes.
+  tags:
+    - diff
+    - compare
+    - preview
+    - configuration
+  aliases:
+    - diff kubernetes config
+    - preview changes before apply
+    - compare manifest to live state
+    - show what would change
+    - dry run diff
+  examples:
+    - query: "diff the deployment.yaml against what is live"
+    - query: "preview what changes would be applied"
+    - query: "compare my manifest file to the current state"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_diff/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-events
+  technology: kubernetes
+  category: monitoring
+  name: Get Events
+  intent: get_events
+  command: kubectl get events -n <namespace> --sort-by='.lastTimestamp'
+  description: >
+    Lists cluster events sorted by timestamp, useful for troubleshooting issues with pods, nodes, and other resources.
+  tags:
+    - events
+    - troubleshoot
+    - debugging
+    - monitoring
+  aliases:
+    - show cluster events
+    - get events
+    - list events
+    - what happened in the cluster
+    - recent events
+    - check cluster events
+    - troubleshoot events
+  examples:
+    - query: "show me recent events in the namespace"
+    - query: "what events happened in the cluster"
+    - query: "list events sorted by time"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_events/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-top-pods
+  technology: kubernetes
+  category: monitoring
+  name: Top Pods Resource Usage
+  intent: top_pods
+  command: kubectl top pods -n <namespace>
+  description: >
+    Shows CPU and memory usage for pods in the namespace. Requires the Metrics Server to be installed.
+  tags:
+    - top
+    - metrics
+    - resources
+    - cpu
+    - memory
+    - monitoring
+  aliases:
+    - show pod resource usage
+    - pod CPU and memory usage
+    - top pods
+    - which pods use most resources
+    - pod metrics
+    - check pod resource consumption
+  examples:
+    - query: "show CPU and memory usage for pods"
+    - query: "which pods are using the most resources"
+    - query: "top pods by resource consumption"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top/kubectl_top_pod/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-top-nodes
+  technology: kubernetes
+  category: monitoring
+  name: Top Nodes Resource Usage
+  intent: top_nodes
+  command: kubectl top nodes
+  description: >
+    Shows CPU and memory usage for all nodes in the cluster. Requires the Metrics Server to be installed.
+  tags:
+    - top
+    - nodes
+    - metrics
+    - resources
+    - monitoring
+  aliases:
+    - show node resource usage
+    - node CPU and memory usage
+    - top nodes
+    - which nodes are overloaded
+    - node metrics
+    - cluster resource usage
+  examples:
+    - query: "show CPU and memory usage for all nodes"
+    - query: "which nodes are using the most resources"
+    - query: "check node capacity utilization"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_top/kubectl_top_node/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pods-by-label
+  technology: kubernetes
+  category: pods
+  name: Get Pods by Label
+  intent: get_pods_by_label
+  command: kubectl get pods -l <key>=<value> -n <namespace>
+  description: >
+    Lists pods that match a specific label selector, useful for filtering pods belonging to a particular application or component.
+  tags:
+    - pods
+    - labels
+    - selectors
+    - filter
+  aliases:
+    - filter pods by label
+    - get pods with label
+    - list pods matching label
+    - pods with specific label
+    - select pods by label
+  examples:
+    - query: "show pods with label app=nginx"
+    - query: "filter pods by the environment=production label"
+    - query: "get all pods labeled tier=frontend"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-label-resource
+  technology: kubernetes
+  category: configuration
+  name: Add or Update Label
+  intent: label_resource
+  command: kubectl label <resource-type> <resource-name> <key>=<value> -n <namespace>
+  description: >
+    Adds or updates a label on a Kubernetes resource. Use --overwrite to change an existing label value.
+  tags:
+    - labels
+    - metadata
+    - configuration
+  aliases:
+    - add label to resource
+    - label a pod
+    - set label on deployment
+    - update resource label
+    - tag resource with label
+  examples:
+    - query: "add label env=production to the pod"
+    - query: "label the deployment with version=v2"
+    - query: "update the label on my service"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_label/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-annotate-resource
+  technology: kubernetes
+  category: configuration
+  name: Add or Update Annotation
+  intent: annotate_resource
+  command: kubectl annotate <resource-type> <resource-name> <key>=<value> -n <namespace>
+  description: >
+    Adds or updates an annotation on a Kubernetes resource. Annotations store non-identifying metadata.
+  tags:
+    - annotations
+    - metadata
+    - configuration
+  aliases:
+    - add annotation to resource
+    - annotate pod
+    - set annotation on deployment
+    - update annotation
+    - add metadata annotation
+  examples:
+    - query: "annotate the pod with description info"
+    - query: "add an annotation to the deployment"
+    - query: "set annotation on the service"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_annotate/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-taint-node
+  technology: kubernetes
+  category: scheduling
+  name: Taint Node
+  intent: taint_node
+  command: kubectl taint nodes <node> <key>=<value>:<effect>
+  description: >
+    Adds a taint to a node to repel pods that do not tolerate the taint. Effects are NoSchedule, PreferNoSchedule, or NoExecute.
+  tags:
+    - taints
+    - nodes
+    - scheduling
+  aliases:
+    - taint a node
+    - add taint to node
+    - prevent pods on node
+    - node taint
+    - set node taint
+  examples:
+    - query: "taint node worker-1 with key=value:NoSchedule"
+    - query: "add a NoExecute taint to the node"
+    - query: "prevent pods from scheduling on this node"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-remove-taint
+  technology: kubernetes
+  category: scheduling
+  name: Remove Node Taint
+  intent: remove_taint
+  command: kubectl taint nodes <node> <key>=<value>:<effect>-
+  description: >
+    Removes a taint from a node by appending a minus sign to the taint specification.
+  tags:
+    - taints
+    - nodes
+    - scheduling
+    - remove
+  aliases:
+    - remove taint from node
+    - untaint node
+    - delete node taint
+    - clear taint
+  examples:
+    - query: "remove the taint from node worker-1"
+    - query: "untaint the node"
+    - query: "clear the NoSchedule taint"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-configmaps
+  technology: kubernetes
+  category: configuration
+  name: List ConfigMaps
+  intent: get_configmaps
+  command: kubectl get configmaps -n <namespace>
+  description: >
+    Lists all ConfigMaps in the specified namespace, which store non-confidential configuration data as key-value pairs.
+  tags:
+    - configmaps
+    - configuration
+    - list
+  aliases:
+    - list configmaps
+    - show configmaps
+    - get configmaps
+    - what configmaps exist
+    - display configuration maps
+  examples:
+    - query: "list all configmaps in the namespace"
+    - query: "show configmaps in production"
+    - query: "what configmaps are defined"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/configuration/configmap/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-configmap
+  technology: kubernetes
+  category: configuration
+  name: Describe ConfigMap
+  intent: describe_configmap
+  command: kubectl describe configmap <configmap> -n <namespace>
+  description: >
+    Shows the full contents and metadata of a ConfigMap including all key-value data entries.
+  tags:
+    - configmaps
+    - describe
+    - configuration
+  aliases:
+    - describe configmap
+    - show configmap contents
+    - view configmap data
+    - inspect configmap
+    - configmap details
+  examples:
+    - query: "describe the app-config configmap"
+    - query: "show the contents of the configmap"
+    - query: "what data is in this configmap"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/configuration/configmap/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-create-configmap
+  technology: kubernetes
+  category: configuration
+  name: Create ConfigMap from File
+  intent: create_configmap
+  command: kubectl create configmap <configmap> --from-file=<file-path> -n <namespace>
+  description: >
+    Creates a ConfigMap from a file, directory, or literal key-value pairs.
+  tags:
+    - configmaps
+    - create
+    - configuration
+  aliases:
+    - create configmap
+    - create config from file
+    - make configmap
+    - new configmap from file
+  examples:
+    - query: "create a configmap from a properties file"
+    - query: "make a new configmap from the config directory"
+    - query: "create configmap from literal values"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_configmap/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-secrets
+  technology: kubernetes
+  category: configuration
+  name: List Secrets
+  intent: get_secrets
+  command: kubectl get secrets -n <namespace>
+  description: >
+    Lists all secrets in the specified namespace. Secret data is not shown in the listing.
+  tags:
+    - secrets
+    - list
+    - security
+  aliases:
+    - list secrets
+    - show secrets
+    - get secrets in namespace
+    - what secrets exist
+    - display secrets
+  examples:
+    - query: "list all secrets in the namespace"
+    - query: "show secrets in production"
+    - query: "what secrets are defined"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/configuration/secret/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-secret
+  technology: kubernetes
+  category: configuration
+  name: Describe Secret
+  intent: describe_secret
+  command: kubectl describe secret <secret> -n <namespace>
+  description: >
+    Shows metadata and key names of a secret without revealing the actual secret values.
+  tags:
+    - secrets
+    - describe
+    - security
+  aliases:
+    - describe secret
+    - show secret details
+    - inspect secret
+    - secret metadata
+    - view secret keys
+  examples:
+    - query: "describe the database-credentials secret"
+    - query: "show the keys in the secret"
+    - query: "what keys are in this secret"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/configuration/secret/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-decode-secret
+  technology: kubernetes
+  category: configuration
+  name: Decode Secret Value
+  intent: decode_secret
+  command: kubectl get secret <secret> -n <namespace> -o jsonpath='{.data.<key>}' | base64 --decode
+  description: >
+    Retrieves and decodes a base64-encoded secret value. Use with caution as this reveals sensitive data.
+  tags:
+    - secrets
+    - decode
+    - base64
+    - security
+  aliases:
+    - decode secret
+    - get secret value
+    - reveal secret data
+    - decrypt secret
+    - read secret value
+  examples:
+    - query: "decode the password from the database secret"
+    - query: "get the actual value of the secret"
+    - query: "reveal the secret data"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/concepts/configuration/secret/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-service-accounts
+  technology: kubernetes
+  category: rbac
+  name: List Service Accounts
+  intent: get_service_accounts
+  command: kubectl get serviceaccounts -n <namespace>
+  description: >
+    Lists all service accounts in the specified namespace that provide identities for pods.
+  tags:
+    - service-accounts
+    - rbac
+    - identity
+    - list
+  aliases:
+    - list service accounts
+    - show service accounts
+    - get sa
+    - what service accounts exist
+    - display service accounts
+  examples:
+    - query: "list all service accounts in the namespace"
+    - query: "show service accounts"
+    - query: "what service accounts are defined"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-roles
+  technology: kubernetes
+  category: rbac
+  name: List Roles
+  intent: get_roles
+  command: kubectl get roles -n <namespace>
+  description: >
+    Lists all roles in the specified namespace. Roles define sets of permissions within a namespace.
+  tags:
+    - roles
+    - rbac
+    - permissions
+    - list
+  aliases:
+    - list roles
+    - show roles
+    - get namespace roles
+    - what roles exist
+    - display rbac roles
+  examples:
+    - query: "list all roles in the namespace"
+    - query: "show RBAC roles"
+    - query: "what roles are defined in production"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-rolebindings
+  technology: kubernetes
+  category: rbac
+  name: List RoleBindings
+  intent: get_rolebindings
+  command: kubectl get rolebindings -n <namespace>
+  description: >
+    Lists all role bindings in the specified namespace, showing which subjects are bound to which roles.
+  tags:
+    - rolebindings
+    - rbac
+    - permissions
+    - list
+  aliases:
+    - list rolebindings
+    - show role bindings
+    - get rbac bindings
+    - who has which role
+    - display role bindings
+  examples:
+    - query: "list all rolebindings in the namespace"
+    - query: "show who is bound to which role"
+    - query: "what role bindings exist"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-clusterroles
+  technology: kubernetes
+  category: rbac
+  name: List ClusterRoles
+  intent: get_clusterroles
+  command: kubectl get clusterroles
+  description: >
+    Lists all cluster roles which define permissions across the entire cluster, not scoped to a namespace.
+  tags:
+    - clusterroles
+    - rbac
+    - permissions
+    - cluster-wide
+  aliases:
+    - list cluster roles
+    - show clusterroles
+    - get cluster-wide roles
+    - what cluster roles exist
+    - display cluster roles
+  examples:
+    - query: "list all cluster roles"
+    - query: "show cluster-wide RBAC roles"
+    - query: "what clusterroles are defined"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-clusterrolebindings
+  technology: kubernetes
+  category: rbac
+  name: List ClusterRoleBindings
+  intent: get_clusterrolebindings
+  command: kubectl get clusterrolebindings
+  description: >
+    Lists all cluster role bindings which grant cluster-wide permissions to subjects.
+  tags:
+    - clusterrolebindings
+    - rbac
+    - permissions
+    - cluster-wide
+  aliases:
+    - list cluster role bindings
+    - show clusterrolebindings
+    - get cluster rbac bindings
+    - who has cluster-wide roles
+  examples:
+    - query: "list all cluster role bindings"
+    - query: "show cluster-wide role bindings"
+    - query: "who has cluster admin access"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/access-authn-authz/rbac/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-ingress
+  technology: kubernetes
+  category: networking
+  name: List Ingresses
+  intent: get_ingress
+  command: kubectl get ingress -n <namespace>
+  description: >
+    Lists all ingress resources in the namespace, showing hosts, paths, and backend services.
+  tags:
+    - ingress
+    - networking
+    - routing
+    - list
+  aliases:
+    - list ingress resources
+    - show ingresses
+    - get ingress rules
+    - what ingresses exist
+    - display ingress configuration
+  examples:
+    - query: "list all ingress resources"
+    - query: "show ingress rules in the namespace"
+    - query: "what ingress configurations exist"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/services-networking/ingress/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-ingress
+  technology: kubernetes
+  category: networking
+  name: Describe Ingress
+  intent: describe_ingress
+  command: kubectl describe ingress <ingress> -n <namespace>
+  description: >
+    Shows detailed information about an ingress resource including rules, paths, backends, and TLS configuration.
+  tags:
+    - ingress
+    - describe
+    - networking
+    - routing
+  aliases:
+    - describe ingress
+    - show ingress details
+    - inspect ingress rules
+    - ingress configuration details
+  examples:
+    - query: "describe the main ingress resource"
+    - query: "show ingress routing rules"
+    - query: "what are the ingress backend services"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/services-networking/ingress/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-endpoints
+  technology: kubernetes
+  category: networking
+  name: List Endpoints
+  intent: get_endpoints
+  command: kubectl get endpoints -n <namespace>
+  description: >
+    Lists all endpoints in the namespace, showing the IP addresses and ports that services route to.
+  tags:
+    - endpoints
+    - networking
+    - services
+  aliases:
+    - list endpoints
+    - show endpoints
+    - get service endpoints
+    - what endpoints exist
+    - display endpoint addresses
+  examples:
+    - query: "list all endpoints in the namespace"
+    - query: "show endpoints for services"
+    - query: "what IP addresses do services route to"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/services-networking/service/#endpoints
+  verified_at: "2026-08-01"
+
+- id: kubernetes-expose-deployment
+  technology: kubernetes
+  category: services
+  name: Expose Deployment as Service
+  intent: expose_deployment
+  command: kubectl expose deployment <deployment> --port=<port> --target-port=<target-port> --type=<type> -n <namespace>
+  description: >
+    Creates a service to expose a deployment. Type can be ClusterIP (default), NodePort, or LoadBalancer.
+  tags:
+    - expose
+    - service
+    - networking
+    - deployment
+  aliases:
+    - expose deployment
+    - create service for deployment
+    - make deployment accessible
+    - expose app as service
+    - create loadbalancer for deployment
+  examples:
+    - query: "expose my deployment as a ClusterIP service on port 80"
+    - query: "create a LoadBalancer service for my-app"
+    - query: "expose the deployment with a NodePort service"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_expose/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pv
+  technology: kubernetes
+  category: storage
+  name: List Persistent Volumes
+  intent: get_persistent_volumes
+  command: kubectl get pv
+  description: >
+    Lists all persistent volumes in the cluster showing capacity, access modes, reclaim policy, status, and storage class.
+  tags:
+    - persistent-volumes
+    - storage
+    - list
+    - pv
+  aliases:
+    - list persistent volumes
+    - show PVs
+    - get persistent volumes
+    - what PVs exist
+    - display storage volumes
+  examples:
+    - query: "list all persistent volumes"
+    - query: "show PVs in the cluster"
+    - query: "what persistent volumes are available"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pvc
+  technology: kubernetes
+  category: storage
+  name: List Persistent Volume Claims
+  intent: get_persistent_volume_claims
+  command: kubectl get pvc -n <namespace>
+  description: >
+    Lists all persistent volume claims in the namespace showing status, volume, capacity, access modes, and storage class.
+  tags:
+    - persistent-volume-claims
+    - storage
+    - list
+    - pvc
+  aliases:
+    - list PVCs
+    - show persistent volume claims
+    - get PVCs
+    - what PVCs exist
+    - display volume claims
+  examples:
+    - query: "list all PVCs in the namespace"
+    - query: "show persistent volume claims"
+    - query: "what volume claims are bound"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-storage-classes
+  technology: kubernetes
+  category: storage
+  name: List Storage Classes
+  intent: get_storage_classes
+  command: kubectl get storageclasses
+  description: >
+    Lists all storage classes in the cluster, showing provisioner, reclaim policy, and volume binding mode.
+  tags:
+    - storage-classes
+    - storage
+    - provisioning
+    - list
+  aliases:
+    - list storage classes
+    - show storage classes
+    - get storageclasses
+    - what storage classes exist
+    - available storage types
+  examples:
+    - query: "list all storage classes"
+    - query: "show available storage classes"
+    - query: "what storage classes can I use for PVCs"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/storage/storage-classes/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-jobs
+  technology: kubernetes
+  category: workloads
+  name: List Jobs
+  intent: get_jobs
+  command: kubectl get jobs -n <namespace>
+  description: >
+    Lists all jobs in the namespace showing completions, duration, and age.
+  tags:
+    - jobs
+    - workloads
+    - batch
+    - list
+  aliases:
+    - list jobs
+    - show jobs
+    - get batch jobs
+    - what jobs are running
+    - display jobs
+  examples:
+    - query: "list all jobs in the namespace"
+    - query: "show running jobs"
+    - query: "what batch jobs exist"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/job/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-job
+  technology: kubernetes
+  category: workloads
+  name: Delete Job
+  intent: delete_job
+  command: kubectl delete job <job> -n <namespace>
+  description: >
+    Deletes a job and its associated pods. Use --cascade=orphan to keep the pods.
+  tags:
+    - jobs
+    - delete
+    - batch
+  aliases:
+    - delete job
+    - remove job
+    - clean up job
+    - delete completed job
+  examples:
+    - query: "delete the data-migration job"
+    - query: "remove the completed job"
+    - query: "clean up old batch jobs"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-cronjobs
+  technology: kubernetes
+  category: workloads
+  name: List CronJobs
+  intent: get_cronjobs
+  command: kubectl get cronjobs -n <namespace>
+  description: >
+    Lists all cron jobs in the namespace showing schedule, suspend status, active jobs, and last schedule time.
+  tags:
+    - cronjobs
+    - workloads
+    - scheduled
+    - list
+  aliases:
+    - list cronjobs
+    - show cron jobs
+    - get scheduled jobs
+    - what cronjobs are defined
+    - display scheduled tasks
+  examples:
+    - query: "list all cron jobs in the namespace"
+    - query: "show scheduled jobs"
+    - query: "what cron jobs are configured"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-daemonsets
+  technology: kubernetes
+  category: workloads
+  name: List DaemonSets
+  intent: get_daemonsets
+  command: kubectl get daemonsets -n <namespace>
+  description: >
+    Lists all DaemonSets in the namespace showing desired, current, ready, and available node counts.
+  tags:
+    - daemonsets
+    - workloads
+    - list
+    - nodes
+  aliases:
+    - list daemonsets
+    - show daemonsets
+    - get daemon sets
+    - what daemonsets are running
+    - display daemonsets
+  examples:
+    - query: "list all daemonsets in the namespace"
+    - query: "show daemonsets running on every node"
+    - query: "what daemonsets are deployed"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-statefulsets
+  technology: kubernetes
+  category: workloads
+  name: List StatefulSets
+  intent: get_statefulsets
+  command: kubectl get statefulsets -n <namespace>
+  description: >
+    Lists all StatefulSets in the namespace showing ready and current replica counts.
+  tags:
+    - statefulsets
+    - workloads
+    - stateful
+    - list
+  aliases:
+    - list statefulsets
+    - show statefulsets
+    - get stateful sets
+    - what statefulsets are running
+    - display statefulsets
+  examples:
+    - query: "list all statefulsets in the namespace"
+    - query: "show statefulsets"
+    - query: "what statefulsets are deployed"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-statefulset
+  technology: kubernetes
+  category: workloads
+  name: Describe StatefulSet
+  intent: describe_statefulset
+  command: kubectl describe statefulset <statefulset> -n <namespace>
+  description: >
+    Shows detailed information about a StatefulSet including update strategy, pod template, and volume claims.
+  tags:
+    - statefulsets
+    - describe
+    - workloads
+  aliases:
+    - describe statefulset
+    - show statefulset details
+    - inspect statefulset
+    - statefulset configuration
+  examples:
+    - query: "describe the database statefulset"
+    - query: "show statefulset details"
+    - query: "inspect the statefulset configuration"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-hpa
+  technology: kubernetes
+  category: monitoring
+  name: List Horizontal Pod Autoscalers
+  intent: get_hpa
+  command: kubectl get hpa -n <namespace>
+  description: >
+    Lists all Horizontal Pod Autoscalers in the namespace showing targets, min/max pods, replicas, and age.
+  tags:
+    - hpa
+    - autoscaling
+    - monitoring
+    - list
+  aliases:
+    - list HPA
+    - show autoscalers
+    - get horizontal pod autoscalers
+    - what HPAs are configured
+    - display autoscaling rules
+    - list auto scalers
+  examples:
+    - query: "list all HPAs in the namespace"
+    - query: "show horizontal pod autoscalers"
+    - query: "what autoscaling rules are configured"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-hpa
+  technology: kubernetes
+  category: monitoring
+  name: Describe Horizontal Pod Autoscaler
+  intent: describe_hpa
+  command: kubectl describe hpa <hpa> -n <namespace>
+  description: >
+    Shows detailed information about an HPA including metrics, current/desired replicas, conditions, and events.
+  tags:
+    - hpa
+    - autoscaling
+    - describe
+    - monitoring
+  aliases:
+    - describe HPA
+    - show autoscaler details
+    - inspect HPA
+    - autoscaler configuration
+    - HPA metrics and status
+  examples:
+    - query: "describe the HPA for my deployment"
+    - query: "show autoscaler metrics and status"
+    - query: "inspect the HPA configuration"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-network-policies
+  technology: kubernetes
+  category: networking
+  name: List Network Policies
+  intent: get_network_policies
+  command: kubectl get networkpolicies -n <namespace>
+  description: >
+    Lists all network policies in the namespace that control ingress and egress traffic between pods.
+  tags:
+    - network-policies
+    - networking
+    - security
+    - list
+  aliases:
+    - list network policies
+    - show network policies
+    - get netpol
+    - what network policies exist
+    - display firewall rules
+  examples:
+    - query: "list all network policies in the namespace"
+    - query: "show network policies"
+    - query: "what network policies are defined"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-network-policy
+  technology: kubernetes
+  category: networking
+  name: Describe Network Policy
+  intent: describe_network_policy
+  command: kubectl describe networkpolicy <policy> -n <namespace>
+  description: >
+    Shows detailed information about a network policy including pod selectors, ingress rules, and egress rules.
+  tags:
+    - network-policies
+    - describe
+    - networking
+    - security
+  aliases:
+    - describe network policy
+    - show network policy details
+    - inspect netpol
+    - network policy rules
+  examples:
+    - query: "describe the deny-all network policy"
+    - query: "show the ingress and egress rules"
+    - query: "inspect the network policy configuration"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/services-networking/network-policies/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pdb
+  technology: kubernetes
+  category: scheduling
+  name: List Pod Disruption Budgets
+  intent: get_pdb
+  command: kubectl get pdb -n <namespace>
+  description: >
+    Lists all Pod Disruption Budgets in the namespace showing min available, max unavailable, allowed disruptions, and age.
+  tags:
+    - pdb
+    - disruption
+    - scheduling
+    - availability
+  aliases:
+    - list pod disruption budgets
+    - show PDBs
+    - get disruption budgets
+    - what PDBs exist
+    - display disruption budgets
+  examples:
+    - query: "list all pod disruption budgets"
+    - query: "show PDBs in the namespace"
+    - query: "what disruption budgets are configured"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-pdb
+  technology: kubernetes
+  category: scheduling
+  name: Describe Pod Disruption Budget
+  intent: describe_pdb
+  command: kubectl describe pdb <pdb> -n <namespace>
+  description: >
+    Shows detailed information about a Pod Disruption Budget including selectors, min available, and current disruptions allowed.
+  tags:
+    - pdb
+    - disruption
+    - describe
+    - scheduling
+  aliases:
+    - describe PDB
+    - show PDB details
+    - inspect disruption budget
+    - PDB configuration
+  examples:
+    - query: "describe the PDB for my deployment"
+    - query: "show disruption budget details"
+    - query: "how many disruptions are allowed"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-apply-dry-run
+  technology: kubernetes
+  category: configuration
+  name: Apply with Dry Run
+  intent: apply_dry_run
+  command: kubectl apply -f <file> --dry-run=client
+  description: >
+    Validates a configuration file and shows what would be applied without actually making changes to the cluster.
+  tags:
+    - apply
+    - dry-run
+    - validate
+    - configuration
+  aliases:
+    - dry run apply
+    - validate manifest
+    - test apply without changes
+    - preview apply
+    - check yaml before applying
+  examples:
+    - query: "validate my deployment yaml without applying"
+    - query: "dry run the manifest file"
+    - query: "test apply without making changes"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_apply/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-resource-by-file
+  technology: kubernetes
+  category: configuration
+  name: Delete Resources by File
+  intent: delete_by_file
+  command: kubectl delete -f <file>
+  description: >
+    Deletes all resources defined in a manifest file. This is irreversible for resources without controllers.
+  tags:
+    - delete
+    - file
+    - configuration
+    - destructive
+  aliases:
+    - delete from file
+    - remove resources from manifest
+    - delete resources defined in yaml
+    - undo apply
+    - delete all from file
+  examples:
+    - query: "delete all resources defined in deployment.yaml"
+    - query: "remove resources from the manifest"
+    - query: "undo the applied configuration"
+  risk: dangerous
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-resource-yaml
+  technology: kubernetes
+  category: configuration
+  name: Get Resource YAML
+  intent: get_resource_yaml
+  command: kubectl get <resource-type> <resource-name> -n <namespace> -o yaml
+  description: >
+    Outputs the full YAML definition of a resource, useful for inspection, backup, or modification.
+  tags:
+    - yaml
+    - output
+    - export
+    - configuration
+  aliases:
+    - get resource yaml
+    - export resource as yaml
+    - show resource definition
+    - dump resource yaml
+    - output yaml format
+    - get resource manifest
+  examples:
+    - query: "get the YAML for my deployment"
+    - query: "export the service as YAML"
+    - query: "show the full resource definition in YAML"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-resource-json
+  technology: kubernetes
+  category: configuration
+  name: Get Resource JSON
+  intent: get_resource_json
+  command: kubectl get <resource-type> <resource-name> -n <namespace> -o json
+  description: >
+    Outputs the full JSON definition of a resource for programmatic processing or inspection.
+  tags:
+    - json
+    - output
+    - export
+    - configuration
+  aliases:
+    - get resource json
+    - export resource as json
+    - show resource in json format
+    - dump resource json
+    - output json
+  examples:
+    - query: "get the JSON for my deployment"
+    - query: "export the pod spec as JSON"
+    - query: "show the full resource definition in JSON"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_get/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-cordon-node
+  technology: kubernetes
+  category: nodes
+  name: Cordon Node
+  intent: cordon_node
+  command: kubectl cordon <node>
+  description: >
+    Marks a node as unschedulable so no new pods will be placed on it. Existing pods continue running.
+  tags:
+    - cordon
+    - nodes
+    - scheduling
+    - maintenance
+  aliases:
+    - cordon node
+    - mark node unschedulable
+    - prevent scheduling on node
+    - stop new pods on node
+    - prepare node for maintenance
+  examples:
+    - query: "cordon the node worker-2"
+    - query: "mark the node as unschedulable"
+    - query: "prevent new pods from being scheduled on this node"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cordon/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-uncordon-node
+  technology: kubernetes
+  category: nodes
+  name: Uncordon Node
+  intent: uncordon_node
+  command: kubectl uncordon <node>
+  description: >
+    Marks a node as schedulable again, allowing new pods to be placed on it after maintenance.
+  tags:
+    - uncordon
+    - nodes
+    - scheduling
+    - maintenance
+  aliases:
+    - uncordon node
+    - mark node schedulable
+    - allow scheduling on node
+    - re-enable node for pods
+    - bring node back online
+  examples:
+    - query: "uncordon the node worker-2"
+    - query: "mark the node as schedulable again"
+    - query: "bring the node back online after maintenance"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_uncordon/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-drain-node
+  technology: kubernetes
+  category: nodes
+  name: Drain Node
+  intent: drain_node
+  command: kubectl drain <node> --ignore-daemonsets --delete-emptydir-data
+  description: >
+    Safely evicts all pods from a node in preparation for maintenance. Cordons the node and evicts pods respecting PDBs.
+  tags:
+    - drain
+    - nodes
+    - maintenance
+    - eviction
+  aliases:
+    - drain node
+    - evacuate node
+    - evict all pods from node
+    - prepare node for shutdown
+    - safely remove workloads from node
+  examples:
+    - query: "drain the node for maintenance"
+    - query: "safely evict all pods from the node"
+    - query: "prepare the node for shutdown"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_drain/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-namespace
+  technology: kubernetes
+  category: namespaces
+  name: Delete Namespace
+  intent: delete_namespace
+  command: kubectl delete namespace <namespace>
+  description: >
+    Deletes a namespace and ALL resources within it. This is a highly destructive operation that cannot be undone.
+  tags:
+    - delete
+    - namespace
+    - destructive
+  aliases:
+    - delete namespace
+    - remove namespace
+    - destroy namespace
+    - delete namespace and all resources
+  examples:
+    - query: "delete the staging namespace"
+    - query: "remove the test namespace and everything in it"
+    - query: "destroy the namespace"
+  risk: dangerous
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-create-namespace
+  technology: kubernetes
+  category: namespaces
+  name: Create Namespace
+  intent: create_namespace
+  command: kubectl create namespace <namespace>
+  description: >
+    Creates a new namespace for organizing and isolating cluster resources.
+  tags:
+    - create
+    - namespace
+    - organization
+  aliases:
+    - create namespace
+    - new namespace
+    - make namespace
+    - add namespace
+  examples:
+    - query: "create a new namespace called staging"
+    - query: "make a namespace for the test environment"
+    - query: "add a new namespace"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_namespace/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-set-context-namespace
+  technology: kubernetes
+  category: configuration
+  name: Set Default Namespace
+  intent: set_context_namespace
+  command: kubectl config set-context --current --namespace=<namespace>
+  description: >
+    Sets the default namespace for the current kubectl context so you do not need to specify -n on every command.
+  tags:
+    - context
+    - namespace
+    - configuration
+    - default
+  aliases:
+    - set default namespace
+    - change namespace
+    - switch namespace
+    - use namespace
+    - set current namespace
+  examples:
+    - query: "set the default namespace to production"
+    - query: "switch to the staging namespace"
+    - query: "change my current namespace"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_set-context/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-contexts
+  technology: kubernetes
+  category: configuration
+  name: List Kubernetes Contexts
+  intent: get_contexts
+  command: kubectl config get-contexts
+  description: >
+    Lists all available kubectl contexts showing cluster, auth info, and namespace for each.
+  tags:
+    - context
+    - configuration
+    - clusters
+    - list
+  aliases:
+    - list contexts
+    - show kubernetes contexts
+    - get kubectl contexts
+    - what clusters am I configured for
+    - display available contexts
+  examples:
+    - query: "list all available kubectl contexts"
+    - query: "show which clusters I can connect to"
+    - query: "what contexts are configured"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_get-contexts/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-use-context
+  technology: kubernetes
+  category: configuration
+  name: Switch Kubernetes Context
+  intent: use_context
+  command: kubectl config use-context <context>
+  description: >
+    Switches the active kubectl context to connect to a different cluster or use different credentials.
+  tags:
+    - context
+    - switch
+    - configuration
+    - cluster
+  aliases:
+    - switch context
+    - use context
+    - change cluster context
+    - connect to different cluster
+    - switch kubectl context
+  examples:
+    - query: "switch to the production context"
+    - query: "use the staging cluster context"
+    - query: "change to a different cluster"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_config/kubectl_config_use-context/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-logs-tail
+  technology: kubernetes
+  category: logs
+  name: View Last N Lines of Logs
+  intent: view_logs_tail
+  command: kubectl logs <pod> -n <namespace> --tail=<lines>
+  description: >
+    Displays the last N lines of logs from a pod instead of the full log output.
+  tags:
+    - logs
+    - tail
+    - recent
+  aliases:
+    - show last N lines of logs
+    - tail pod logs
+    - recent log lines
+    - last few log entries
+    - most recent logs
+  examples:
+    - query: "show the last 100 lines of logs"
+    - query: "tail 50 lines from the pod"
+    - query: "get the most recent log entries"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-edit-resource
+  technology: kubernetes
+  category: configuration
+  name: Edit Resource
+  intent: edit_resource
+  command: kubectl edit <resource-type> <resource-name> -n <namespace>
+  description: >
+    Opens a resource in the default editor for live editing. Changes are applied immediately upon saving.
+  tags:
+    - edit
+    - modify
+    - configuration
+    - live
+  aliases:
+    - edit resource
+    - modify resource live
+    - change resource inline
+    - open resource in editor
+    - edit deployment live
+  examples:
+    - query: "edit the deployment in my editor"
+    - query: "modify the service configuration live"
+    - query: "open the configmap for editing"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_edit/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-patch-resource
+  technology: kubernetes
+  category: configuration
+  name: Patch Resource
+  intent: patch_resource
+  command: kubectl patch <resource-type> <resource-name> -n <namespace> -p '<json-patch>'
+  description: >
+    Applies a partial update to a resource using strategic merge patch, JSON merge patch, or JSON patch.
+  tags:
+    - patch
+    - update
+    - modify
+    - configuration
+  aliases:
+    - patch resource
+    - partially update resource
+    - modify resource field
+    - update resource attribute
+    - patch deployment
+  examples:
+    - query: "patch the deployment to change the image"
+    - query: "update a single field on the resource"
+    - query: "modify the replica count with a patch"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_patch/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-replicasets
+  technology: kubernetes
+  category: workloads
+  name: List ReplicaSets
+  intent: get_replicasets
+  command: kubectl get replicasets -n <namespace>
+  description: >
+    Lists all ReplicaSets in the namespace showing desired, current, and ready replica counts.
+  tags:
+    - replicasets
+    - workloads
+    - list
+  aliases:
+    - list replicasets
+    - show replica sets
+    - get replicasets
+    - what replicasets exist
+    - display replicasets
+  examples:
+    - query: "list all replicasets in the namespace"
+    - query: "show replicasets"
+    - query: "what replicasets are deployed"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-pods-by-label
+  technology: kubernetes
+  category: pods
+  name: Delete Pods by Label
+  intent: delete_pods_by_label
+  command: kubectl delete pods -l <key>=<value> -n <namespace>
+  description: >
+    Deletes all pods matching a specific label selector. Useful for bulk pod restarts when managed by controllers.
+  tags:
+    - delete
+    - pods
+    - labels
+    - bulk
+  aliases:
+    - delete pods by label
+    - remove pods matching label
+    - bulk delete pods
+    - kill pods with label
+    - delete all pods with label
+  examples:
+    - query: "delete all pods with label app=my-app"
+    - query: "remove pods matching the tier=frontend label"
+    - query: "bulk delete pods with a specific label"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-wait-condition
+  technology: kubernetes
+  category: configuration
+  name: Wait for Resource Condition
+  intent: wait_condition
+  command: kubectl wait --for=condition=<condition> <resource-type>/<resource-name> -n <namespace> --timeout=<duration>
+  description: >
+    Waits for a specific condition to be met on a resource before continuing. Useful in scripts and CI/CD pipelines.
+  tags:
+    - wait
+    - condition
+    - automation
+    - scripting
+  aliases:
+    - wait for condition
+    - wait until ready
+    - wait for pod to be ready
+    - wait for resource condition
+    - block until condition met
+  examples:
+    - query: "wait for the pod to be ready"
+    - query: "wait until the deployment is available"
+    - query: "block until the job completes"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_wait/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-api-resources
+  technology: kubernetes
+  category: configuration
+  name: List API Resources
+  intent: api_resources
+  command: kubectl api-resources
+  description: >
+    Lists all available API resource types in the cluster with their short names, API group, and whether they are namespaced.
+  tags:
+    - api
+    - resources
+    - discovery
+    - reference
+  aliases:
+    - list api resources
+    - show all resource types
+    - what resources does kubernetes support
+    - available resource kinds
+    - kubectl resource types
+  examples:
+    - query: "list all available API resource types"
+    - query: "what resource types does this cluster support"
+    - query: "show all available kubernetes resource kinds"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_api-resources/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-cluster-info
+  technology: kubernetes
+  category: nodes
+  name: Show Cluster Info
+  intent: cluster_info
+  command: kubectl cluster-info
+  description: >
+    Displays the addresses of the Kubernetes control plane and cluster services like CoreDNS.
+  tags:
+    - cluster
+    - info
+    - control-plane
+  aliases:
+    - show cluster info
+    - cluster information
+    - where is the API server
+    - kubernetes control plane address
+    - cluster details
+  examples:
+    - query: "show cluster information"
+    - query: "where is the Kubernetes API server"
+    - query: "display cluster endpoint addresses"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_cluster-info/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-create-secret-generic
+  technology: kubernetes
+  category: configuration
+  name: Create Generic Secret
+  intent: create_secret_generic
+  command: kubectl create secret generic <secret> --from-literal=<key>=<value> -n <namespace>
+  description: >
+    Creates a generic secret from literal key-value pairs, files, or directories.
+  tags:
+    - secrets
+    - create
+    - security
+    - configuration
+  aliases:
+    - create secret
+    - make a secret
+    - create generic secret
+    - new secret from literal
+    - add secret
+  examples:
+    - query: "create a secret with username and password"
+    - query: "make a new secret from literal values"
+    - query: "create a secret for the database credentials"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_secret_generic/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-create-secret-tls
+  technology: kubernetes
+  category: configuration
+  name: Create TLS Secret
+  intent: create_secret_tls
+  command: kubectl create secret tls <secret> --cert=<cert-file> --key=<key-file> -n <namespace>
+  description: >
+    Creates a TLS secret from a certificate and private key file for use with ingress TLS termination.
+  tags:
+    - secrets
+    - tls
+    - certificate
+    - security
+  aliases:
+    - create TLS secret
+    - create certificate secret
+    - add TLS cert secret
+    - make secret for HTTPS
+  examples:
+    - query: "create a TLS secret from cert and key files"
+    - query: "add a certificate secret for ingress"
+    - query: "create a secret for HTTPS termination"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_create/kubectl_create_secret_tls/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-scale-statefulset
+  technology: kubernetes
+  category: workloads
+  name: Scale StatefulSet
+  intent: scale_statefulset
+  command: kubectl scale statefulset/<statefulset> --replicas=<count> -n <namespace>
+  description: >
+    Scales a StatefulSet to the specified number of replicas. Pods are created or terminated in ordinal order.
+  tags:
+    - scale
+    - statefulsets
+    - replicas
+    - workloads
+  aliases:
+    - scale statefulset
+    - change statefulset replicas
+    - increase statefulset pods
+    - decrease statefulset pods
+    - scale stateful workload
+  examples:
+    - query: "scale the database statefulset to 3 replicas"
+    - query: "increase the statefulset to 5 replicas"
+    - query: "scale down the statefulset"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_scale/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-autoscale-deployment
+  technology: kubernetes
+  category: monitoring
+  name: Create HPA for Deployment
+  intent: autoscale_deployment
+  command: kubectl autoscale deployment <deployment> --min=<min> --max=<max> --cpu-percent=<percent> -n <namespace>
+  description: >
+    Creates a Horizontal Pod Autoscaler for a deployment that automatically scales based on CPU utilization.
+  tags:
+    - autoscale
+    - hpa
+    - deployment
+    - cpu
+  aliases:
+    - autoscale deployment
+    - create HPA
+    - auto scale pods
+    - set up autoscaling
+    - configure horizontal pod autoscaler
+  examples:
+    - query: "autoscale my deployment between 2 and 10 pods"
+    - query: "create an HPA targeting 80% CPU usage"
+    - query: "set up autoscaling for the web server"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_autoscale/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-all-pods
+  technology: kubernetes
+  category: pods
+  name: Delete All Pods in Namespace
+  intent: delete_all_pods
+  command: kubectl delete pods --all -n <namespace>
+  description: >
+    Deletes all pods in the specified namespace. Pods managed by controllers will be recreated automatically.
+  tags:
+    - delete
+    - pods
+    - all
+    - bulk
+    - destructive
+  aliases:
+    - delete all pods
+    - remove all pods in namespace
+    - restart all pods
+    - kill all pods
+    - clear all pods
+  examples:
+    - query: "delete all pods in the namespace"
+    - query: "remove every pod in staging"
+    - query: "kill all pods to force restart"
+  risk: dangerous
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-run-pod
+  technology: kubernetes
+  category: pods
+  name: Run Pod
+  intent: run_pod
+  command: kubectl run <pod-name> --image=<image> -n <namespace>
+  description: >
+    Creates and runs a single pod from the specified container image. Useful for quick tests and debugging.
+  tags:
+    - run
+    - pod
+    - create
+    - quick
+  aliases:
+    - run a pod
+    - create a quick pod
+    - start a container
+    - run a test pod
+    - launch pod from image
+  examples:
+    - query: "run a pod with nginx image"
+    - query: "create a quick test pod"
+    - query: "start a busybox container for debugging"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_run/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-run-pod-interactive
+  technology: kubernetes
+  category: pods
+  name: Run Interactive Pod
+  intent: run_pod_interactive
+  command: kubectl run <pod-name> --image=<image> -it --rm --restart=Never -n <namespace> -- /bin/sh
+  description: >
+    Creates a temporary interactive pod that is automatically deleted when you exit. Ideal for debugging and testing.
+  tags:
+    - run
+    - pod
+    - interactive
+    - temporary
+    - debugging
+  aliases:
+    - run temporary pod
+    - create debug pod
+    - run interactive container
+    - temporary shell pod
+    - disposable pod for testing
+    - run ephemeral pod
+  examples:
+    - query: "run a temporary interactive pod for debugging"
+    - query: "create a disposable busybox pod"
+    - query: "start an ephemeral shell pod that cleans up when I exit"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_run/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-pod-jsonpath
+  technology: kubernetes
+  category: pods
+  name: Get Pod Info with JSONPath
+  intent: get_pod_jsonpath
+  command: kubectl get pod <pod> -n <namespace> -o jsonpath='{<jsonpath-expression>}'
+  description: >
+    Extracts specific fields from a pod using JSONPath expressions for targeted information retrieval.
+  tags:
+    - jsonpath
+    - pods
+    - query
+    - extract
+  aliases:
+    - get specific pod field
+    - extract pod information
+    - query pod with jsonpath
+    - get pod IP address
+    - pod status with jsonpath
+  examples:
+    - query: "get the IP address of a pod"
+    - query: "extract the container image name from the pod"
+    - query: "get the pod restart count using jsonpath"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/jsonpath/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-delete-service
+  technology: kubernetes
+  category: services
+  name: Delete Service
+  intent: delete_service
+  command: kubectl delete service <service> -n <namespace>
+  description: >
+    Deletes a service, removing the network abstraction and its associated endpoints.
+  tags:
+    - delete
+    - service
+    - networking
+  aliases:
+    - delete service
+    - remove service
+    - destroy service
+    - remove kubernetes service
+  examples:
+    - query: "delete the frontend service"
+    - query: "remove the old service"
+    - query: "destroy the service"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_delete/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-set-image
+  technology: kubernetes
+  category: deployments
+  name: Set Container Image
+  intent: set_image
+  command: kubectl set image deployment/<deployment> <container>=<image>:<tag> -n <namespace>
+  description: >
+    Updates the container image of a deployment, triggering a rolling update to the new image version.
+  tags:
+    - set
+    - image
+    - deployment
+    - update
+    - rolling-update
+  aliases:
+    - set deployment image
+    - update container image
+    - change deployment image
+    - deploy new image version
+    - update image tag
+    - rolling update to new image
+  examples:
+    - query: "update the deployment to use nginx:1.25"
+    - query: "change the container image to the latest version"
+    - query: "deploy a new image version"
+  risk: warning
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_set/kubectl_set_image/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-get-resource-custom-columns
+  technology: kubernetes
+  category: configuration
+  name: Get Resources with Custom Columns
+  intent: get_custom_columns
+  command: kubectl get <resource-type> -n <namespace> -o custom-columns=<header>:<jsonpath>,<header>:<jsonpath>
+  description: >
+    Displays resources with user-defined custom columns using JSONPath expressions for tailored output.
+  tags:
+    - custom-columns
+    - output
+    - formatting
+    - query
+  aliases:
+    - custom column output
+    - get resources with custom fields
+    - formatted resource listing
+    - custom table output
+    - show specific columns
+  examples:
+    - query: "show pods with name and IP in custom columns"
+    - query: "list deployments with custom column format"
+    - query: "display resources with only specific fields"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/overview/#custom-columns
+  verified_at: "2026-08-01"
+
+- id: kubernetes-force-delete-pod
+  technology: kubernetes
+  category: pods
+  name: Force Delete Pod
+  intent: force_delete_pod
+  command: kubectl delete pod <pod> -n <namespace> --grace-period=0 --force
+  description: >
+    Force deletes a pod immediately without waiting for graceful shutdown. Use only when a pod is stuck in Terminating state.
+  tags:
+    - delete
+    - force
+    - pod
+    - stuck
+    - terminating
+  aliases:
+    - force delete pod
+    - force kill pod
+    - remove stuck pod
+    - delete terminating pod
+    - force remove pod
+  examples:
+    - query: "force delete the stuck pod"
+    - query: "force kill a pod stuck in Terminating"
+    - query: "remove the pod that won't terminate"
+  risk: dangerous
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination-forced
+  verified_at: "2026-08-01"
+
+- id: kubernetes-logs-since
+  technology: kubernetes
+  category: logs
+  name: View Logs Since Duration
+  intent: view_logs_since
+  command: kubectl logs <pod> -n <namespace> --since=<duration>
+  description: >
+    Displays logs from a pod generated within the specified time duration (e.g., 1h, 30m, 2h30m).
+  tags:
+    - logs
+    - since
+    - time-based
+    - recent
+  aliases:
+    - show logs since
+    - get recent logs
+    - logs from last hour
+    - logs in time window
+    - view logs since duration
+  examples:
+    - query: "show logs from the last hour"
+    - query: "get logs from the past 30 minutes"
+    - query: "view logs since 2 hours ago"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/reference/kubectl/generated/kubectl_logs/
+  verified_at: "2026-08-01"
+
+- id: kubernetes-describe-cronjob
+  technology: kubernetes
+  category: workloads
+  name: Describe CronJob
+  intent: describe_cronjob
+  command: kubectl describe cronjob <cronjob> -n <namespace>
+  description: >
+    Shows detailed information about a CronJob including schedule, concurrency policy, last schedule time, and active jobs.
+  tags:
+    - cronjobs
+    - describe
+    - scheduled
+    - workloads
+  aliases:
+    - describe cronjob
+    - show cronjob details
+    - inspect cron job
+    - cronjob schedule and status
+    - cronjob configuration
+  examples:
+    - query: "describe the backup cronjob"
+    - query: "show cronjob schedule and configuration"
+    - query: "inspect the cron job details"
+  risk: safe
+  documentation:
+    url: https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/
+  verified_at: "2026-08-01"

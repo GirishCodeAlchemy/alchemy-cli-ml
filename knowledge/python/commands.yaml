@@ -1,0 +1,1448 @@
+# AlchemyCLI AI - Python Commands
+
+- id: python-check-version
+  technology: python
+  category: runtime
+  name: Check Python Version
+  intent: check_version
+  command: python --version
+  description: >
+    Display the currently installed Python interpreter version.
+  tags:
+    - python
+    - version
+    - info
+  aliases:
+    - check python version
+    - what python version do I have
+    - show python version
+    - python version number
+    - which python version is installed
+  examples:
+    - query: "What version of Python am I running?"
+    - query: "Check my Python version"
+    - query: "Show installed Python version"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#cmdoption-V
+  verified_at: "2026-08-01"
+
+- id: python-check-version-python3
+  technology: python
+  category: runtime
+  name: Check Python 3 Version
+  intent: check_python3_version
+  command: python3 --version
+  description: >
+    Display the version of the Python 3 interpreter specifically, useful on systems
+    where both Python 2 and Python 3 are installed.
+  tags:
+    - python3
+    - version
+    - info
+  aliases:
+    - check python3 version
+    - python3 version
+    - what version of python3
+    - show python3 version
+  examples:
+    - query: "What version of python3 is installed?"
+    - query: "Check python3 version"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#cmdoption-V
+  verified_at: "2026-08-01"
+
+- id: python-pip-install-package
+  technology: python
+  category: packages
+  name: Install a Package with pip
+  intent: install_package
+  command: pip install <package>
+  description: >
+    Install a Python package from PyPI using pip.
+  tags:
+    - pip
+    - install
+    - package
+    - pypi
+  aliases:
+    - pip install package
+    - install a python package
+    - add a python dependency
+    - install python library
+    - pip add package
+  examples:
+    - query: "Install the requests library"
+    - query: "How do I install a Python package?"
+    - query: "Add flask to my project"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_install/
+  verified_at: "2026-08-01"
+
+- id: python-pip-install-requirements
+  technology: python
+  category: packages
+  name: Install Packages from requirements.txt
+  intent: install_from_requirements
+  command: pip install -r requirements.txt
+  description: >
+    Install all Python packages listed in a requirements.txt file.
+  tags:
+    - pip
+    - install
+    - requirements
+    - dependencies
+  aliases:
+    - install from requirements file
+    - pip install requirements
+    - install all dependencies
+    - install packages from requirements.txt
+    - pip install -r
+  examples:
+    - query: "Install all packages from requirements.txt"
+    - query: "How do I install project dependencies?"
+    - query: "Install requirements file"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers
+  verified_at: "2026-08-01"
+
+- id: python-pip-install-version
+  technology: python
+  category: packages
+  name: Install a Specific Package Version
+  intent: install_package_version
+  command: pip install <package>==<version>
+  description: >
+    Install an exact version of a Python package using the == version specifier.
+  tags:
+    - pip
+    - install
+    - version
+    - pinning
+  aliases:
+    - install specific version of a package
+    - pin a package version
+    - install exact version with pip
+    - pip install with version
+    - install a particular version
+  examples:
+    - query: "Install version 2.28.0 of requests"
+    - query: "How do I install a specific version of a package?"
+    - query: "Pin flask to version 2.3.1"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_install/#requirement-specifiers
+  verified_at: "2026-08-01"
+
+- id: python-pip-install-editable
+  technology: python
+  category: packages
+  name: Install Package in Editable Mode
+  intent: install_editable
+  command: pip install -e <path>
+  description: >
+    Install a local package in editable (development) mode so that changes to
+    the source code are immediately reflected without reinstalling.
+  tags:
+    - pip
+    - install
+    - editable
+    - development
+    - local
+  aliases:
+    - install package in editable mode
+    - pip install editable
+    - install package for development
+    - pip install -e
+    - install local package in dev mode
+  examples:
+    - query: "Install my local package in editable mode"
+    - query: "How do I install a package for development?"
+    - query: "Set up a package in development mode"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_install/#editable-installs
+  verified_at: "2026-08-01"
+
+- id: python-pip-list
+  technology: python
+  category: packages
+  name: List Installed Packages
+  intent: list_packages
+  command: pip list
+  description: >
+    List all Python packages currently installed in the active environment.
+  tags:
+    - pip
+    - list
+    - packages
+    - installed
+  aliases:
+    - list installed python packages
+    - show installed packages
+    - what packages are installed
+    - pip list packages
+    - see all python libraries
+  examples:
+    - query: "Show all installed Python packages"
+    - query: "What packages do I have installed?"
+    - query: "List my pip packages"
+  risk: safe
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_list/
+  verified_at: "2026-08-01"
+
+- id: python-pip-freeze
+  technology: python
+  category: packages
+  name: Freeze Installed Packages
+  intent: freeze_packages
+  command: pip freeze > requirements.txt
+  description: >
+    Output all installed packages with their exact versions in requirements format
+    and save to a requirements.txt file.
+  tags:
+    - pip
+    - freeze
+    - requirements
+    - export
+  aliases:
+    - pip freeze
+    - export installed packages
+    - generate requirements.txt
+    - save dependencies to file
+    - freeze python dependencies
+    - create requirements file
+  examples:
+    - query: "Generate a requirements.txt from installed packages"
+    - query: "How do I freeze my Python dependencies?"
+    - query: "Export my pip packages to a file"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_freeze/
+  verified_at: "2026-08-01"
+
+- id: python-pip-show
+  technology: python
+  category: packages
+  name: Show Package Information
+  intent: show_package_info
+  command: pip show <package>
+  description: >
+    Display detailed information about an installed package including version,
+    location, dependencies, and metadata.
+  tags:
+    - pip
+    - show
+    - info
+    - metadata
+  aliases:
+    - show package details
+    - pip show package info
+    - get package information
+    - display package metadata
+    - check package details
+  examples:
+    - query: "Show details about the requests package"
+    - query: "What version of flask is installed?"
+    - query: "Get info about an installed package"
+  risk: safe
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_show/
+  verified_at: "2026-08-01"
+
+- id: python-pip-uninstall
+  technology: python
+  category: packages
+  name: Uninstall a Package
+  intent: uninstall_package
+  command: pip uninstall <package>
+  description: >
+    Remove an installed Python package from the current environment.
+  tags:
+    - pip
+    - uninstall
+    - remove
+    - package
+  aliases:
+    - uninstall a python package
+    - remove a pip package
+    - pip remove package
+    - delete python library
+    - pip uninstall package
+  examples:
+    - query: "Uninstall the requests package"
+    - query: "How do I remove a Python package?"
+    - query: "Remove flask from my environment"
+  risk: dangerous
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_uninstall/
+  verified_at: "2026-08-01"
+
+- id: python-pip-upgrade-pip
+  technology: python
+  category: packages
+  name: Upgrade pip Itself
+  intent: upgrade_pip
+  command: pip install --upgrade pip
+  description: >
+    Upgrade pip to the latest available version.
+  tags:
+    - pip
+    - upgrade
+    - update
+    - self-update
+  aliases:
+    - upgrade pip
+    - update pip
+    - install latest pip
+    - pip upgrade itself
+    - update pip to latest version
+  examples:
+    - query: "How do I upgrade pip?"
+    - query: "Update pip to the latest version"
+    - query: "Upgrade pip itself"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/installation/#upgrading-pip
+  verified_at: "2026-08-01"
+
+- id: python-pip-upgrade-package
+  technology: python
+  category: packages
+  name: Upgrade a Package
+  intent: upgrade_package
+  command: pip install --upgrade <package>
+  description: >
+    Upgrade an installed Python package to the latest available version.
+  tags:
+    - pip
+    - upgrade
+    - update
+    - package
+  aliases:
+    - upgrade a python package
+    - update a pip package
+    - pip upgrade package
+    - install latest version of package
+    - update python library
+  examples:
+    - query: "Upgrade the requests package"
+    - query: "Update flask to the latest version"
+    - query: "How do I upgrade a Python package?"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_install/#cmdoption-U
+  verified_at: "2026-08-01"
+
+- id: python-create-venv
+  technology: python
+  category: virtual-environments
+  name: Create a Virtual Environment
+  intent: create_venv
+  command: python -m venv <path>
+  description: >
+    Create a new Python virtual environment at the specified path using the
+    built-in venv module.
+  tags:
+    - venv
+    - virtualenv
+    - virtual-environment
+    - isolate
+  aliases:
+    - create a virtual environment
+    - make a venv
+    - set up virtual environment
+    - python venv create
+    - initialize a venv
+    - create isolated python environment
+  examples:
+    - query: "Create a virtual environment called .venv"
+    - query: "How do I set up a Python virtual environment?"
+    - query: "Make a new venv for my project"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/venv.html
+  verified_at: "2026-08-01"
+
+- id: python-activate-venv
+  technology: python
+  category: virtual-environments
+  name: Activate Virtual Environment
+  intent: activate_venv
+  command: source <path>/bin/activate
+  description: >
+    Activate a Python virtual environment so that its interpreter and packages
+    are used. On Windows use <path>\Scripts\activate instead.
+  tags:
+    - venv
+    - activate
+    - virtual-environment
+  aliases:
+    - activate virtual environment
+    - activate venv
+    - source activate venv
+    - enter virtual environment
+    - start venv
+    - enable virtual environment
+  examples:
+    - query: "How do I activate my virtual environment?"
+    - query: "Activate the .venv environment"
+    - query: "Source the venv activate script"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/venv.html#how-venvs-work
+  verified_at: "2026-08-01"
+
+- id: python-deactivate-venv
+  technology: python
+  category: virtual-environments
+  name: Deactivate Virtual Environment
+  intent: deactivate_venv
+  command: deactivate
+  description: >
+    Deactivate the currently active Python virtual environment and return to
+    the system Python.
+  tags:
+    - venv
+    - deactivate
+    - virtual-environment
+  aliases:
+    - deactivate virtual environment
+    - exit venv
+    - leave virtual environment
+    - deactivate venv
+    - stop virtual environment
+  examples:
+    - query: "How do I deactivate my virtual environment?"
+    - query: "Exit the current venv"
+    - query: "Deactivate the venv"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/venv.html#how-venvs-work
+  verified_at: "2026-08-01"
+
+- id: python-run-module
+  technology: python
+  category: runtime
+  name: Run a Python Module
+  intent: run_module
+  command: python -m <module>
+  description: >
+    Run a Python module as a script using the -m flag. The module is located
+    on sys.path and executed as __main__.
+  tags:
+    - python
+    - module
+    - run
+    - execute
+  aliases:
+    - run a python module
+    - python -m
+    - execute python module
+    - run module as script
+    - invoke python module
+  examples:
+    - query: "Run the http.server module"
+    - query: "How do I run a Python module from the command line?"
+    - query: "Execute a module with python -m"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#cmdoption-m
+  verified_at: "2026-08-01"
+
+- id: python-run-script
+  technology: python
+  category: runtime
+  name: Run a Python Script
+  intent: run_script
+  command: python <script>
+  description: >
+    Execute a Python script file by passing its path to the Python interpreter.
+  tags:
+    - python
+    - script
+    - run
+    - execute
+  aliases:
+    - run a python script
+    - execute python file
+    - run python file
+    - python run script
+    - execute a .py file
+  examples:
+    - query: "Run the script main.py"
+    - query: "How do I execute a Python file?"
+    - query: "Run my Python script"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#interface-options
+  verified_at: "2026-08-01"
+
+- id: python-run-inline-code
+  technology: python
+  category: runtime
+  name: Run Inline Python Code
+  intent: run_inline_code
+  command: python -c "<code>"
+  description: >
+    Execute a short Python statement or expression directly from the command line
+    without creating a script file.
+  tags:
+    - python
+    - inline
+    - one-liner
+    - execute
+  aliases:
+    - run inline python code
+    - python one-liner
+    - execute python from command line
+    - python -c
+    - run python expression
+    - quick python command
+  examples:
+    - query: "Run a one-liner Python command"
+    - query: "Execute python -c 'print(42)'"
+    - query: "How do I run Python code inline?"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#cmdoption-c
+  verified_at: "2026-08-01"
+
+- id: python-pytest-run-all
+  technology: python
+  category: testing
+  name: Run All Tests with pytest
+  intent: run_all_tests
+  command: pytest
+  description: >
+    Discover and run all test files and test functions in the current directory
+    and its subdirectories using pytest.
+  tags:
+    - pytest
+    - testing
+    - test
+    - run
+  aliases:
+    - run all tests
+    - run pytest
+    - execute all tests
+    - run test suite
+    - pytest run all
+    - run all unit tests
+  examples:
+    - query: "Run all my Python tests"
+    - query: "Execute the full test suite"
+    - query: "How do I run pytest?"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/usage.html
+  verified_at: "2026-08-01"
+
+- id: python-pytest-specific-file
+  technology: python
+  category: testing
+  name: Run Tests in a Specific File
+  intent: run_tests_file
+  command: pytest <file>
+  description: >
+    Run all tests contained in a specific test file.
+  tags:
+    - pytest
+    - testing
+    - file
+    - specific
+  aliases:
+    - run tests in a file
+    - pytest specific file
+    - run one test file
+    - execute tests from file
+    - test a single file
+  examples:
+    - query: "Run tests in test_models.py"
+    - query: "Execute only tests from a specific file"
+    - query: "Run pytest on a single file"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run
+  verified_at: "2026-08-01"
+
+- id: python-pytest-specific-test
+  technology: python
+  category: testing
+  name: Run a Specific Test Function
+  intent: run_specific_test
+  command: pytest <file>::<test_function>
+  description: >
+    Run a single test function by specifying the file path and test function name
+    separated by a double colon.
+  tags:
+    - pytest
+    - testing
+    - specific
+    - function
+  aliases:
+    - run a specific test
+    - run one test function
+    - pytest specific test
+    - execute single test
+    - run individual test
+  examples:
+    - query: "Run only test_login in test_auth.py"
+    - query: "How do I run a single test function?"
+    - query: "Execute a specific test with pytest"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/usage.html#specifying-which-tests-to-run
+  verified_at: "2026-08-01"
+
+- id: python-pytest-verbose
+  technology: python
+  category: testing
+  name: Run Tests in Verbose Mode
+  intent: run_tests_verbose
+  command: pytest -v
+  description: >
+    Run pytest with verbose output showing each individual test name and result.
+  tags:
+    - pytest
+    - testing
+    - verbose
+    - output
+  aliases:
+    - run tests verbose
+    - pytest verbose mode
+    - show detailed test output
+    - pytest -v
+    - run tests with full output
+  examples:
+    - query: "Run tests with verbose output"
+    - query: "Show detailed test results"
+    - query: "How do I get verbose pytest output?"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/output.html#verbosity
+  verified_at: "2026-08-01"
+
+- id: python-pytest-coverage
+  technology: python
+  category: testing
+  name: Run Tests with Coverage
+  intent: run_tests_coverage
+  command: pytest --cov=<package>
+  description: >
+    Run pytest with code coverage reporting using the pytest-cov plugin.
+    Shows which lines of code are exercised by tests.
+  tags:
+    - pytest
+    - testing
+    - coverage
+    - pytest-cov
+  aliases:
+    - run tests with coverage
+    - pytest coverage report
+    - check code coverage
+    - pytest-cov
+    - measure test coverage
+    - run coverage
+  examples:
+    - query: "Run tests with code coverage"
+    - query: "Check my test coverage"
+    - query: "How do I measure test coverage with pytest?"
+  risk: safe
+  documentation:
+    url: https://pytest-cov.readthedocs.io/en/latest/
+  verified_at: "2026-08-01"
+
+- id: python-pytest-markers
+  technology: python
+  category: testing
+  name: Run Tests by Marker
+  intent: run_tests_by_marker
+  command: pytest -m <marker>
+  description: >
+    Run only tests decorated with a specific pytest marker, such as @pytest.mark.slow
+    or @pytest.mark.integration.
+  tags:
+    - pytest
+    - testing
+    - markers
+    - filter
+  aliases:
+    - run tests by marker
+    - pytest markers
+    - filter tests by marker
+    - run marked tests
+    - pytest -m
+  examples:
+    - query: "Run only tests marked as slow"
+    - query: "How do I run tests with a specific marker?"
+    - query: "Filter pytest tests by marker"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/mark.html
+  verified_at: "2026-08-01"
+
+- id: python-pytest-stop-first-failure
+  technology: python
+  category: testing
+  name: Stop on First Test Failure
+  intent: run_tests_stop_first_failure
+  command: pytest -x
+  description: >
+    Run pytest and stop execution immediately after the first test failure.
+  tags:
+    - pytest
+    - testing
+    - fail-fast
+    - stop
+  aliases:
+    - stop on first test failure
+    - pytest fail fast
+    - pytest -x
+    - stop tests on failure
+    - exit on first failure
+  examples:
+    - query: "Run tests but stop on the first failure"
+    - query: "How do I make pytest stop at the first failing test?"
+    - query: "Fail fast with pytest"
+  risk: safe
+  documentation:
+    url: https://docs.pytest.org/en/stable/how-to/usage.html#stopping-after-the-first-or-n-failures
+  verified_at: "2026-08-01"
+
+- id: python-ruff-check
+  technology: python
+  category: linting
+  name: Check Code with Ruff
+  intent: ruff_check
+  command: ruff check <path>
+  description: >
+    Run the Ruff linter to check Python code for style violations, errors, and
+    potential bugs. Ruff is an extremely fast Python linter written in Rust.
+  tags:
+    - ruff
+    - linting
+    - check
+    - style
+  aliases:
+    - ruff check code
+    - lint python with ruff
+    - check code with ruff
+    - run ruff linter
+    - ruff lint
+  examples:
+    - query: "Lint my Python code with ruff"
+    - query: "Check for code style issues using ruff"
+    - query: "Run ruff on my project"
+  risk: safe
+  documentation:
+    url: https://docs.astral.sh/ruff/linter/
+  verified_at: "2026-08-01"
+
+- id: python-ruff-fix
+  technology: python
+  category: linting
+  name: Auto-fix Linting Issues with Ruff
+  intent: ruff_fix
+  command: ruff check --fix <path>
+  description: >
+    Run Ruff and automatically fix all auto-fixable linting violations in place.
+  tags:
+    - ruff
+    - linting
+    - fix
+    - auto-fix
+  aliases:
+    - ruff fix issues
+    - auto-fix linting with ruff
+    - ruff autofix
+    - fix code style with ruff
+    - ruff check fix
+  examples:
+    - query: "Auto-fix linting issues with ruff"
+    - query: "Fix all ruff violations automatically"
+    - query: "Run ruff with auto-fix"
+  risk: warning
+  documentation:
+    url: https://docs.astral.sh/ruff/linter/#fixing-errors
+  verified_at: "2026-08-01"
+
+- id: python-ruff-format
+  technology: python
+  category: formatting
+  name: Format Code with Ruff
+  intent: ruff_format
+  command: ruff format <path>
+  description: >
+    Format Python source code using Ruff's built-in formatter, which is a
+    drop-in replacement for Black.
+  tags:
+    - ruff
+    - format
+    - formatting
+    - code-style
+  aliases:
+    - ruff format code
+    - format python with ruff
+    - ruff formatter
+    - auto-format with ruff
+    - format code using ruff
+  examples:
+    - query: "Format my Python code with ruff"
+    - query: "Run ruff formatter"
+    - query: "Auto-format code using ruff"
+  risk: warning
+  documentation:
+    url: https://docs.astral.sh/ruff/formatter/
+  verified_at: "2026-08-01"
+
+- id: python-mypy-check
+  technology: python
+  category: linting
+  name: Type Check with mypy
+  intent: mypy_check
+  command: mypy <path>
+  description: >
+    Run mypy to perform static type checking on Python source code using type
+    annotations.
+  tags:
+    - mypy
+    - type-checking
+    - static-analysis
+    - types
+  aliases:
+    - mypy type check
+    - run mypy
+    - type check python code
+    - static type analysis
+    - check types with mypy
+  examples:
+    - query: "Type check my Python code with mypy"
+    - query: "Run mypy on my project"
+    - query: "Check for type errors in Python"
+  risk: safe
+  documentation:
+    url: https://mypy.readthedocs.io/en/stable/running_mypy.html
+  verified_at: "2026-08-01"
+
+- id: python-black-format
+  technology: python
+  category: formatting
+  name: Format Code with Black
+  intent: black_format
+  command: black <path>
+  description: >
+    Format Python source code using the Black code formatter, the uncompromising
+    Python code formatter.
+  tags:
+    - black
+    - format
+    - formatting
+    - code-style
+  aliases:
+    - black format code
+    - format python with black
+    - run black formatter
+    - auto-format with black
+    - format code using black
+  examples:
+    - query: "Format my Python code with black"
+    - query: "Run the black formatter"
+    - query: "Auto-format Python files with black"
+  risk: warning
+  documentation:
+    url: https://black.readthedocs.io/en/stable/usage_and_configuration/the_basics.html
+  verified_at: "2026-08-01"
+
+- id: python-isort-imports
+  technology: python
+  category: formatting
+  name: Sort Imports with isort
+  intent: isort_imports
+  command: isort <path>
+  description: >
+    Sort and organize Python import statements according to PEP 8 guidelines
+    using isort.
+  tags:
+    - isort
+    - imports
+    - sorting
+    - formatting
+  aliases:
+    - sort python imports
+    - organize imports with isort
+    - run isort
+    - fix import order
+    - isort imports
+    - sort imports
+  examples:
+    - query: "Sort my Python imports with isort"
+    - query: "Organize import statements"
+    - query: "Fix import ordering in my Python files"
+  risk: warning
+  documentation:
+    url: https://pycqa.github.io/isort/docs/configuration/options.html
+  verified_at: "2026-08-01"
+
+- id: python-poetry-install
+  technology: python
+  category: packages
+  name: Install Dependencies with Poetry
+  intent: poetry_install
+  command: poetry install
+  description: >
+    Install all dependencies defined in pyproject.toml using Poetry, creating
+    a virtual environment if one does not exist.
+  tags:
+    - poetry
+    - install
+    - dependencies
+    - pyproject
+  aliases:
+    - poetry install
+    - install poetry dependencies
+    - install project with poetry
+    - poetry install packages
+    - set up poetry project
+  examples:
+    - query: "Install my project dependencies with poetry"
+    - query: "Run poetry install"
+    - query: "Set up a poetry project"
+  risk: warning
+  documentation:
+    url: https://python-poetry.org/docs/cli/#install
+  verified_at: "2026-08-01"
+
+- id: python-poetry-add
+  technology: python
+  category: packages
+  name: Add a Dependency with Poetry
+  intent: poetry_add
+  command: poetry add <package>
+  description: >
+    Add a new dependency to the project and install it using Poetry.
+  tags:
+    - poetry
+    - add
+    - dependency
+    - package
+  aliases:
+    - poetry add package
+    - add dependency with poetry
+    - poetry install a package
+    - add a library with poetry
+    - poetry add dependency
+  examples:
+    - query: "Add requests to my poetry project"
+    - query: "How do I add a dependency with poetry?"
+    - query: "Install a new package with poetry"
+  risk: warning
+  documentation:
+    url: https://python-poetry.org/docs/cli/#add
+  verified_at: "2026-08-01"
+
+- id: python-poetry-remove
+  technology: python
+  category: packages
+  name: Remove a Dependency with Poetry
+  intent: poetry_remove
+  command: poetry remove <package>
+  description: >
+    Remove a dependency from the project using Poetry.
+  tags:
+    - poetry
+    - remove
+    - dependency
+    - uninstall
+  aliases:
+    - poetry remove package
+    - remove dependency with poetry
+    - uninstall a poetry package
+    - delete a poetry dependency
+    - poetry remove
+  examples:
+    - query: "Remove requests from my poetry project"
+    - query: "How do I remove a dependency with poetry?"
+    - query: "Uninstall a package with poetry"
+  risk: warning
+  documentation:
+    url: https://python-poetry.org/docs/cli/#remove
+  verified_at: "2026-08-01"
+
+- id: python-poetry-update
+  technology: python
+  category: packages
+  name: Update Dependencies with Poetry
+  intent: poetry_update
+  command: poetry update
+  description: >
+    Update all dependencies to their latest compatible versions according to
+    the version constraints in pyproject.toml.
+  tags:
+    - poetry
+    - update
+    - upgrade
+    - dependencies
+  aliases:
+    - poetry update
+    - update poetry dependencies
+    - upgrade poetry packages
+    - poetry update all
+    - refresh poetry dependencies
+  examples:
+    - query: "Update all my poetry dependencies"
+    - query: "How do I update packages with poetry?"
+    - query: "Upgrade poetry dependencies to latest"
+  risk: warning
+  documentation:
+    url: https://python-poetry.org/docs/cli/#update
+  verified_at: "2026-08-01"
+
+- id: python-poetry-build
+  technology: python
+  category: tools
+  name: Build Package with Poetry
+  intent: poetry_build
+  command: poetry build
+  description: >
+    Build the project into distributable archives (sdist and wheel) using Poetry.
+  tags:
+    - poetry
+    - build
+    - package
+    - distribution
+  aliases:
+    - poetry build
+    - build python package with poetry
+    - create distribution with poetry
+    - build wheel with poetry
+    - package project with poetry
+  examples:
+    - query: "Build my Python package with poetry"
+    - query: "Create a wheel file with poetry"
+    - query: "How do I build a distributable with poetry?"
+  risk: safe
+  documentation:
+    url: https://python-poetry.org/docs/cli/#build
+  verified_at: "2026-08-01"
+
+- id: python-poetry-run
+  technology: python
+  category: tools
+  name: Run a Command with Poetry
+  intent: poetry_run
+  command: poetry run <command>
+  description: >
+    Run a command within the Poetry-managed virtual environment without
+    activating it first.
+  tags:
+    - poetry
+    - run
+    - execute
+    - virtual-environment
+  aliases:
+    - poetry run command
+    - run command with poetry
+    - execute in poetry env
+    - poetry run python
+    - poetry run script
+  examples:
+    - query: "Run a script using poetry's virtual environment"
+    - query: "How do I run a command with poetry?"
+    - query: "Execute python in poetry's venv"
+  risk: safe
+  documentation:
+    url: https://python-poetry.org/docs/cli/#run
+  verified_at: "2026-08-01"
+
+- id: python-poetry-lock
+  technology: python
+  category: packages
+  name: Lock Dependencies with Poetry
+  intent: poetry_lock
+  command: poetry lock
+  description: >
+    Resolve and lock all dependencies to specific versions in the poetry.lock
+    file without installing them.
+  tags:
+    - poetry
+    - lock
+    - dependencies
+    - resolve
+  aliases:
+    - poetry lock
+    - lock poetry dependencies
+    - generate poetry lock file
+    - resolve dependencies with poetry
+    - update poetry lock
+  examples:
+    - query: "Lock my poetry dependencies"
+    - query: "Generate a poetry.lock file"
+    - query: "Resolve and lock dependencies with poetry"
+  risk: safe
+  documentation:
+    url: https://python-poetry.org/docs/cli/#lock
+  verified_at: "2026-08-01"
+
+- id: python-uv-pip-install
+  technology: python
+  category: packages
+  name: Install a Package with uv
+  intent: uv_pip_install
+  command: uv pip install <package>
+  description: >
+    Install a Python package using uv, an extremely fast Python package installer
+    written in Rust.
+  tags:
+    - uv
+    - pip
+    - install
+    - fast
+  aliases:
+    - uv install package
+    - install with uv
+    - uv pip install
+    - fast pip install
+    - install python package with uv
+  examples:
+    - query: "Install requests using uv"
+    - query: "How do I use uv to install packages?"
+    - query: "Fast install a Python package with uv"
+  risk: warning
+  documentation:
+    url: https://docs.astral.sh/uv/pip/packages/
+  verified_at: "2026-08-01"
+
+- id: python-uv-pip-compile
+  technology: python
+  category: packages
+  name: Compile Requirements with uv
+  intent: uv_pip_compile
+  command: uv pip compile requirements.in -o requirements.txt
+  description: >
+    Resolve and compile abstract dependencies from requirements.in into a fully
+    pinned requirements.txt using uv.
+  tags:
+    - uv
+    - pip-compile
+    - requirements
+    - resolve
+  aliases:
+    - uv pip compile
+    - compile requirements with uv
+    - resolve dependencies with uv
+    - uv compile requirements.in
+    - lock requirements with uv
+  examples:
+    - query: "Compile requirements.in to requirements.txt using uv"
+    - query: "How do I pin dependencies with uv?"
+    - query: "Resolve requirements with uv pip compile"
+  risk: safe
+  documentation:
+    url: https://docs.astral.sh/uv/pip/compile/
+  verified_at: "2026-08-01"
+
+- id: python-uv-venv
+  technology: python
+  category: virtual-environments
+  name: Create Virtual Environment with uv
+  intent: uv_create_venv
+  command: uv venv <path>
+  description: >
+    Create a Python virtual environment using uv, which is significantly faster
+    than the standard venv module.
+  tags:
+    - uv
+    - venv
+    - virtual-environment
+    - fast
+  aliases:
+    - uv create venv
+    - create venv with uv
+    - uv venv
+    - fast virtual environment
+    - uv virtual environment
+  examples:
+    - query: "Create a virtual environment with uv"
+    - query: "Use uv to make a venv"
+    - query: "Fast venv creation with uv"
+  risk: safe
+  documentation:
+    url: https://docs.astral.sh/uv/pip/environments/
+  verified_at: "2026-08-01"
+
+- id: python-uv-run
+  technology: python
+  category: tools
+  name: Run a Script with uv
+  intent: uv_run
+  command: uv run <script>
+  description: >
+    Run a Python script with uv, which automatically manages the environment and
+    dependencies.
+  tags:
+    - uv
+    - run
+    - script
+    - execute
+  aliases:
+    - uv run script
+    - run python with uv
+    - execute script with uv
+    - uv run command
+    - run with uv
+  examples:
+    - query: "Run a Python script with uv"
+    - query: "How do I use uv run?"
+    - query: "Execute a script using uv"
+  risk: safe
+  documentation:
+    url: https://docs.astral.sh/uv/concepts/tools/
+  verified_at: "2026-08-01"
+
+- id: python-uv-sync
+  technology: python
+  category: packages
+  name: Sync Environment with uv
+  intent: uv_sync
+  command: uv sync
+  description: >
+    Synchronize the virtual environment with the project's dependency specification
+    using uv, installing missing packages and removing extraneous ones.
+  tags:
+    - uv
+    - sync
+    - dependencies
+    - environment
+  aliases:
+    - uv sync dependencies
+    - sync environment with uv
+    - uv sync packages
+    - synchronize uv environment
+    - uv install and sync
+  examples:
+    - query: "Sync my uv environment with project dependencies"
+    - query: "How do I sync packages with uv?"
+    - query: "Synchronize my virtual environment using uv"
+  risk: warning
+  documentation:
+    url: https://docs.astral.sh/uv/reference/cli/#uv-sync
+  verified_at: "2026-08-01"
+
+- id: python-pip-compile
+  technology: python
+  category: packages
+  name: Compile Requirements with pip-compile
+  intent: pip_compile
+  command: pip-compile requirements.in
+  description: >
+    Resolve and compile abstract dependencies from a requirements.in file into a
+    fully pinned requirements.txt using pip-tools' pip-compile command.
+  tags:
+    - pip-compile
+    - pip-tools
+    - requirements
+    - resolve
+    - lock
+  aliases:
+    - pip-compile requirements
+    - compile requirements file
+    - lock dependencies with pip-tools
+    - resolve requirements
+    - generate pinned requirements
+  examples:
+    - query: "Compile requirements.in into requirements.txt"
+    - query: "How do I use pip-compile?"
+    - query: "Lock my Python dependencies with pip-tools"
+  risk: safe
+  documentation:
+    url: https://pip-tools.readthedocs.io/en/stable/#example-usage
+  verified_at: "2026-08-01"
+
+- id: python-pdb-debugger
+  technology: python
+  category: debugging
+  name: Run Script with pdb Debugger
+  intent: run_debugger
+  command: python -m pdb <script>
+  description: >
+    Run a Python script under the pdb debugger, which allows setting breakpoints,
+    stepping through code, and inspecting variables interactively.
+  tags:
+    - pdb
+    - debugger
+    - debugging
+    - breakpoint
+  aliases:
+    - run python debugger
+    - debug python script
+    - python pdb
+    - start pdb
+    - run with debugger
+    - debug with pdb
+  examples:
+    - query: "Debug my Python script with pdb"
+    - query: "How do I use the Python debugger?"
+    - query: "Run main.py in pdb"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/pdb.html
+  verified_at: "2026-08-01"
+
+- id: python-http-server
+  technology: python
+  category: tools
+  name: Start a Simple HTTP Server
+  intent: start_http_server
+  command: python -m http.server <port>
+  description: >
+    Start a simple HTTP server serving files from the current directory on the
+    specified port. Defaults to port 8000 if no port is given.
+  tags:
+    - http
+    - server
+    - web
+    - serve
+    - static
+  aliases:
+    - start a python http server
+    - python simple server
+    - serve files with python
+    - python web server
+    - start local server
+    - python http.server
+    - serve static files
+  examples:
+    - query: "Start a simple HTTP server on port 8080"
+    - query: "How do I serve files with Python?"
+    - query: "Run a local web server with Python"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/http.server.html
+  verified_at: "2026-08-01"
+
+- id: python-json-tool
+  technology: python
+  category: tools
+  name: Format JSON with json.tool
+  intent: format_json
+  command: python -m json.tool <file>
+  description: >
+    Pretty-print and validate a JSON file using Python's built-in json.tool module.
+    Can also read from stdin via pipe.
+  tags:
+    - json
+    - format
+    - pretty-print
+    - validate
+  aliases:
+    - format json with python
+    - pretty print json
+    - python json tool
+    - validate json file
+    - json pretty printer
+    - format json file
+  examples:
+    - query: "Pretty-print a JSON file using Python"
+    - query: "How do I format JSON from the command line?"
+    - query: "Validate a JSON file with Python"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/library/json.html#module-json.tool
+  verified_at: "2026-08-01"
+
+- id: python-set-pythonpath
+  technology: python
+  category: runtime
+  name: Set PYTHONPATH Environment Variable
+  intent: set_pythonpath
+  command: export PYTHONPATH=<path>:$PYTHONPATH
+  description: >
+    Set the PYTHONPATH environment variable to add directories to Python's module
+    search path. This allows importing modules from custom locations.
+  tags:
+    - pythonpath
+    - environment
+    - path
+    - import
+    - env-var
+  aliases:
+    - set pythonpath
+    - add to python path
+    - configure pythonpath
+    - set python module path
+    - export pythonpath
+    - add directory to pythonpath
+  examples:
+    - query: "How do I set the PYTHONPATH?"
+    - query: "Add a directory to Python's import path"
+    - query: "Set PYTHONPATH environment variable"
+  risk: safe
+  documentation:
+    url: https://docs.python.org/3/using/cmdline.html#envvar-PYTHONPATH
+  verified_at: "2026-08-01"
+
+- id: python-pip-cache-purge
+  technology: python
+  category: packages
+  name: Purge pip Cache
+  intent: pip_cache_purge
+  command: pip cache purge
+  description: >
+    Remove all items from the pip download cache. This frees disk space but may
+    slow down subsequent installations.
+  tags:
+    - pip
+    - cache
+    - purge
+    - clean
+    - disk
+  aliases:
+    - purge pip cache
+    - clear pip cache
+    - clean pip cache
+    - delete pip cache
+    - pip cache clean
+    - remove pip cache
+  examples:
+    - query: "Clear the pip cache"
+    - query: "How do I purge the pip download cache?"
+    - query: "Free up disk space used by pip"
+  risk: warning
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_cache/
+  verified_at: "2026-08-01"
+
+- id: python-pip-check
+  technology: python
+  category: packages
+  name: Verify Installed Dependencies
+  intent: pip_check_dependencies
+  command: pip check
+  description: >
+    Verify that all installed packages have compatible dependencies and no
+    requirements are broken.
+  tags:
+    - pip
+    - check
+    - dependencies
+    - verify
+    - compatibility
+  aliases:
+    - pip check dependencies
+    - verify python dependencies
+    - check for broken dependencies
+    - pip dependency check
+    - validate installed packages
+  examples:
+    - query: "Check for broken Python dependencies"
+    - query: "Verify my installed packages are compatible"
+    - query: "Are there any dependency conflicts?"
+  risk: safe
+  documentation:
+    url: https://pip.pypa.io/en/stable/cli/pip_check/
+  verified_at: "2026-08-01"

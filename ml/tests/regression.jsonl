@@ -1,0 +1,20 @@
+{"query": "restart kubernetes deployment", "expected": "kubernetes-rollout-restart"}
+{"query": "view pod logs", "expected": "kubernetes-pod-logs"}
+{"query": "list running docker containers", "expected": "docker-ps-running"}
+{"query": "undo last git commit keep changes", "expected": "git-reset-soft"}
+{"query": "find process using port 8080", "expected": "linux-lsof-port"}
+{"query": "check disk space", "expected": "linux-df"}
+{"query": "create python virtual environment", "expected": "python-venv-create"}
+{"query": "build rust project release mode", "expected": "rust-cargo-build-release"}
+{"query": "go test with coverage", "expected": "go-test-coverage"}
+{"query": "kafka consumer group lag", "expected": "kafka-consumer-group-lag"}
+{"query": "terraform plan", "expected": "terraform-plan"}
+{"query": "check memory usage linux", "expected": "linux-free"}
+{"query": "docker container logs", "expected": "docker-logs"}
+{"query": "git stash changes", "expected": "git-stash"}
+{"query": "kubectl describe pod", "expected": "kubernetes-describe-pod"}
+{"query": "scale kubernetes deployment", "expected": "kubernetes-scale-deployment"}
+{"query": "ssh to remote server", "expected": "linux-ssh-connect"}
+{"query": "create tar archive", "expected": "linux-tar-create"}
+{"query": "git create branch", "expected": "git-branch-create"}
+{"query": "terraform apply", "expected": "terraform-apply"}

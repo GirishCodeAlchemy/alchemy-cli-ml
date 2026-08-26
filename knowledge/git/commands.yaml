@@ -1,0 +1,2754 @@
+# AlchemyCLI AI - Git Commands
+# Comprehensive Git command reference for natural language query matching
+# Total commands: 70
+
+- id: git-view-status
+  technology: git
+  category: status
+  name: View Repository Status
+  intent: view_status
+  command: "git status"
+  description: >
+    Show the working tree status including staged, unstaged, and untracked files.
+  tags:
+    - status
+    - working-tree
+    - staged
+    - unstaged
+  aliases:
+    - "show git status"
+    - "what files have changed"
+    - "show modified files"
+    - "check repo status"
+    - "list changed files"
+    - "what is staged"
+  examples:
+    - query: "What is the current status of my repo?"
+    - query: "Show me which files have been modified"
+    - query: "Are there any unstaged changes?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-status
+  verified_at: "2026-08-01"
+
+- id: git-short-status
+  technology: git
+  category: status
+  name: View Short Status
+  intent: view_short_status
+  command: "git status -s"
+  description: >
+    Show the working tree status in short format with compact output.
+  tags:
+    - status
+    - short
+    - compact
+  aliases:
+    - "short status"
+    - "compact status"
+    - "brief status"
+    - "concise status output"
+  examples:
+    - query: "Show me a short status"
+    - query: "Give me a compact view of changed files"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-status
+  verified_at: "2026-08-01"
+
+- id: git-view-log
+  technology: git
+  category: history
+  name: View Commit Log
+  intent: view_log
+  command: "git log"
+  description: >
+    Show the commit history for the current branch with full details.
+  tags:
+    - log
+    - history
+    - commits
+  aliases:
+    - "show commit history"
+    - "view git log"
+    - "list commits"
+    - "show recent commits"
+    - "commit history"
+  examples:
+    - query: "Show me the commit history"
+    - query: "What are the recent commits?"
+    - query: "List all commits on this branch"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-log-oneline
+  technology: git
+  category: history
+  name: View Log Oneline
+  intent: view_log_oneline
+  command: "git log --oneline"
+  description: >
+    Show commit history with each commit condensed to a single line showing the
+    abbreviated hash and commit message.
+  tags:
+    - log
+    - oneline
+    - compact
+    - history
+  aliases:
+    - "one line log"
+    - "compact commit history"
+    - "short log"
+    - "abbreviated log"
+    - "condensed history"
+  examples:
+    - query: "Show me commits in one line each"
+    - query: "Give me a compact commit log"
+    - query: "Show abbreviated commit history"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-log-graph
+  technology: git
+  category: history
+  name: View Log Graph
+  intent: view_log_graph
+  command: "git log --oneline --graph --all --decorate"
+  description: >
+    Show a visual ASCII graph of the branch structure and commit history across
+    all branches with decoration showing branch and tag names.
+  tags:
+    - log
+    - graph
+    - visual
+    - branches
+    - history
+  aliases:
+    - "show branch graph"
+    - "visual commit history"
+    - "show branch tree"
+    - "graph log"
+    - "visualize branches"
+    - "show git tree"
+  examples:
+    - query: "Show me a visual graph of branches"
+    - query: "Draw the branch tree"
+    - query: "Visualize the commit history with branches"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-log-by-author
+  technology: git
+  category: history
+  name: View Log by Author
+  intent: view_log_by_author
+  command: "git log --author=\"<author>\""
+  description: >
+    Filter commit history to show only commits made by a specific author.
+  tags:
+    - log
+    - author
+    - filter
+    - history
+  aliases:
+    - "commits by author"
+    - "show author commits"
+    - "filter log by author"
+    - "who committed"
+    - "find commits by person"
+  examples:
+    - query: "Show commits by John"
+    - query: "What did Alice commit?"
+    - query: "Filter log by author name"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-log-date-range
+  technology: git
+  category: history
+  name: View Log by Date Range
+  intent: view_log_date_range
+  command: "git log --after=\"<start-date>\" --before=\"<end-date>\""
+  description: >
+    Show commits within a specific date range using after and before filters.
+    Dates can be in formats like YYYY-MM-DD or relative like "2 weeks ago".
+  tags:
+    - log
+    - date
+    - range
+    - filter
+    - history
+  aliases:
+    - "commits between dates"
+    - "log by date range"
+    - "commits since date"
+    - "commits before date"
+    - "filter commits by date"
+    - "recent commits since"
+  examples:
+    - query: "Show commits from last week"
+    - query: "What was committed between January and March?"
+    - query: "Show commits after 2024-01-01"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-log-file-history
+  technology: git
+  category: history
+  name: View File History
+  intent: view_file_history
+  command: "git log --follow -- <file>"
+  description: >
+    Show the commit history for a specific file, following renames across the
+    file's history.
+  tags:
+    - log
+    - file
+    - history
+    - follow
+    - rename
+  aliases:
+    - "file commit history"
+    - "who changed this file"
+    - "history of a file"
+    - "track file changes"
+    - "file log"
+  examples:
+    - query: "Show the history of README.md"
+    - query: "Who changed this file?"
+    - query: "What commits touched src/main.py?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-list-local-branches
+  technology: git
+  category: branches
+  name: List Local Branches
+  intent: list_local_branches
+  command: "git branch"
+  description: >
+    List all local branches in the repository. The current branch is highlighted
+    with an asterisk.
+  tags:
+    - branch
+    - list
+    - local
+  aliases:
+    - "show local branches"
+    - "list branches"
+    - "what branches exist"
+    - "show my branches"
+    - "current branch"
+  examples:
+    - query: "What branches do I have locally?"
+    - query: "List all local branches"
+    - query: "Which branch am I on?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-list-remote-branches
+  technology: git
+  category: branches
+  name: List Remote Branches
+  intent: list_remote_branches
+  command: "git branch -r"
+  description: >
+    List all remote-tracking branches.
+  tags:
+    - branch
+    - list
+    - remote
+  aliases:
+    - "show remote branches"
+    - "list remote branches"
+    - "what branches are on the remote"
+    - "remote branch list"
+  examples:
+    - query: "Show me all remote branches"
+    - query: "What branches exist on origin?"
+    - query: "List remote-tracking branches"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-list-all-branches
+  technology: git
+  category: branches
+  name: List All Branches
+  intent: list_all_branches
+  command: "git branch -a"
+  description: >
+    List both local and remote-tracking branches.
+  tags:
+    - branch
+    - list
+    - all
+    - local
+    - remote
+  aliases:
+    - "show all branches"
+    - "list all branches"
+    - "all local and remote branches"
+    - "every branch"
+    - "complete branch list"
+  examples:
+    - query: "Show me all branches including remote"
+    - query: "List every branch local and remote"
+    - query: "Show all branches"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-create-branch
+  technology: git
+  category: branches
+  name: Create Branch
+  intent: create_branch
+  command: "git branch <branch>"
+  description: >
+    Create a new branch pointing to the current HEAD without switching to it.
+  tags:
+    - branch
+    - create
+    - new
+  aliases:
+    - "create a branch"
+    - "make a new branch"
+    - "new branch"
+    - "add branch"
+    - "create branch without switching"
+  examples:
+    - query: "Create a branch called feature-login"
+    - query: "Make a new branch from current commit"
+    - query: "How do I create a branch?"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-delete-branch
+  technology: git
+  category: branches
+  name: Delete Branch
+  intent: delete_branch
+  command: "git branch -d <branch>"
+  description: >
+    Delete a local branch that has been fully merged. Use -D (uppercase) to
+    force delete an unmerged branch.
+  tags:
+    - branch
+    - delete
+    - remove
+    - cleanup
+  aliases:
+    - "delete a branch"
+    - "remove a branch"
+    - "drop branch"
+    - "cleanup old branch"
+    - "delete merged branch"
+  examples:
+    - query: "Delete the feature-login branch"
+    - query: "Remove an old branch"
+    - query: "How do I delete a branch?"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-switch-branch
+  technology: git
+  category: branches
+  name: Switch Branch
+  intent: switch_branch
+  command: "git switch <branch>"
+  description: >
+    Switch to an existing branch. This is the modern replacement for
+    git checkout for branch switching.
+  tags:
+    - switch
+    - branch
+    - checkout
+    - change
+  aliases:
+    - "switch to branch"
+    - "change branch"
+    - "go to branch"
+    - "move to branch"
+    - "checkout branch"
+  examples:
+    - query: "Switch to the main branch"
+    - query: "Go to the develop branch"
+    - query: "Change to feature-login branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-switch
+  verified_at: "2026-08-01"
+
+- id: git-create-and-switch-branch
+  technology: git
+  category: branches
+  name: Create and Switch Branch
+  intent: create_and_switch_branch
+  command: "git switch -c <branch>"
+  description: >
+    Create a new branch and immediately switch to it.
+  tags:
+    - switch
+    - branch
+    - create
+    - new
+  aliases:
+    - "create and switch to branch"
+    - "new branch and checkout"
+    - "checkout new branch"
+    - "make branch and switch"
+    - "create branch and move to it"
+  examples:
+    - query: "Create a new branch and switch to it"
+    - query: "Make a feature branch and start working on it"
+    - query: "Checkout a new branch called hotfix"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-switch
+  verified_at: "2026-08-01"
+
+- id: git-rename-branch
+  technology: git
+  category: branches
+  name: Rename Branch
+  intent: rename_branch
+  command: "git branch -m <old-name> <new-name>"
+  description: >
+    Rename a branch. If only one name is provided, renames the current branch.
+  tags:
+    - branch
+    - rename
+    - move
+  aliases:
+    - "rename a branch"
+    - "change branch name"
+    - "move branch"
+    - "rename current branch"
+  examples:
+    - query: "Rename branch old-name to new-name"
+    - query: "Change the name of my current branch"
+    - query: "How do I rename a branch?"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-branch
+  verified_at: "2026-08-01"
+
+- id: git-checkout-branch
+  technology: git
+  category: branches
+  name: Checkout Branch
+  intent: checkout_branch
+  command: "git checkout <branch>"
+  description: >
+    Switch to an existing branch by updating the working tree and HEAD.
+  tags:
+    - checkout
+    - branch
+    - switch
+  aliases:
+    - "checkout a branch"
+    - "switch using checkout"
+    - "git checkout branch"
+    - "change to branch with checkout"
+  examples:
+    - query: "Checkout the main branch"
+    - query: "Switch to develop using checkout"
+    - query: "Go to release branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-checkout
+  verified_at: "2026-08-01"
+
+- id: git-checkout-file
+  technology: git
+  category: staging
+  name: Checkout File
+  intent: checkout_file
+  command: "git checkout -- <file>"
+  description: >
+    Discard changes in a specific file in the working directory by restoring it
+    to the last committed version.
+  tags:
+    - checkout
+    - file
+    - discard
+    - restore
+    - undo
+  aliases:
+    - "discard file changes"
+    - "restore file to last commit"
+    - "undo file changes"
+    - "revert file to HEAD"
+    - "checkout specific file"
+    - "throw away changes in file"
+  examples:
+    - query: "Discard changes in main.py"
+    - query: "Restore a file to its last committed state"
+    - query: "Undo my changes to a specific file"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-checkout
+  verified_at: "2026-08-01"
+
+- id: git-checkout-commit
+  technology: git
+  category: history
+  name: Checkout Commit
+  intent: checkout_commit
+  command: "git checkout <commit>"
+  description: >
+    Check out a specific commit, entering detached HEAD state. Useful for
+    inspecting old code without modifying branches.
+  tags:
+    - checkout
+    - commit
+    - detached
+    - history
+    - inspect
+  aliases:
+    - "checkout a specific commit"
+    - "go to a commit"
+    - "detached HEAD"
+    - "inspect old commit"
+    - "view code at specific commit"
+  examples:
+    - query: "Checkout commit abc1234"
+    - query: "Go to a specific commit to inspect it"
+    - query: "View the code at an older commit"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-checkout
+  verified_at: "2026-08-01"
+
+- id: git-merge
+  technology: git
+  category: merging
+  name: Merge Branch
+  intent: merge_branch
+  command: "git merge <branch>"
+  description: >
+    Merge the specified branch into the current branch. Performs a fast-forward
+    merge if possible, otherwise creates a merge commit.
+  tags:
+    - merge
+    - branch
+    - combine
+    - integrate
+  aliases:
+    - "merge a branch"
+    - "combine branches"
+    - "integrate branch"
+    - "merge into current branch"
+    - "bring changes from branch"
+  examples:
+    - query: "Merge feature-login into main"
+    - query: "Combine develop into my branch"
+    - query: "Bring changes from another branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-merge
+  verified_at: "2026-08-01"
+
+- id: git-merge-no-ff
+  technology: git
+  category: merging
+  name: Merge No Fast-Forward
+  intent: merge_no_ff
+  command: "git merge --no-ff <branch>"
+  description: >
+    Merge a branch creating a merge commit even if a fast-forward merge is
+    possible. This preserves the branch history.
+  tags:
+    - merge
+    - no-ff
+    - no-fast-forward
+    - history
+  aliases:
+    - "merge without fast forward"
+    - "merge with merge commit"
+    - "preserve branch history on merge"
+    - "no fast forward merge"
+    - "force merge commit"
+  examples:
+    - query: "Merge feature branch without fast-forward"
+    - query: "Merge and keep the branch history"
+    - query: "Create a merge commit even if fast-forward is possible"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-merge
+  verified_at: "2026-08-01"
+
+- id: git-merge-abort
+  technology: git
+  category: merging
+  name: Abort Merge
+  intent: abort_merge
+  command: "git merge --abort"
+  description: >
+    Abort the current merge operation and restore the pre-merge state. Only
+    works during an active merge conflict.
+  tags:
+    - merge
+    - abort
+    - cancel
+    - conflict
+    - undo
+  aliases:
+    - "abort merge"
+    - "cancel merge"
+    - "undo merge in progress"
+    - "stop merge"
+    - "exit merge conflict"
+  examples:
+    - query: "Abort the current merge"
+    - query: "Cancel this merge and go back"
+    - query: "I want to undo this merge"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-merge
+  verified_at: "2026-08-01"
+
+- id: git-rebase
+  technology: git
+  category: merging
+  name: Rebase Branch
+  intent: rebase_branch
+  command: "git rebase <branch>"
+  description: >
+    Reapply commits from the current branch on top of the specified branch.
+    Creates a linear history by moving the branch start point.
+  tags:
+    - rebase
+    - linear
+    - history
+    - replay
+  aliases:
+    - "rebase onto branch"
+    - "rebase current branch"
+    - "replay commits"
+    - "linearize history"
+    - "rebase on top of"
+  examples:
+    - query: "Rebase my branch onto main"
+    - query: "Rebase feature branch on develop"
+    - query: "Update my branch with rebase"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-rebase
+  verified_at: "2026-08-01"
+
+- id: git-rebase-interactive
+  technology: git
+  category: merging
+  name: Interactive Rebase
+  intent: rebase_interactive
+  command: "git rebase -i <commit>"
+  description: >
+    Start an interactive rebase session to edit, squash, reorder, or drop
+    commits from the specified commit onward.
+  tags:
+    - rebase
+    - interactive
+    - squash
+    - edit
+    - reorder
+  aliases:
+    - "interactive rebase"
+    - "squash commits"
+    - "reorder commits"
+    - "edit commit history"
+    - "clean up commits"
+    - "rebase interactively"
+  examples:
+    - query: "Squash the last 3 commits"
+    - query: "Interactively rebase to clean up history"
+    - query: "Edit and reorder my recent commits"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-rebase
+  verified_at: "2026-08-01"
+
+- id: git-rebase-onto
+  technology: git
+  category: merging
+  name: Rebase Onto
+  intent: rebase_onto
+  command: "git rebase --onto <newbase> <oldbase> <branch>"
+  description: >
+    Rebase a range of commits onto a new base. Useful for transplanting a
+    series of commits from one base to another.
+  tags:
+    - rebase
+    - onto
+    - transplant
+    - advanced
+  aliases:
+    - "rebase onto another branch"
+    - "transplant commits"
+    - "move commits to different base"
+    - "rebase range of commits"
+    - "change base of commits"
+  examples:
+    - query: "Rebase my commits onto a different branch"
+    - query: "Move commits from one base to another"
+    - query: "Transplant a range of commits"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-rebase
+  verified_at: "2026-08-01"
+
+- id: git-rebase-abort
+  technology: git
+  category: merging
+  name: Abort Rebase
+  intent: abort_rebase
+  command: "git rebase --abort"
+  description: >
+    Abort the current rebase operation and return the branch to its original
+    state before the rebase started.
+  tags:
+    - rebase
+    - abort
+    - cancel
+    - undo
+  aliases:
+    - "abort rebase"
+    - "cancel rebase"
+    - "stop rebase"
+    - "undo rebase in progress"
+    - "exit rebase"
+  examples:
+    - query: "Abort the current rebase"
+    - query: "Cancel this rebase"
+    - query: "Go back to before the rebase"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-rebase
+  verified_at: "2026-08-01"
+
+- id: git-rebase-continue
+  technology: git
+  category: merging
+  name: Continue Rebase
+  intent: rebase_continue
+  command: "git rebase --continue"
+  description: >
+    Continue the rebase after resolving conflicts in the current step.
+  tags:
+    - rebase
+    - continue
+    - conflict
+    - resolve
+  aliases:
+    - "continue rebase"
+    - "resume rebase"
+    - "proceed with rebase"
+    - "rebase after conflict resolution"
+  examples:
+    - query: "Continue the rebase after fixing conflicts"
+    - query: "Resume the rebase"
+    - query: "Proceed with rebase after resolving"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-rebase
+  verified_at: "2026-08-01"
+
+- id: git-reset-soft
+  technology: git
+  category: staging
+  name: Soft Reset
+  intent: reset_soft
+  command: "git reset --soft <commit>"
+  description: >
+    Move HEAD to the specified commit but keep all changes staged in the index.
+    Useful for uncommitting while preserving staged changes.
+  tags:
+    - reset
+    - soft
+    - undo
+    - uncommit
+  aliases:
+    - "soft reset"
+    - "undo commit keep staged"
+    - "uncommit but keep changes staged"
+    - "move HEAD back soft"
+    - "reset soft to commit"
+  examples:
+    - query: "Undo the last commit but keep changes staged"
+    - query: "Soft reset to the previous commit"
+    - query: "Uncommit without losing staged changes"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-reset
+  verified_at: "2026-08-01"
+
+- id: git-reset-mixed
+  technology: git
+  category: staging
+  name: Mixed Reset
+  intent: reset_mixed
+  command: "git reset <commit>"
+  description: >
+    Move HEAD to the specified commit and unstage changes but keep them in the
+    working directory. This is the default reset mode.
+  tags:
+    - reset
+    - mixed
+    - unstage
+    - undo
+  aliases:
+    - "reset to commit"
+    - "unstage and undo commit"
+    - "mixed reset"
+    - "undo commit keep changes"
+    - "reset HEAD"
+  examples:
+    - query: "Undo the last commit and unstage changes"
+    - query: "Reset to a previous commit but keep working directory"
+    - query: "Unstage everything and move HEAD back"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-reset
+  verified_at: "2026-08-01"
+
+- id: git-reset-hard
+  technology: git
+  category: staging
+  name: Hard Reset
+  intent: reset_hard
+  command: "git reset --hard <commit>"
+  description: >
+    Move HEAD to the specified commit and discard all changes in both the index
+    and working directory. This is destructive and cannot be undone.
+  tags:
+    - reset
+    - hard
+    - discard
+    - destructive
+    - dangerous
+  aliases:
+    - "hard reset"
+    - "discard all changes"
+    - "reset and remove everything"
+    - "throw away all changes"
+    - "force reset to commit"
+    - "nuke changes"
+  examples:
+    - query: "Hard reset to the last commit"
+    - query: "Discard all local changes completely"
+    - query: "Reset everything to match a specific commit"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-reset
+  verified_at: "2026-08-01"
+
+- id: git-reset-file
+  technology: git
+  category: staging
+  name: Unstage File
+  intent: unstage_file
+  command: "git reset HEAD <file>"
+  description: >
+    Remove a file from the staging area (index) without changing the working
+    directory contents.
+  tags:
+    - reset
+    - unstage
+    - file
+    - index
+  aliases:
+    - "unstage a file"
+    - "remove file from staging"
+    - "undo git add"
+    - "unstage specific file"
+    - "remove from index"
+  examples:
+    - query: "Unstage main.py"
+    - query: "Remove a file from staging area"
+    - query: "Undo git add for a specific file"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-reset
+  verified_at: "2026-08-01"
+
+- id: git-cherry-pick
+  technology: git
+  category: advanced
+  name: Cherry-Pick Commit
+  intent: cherry_pick
+  command: "git cherry-pick <commit>"
+  description: >
+    Apply the changes introduced by an existing commit onto the current branch,
+    creating a new commit.
+  tags:
+    - cherry-pick
+    - commit
+    - apply
+    - selective
+  aliases:
+    - "cherry pick a commit"
+    - "apply specific commit"
+    - "pick a commit from another branch"
+    - "copy commit to current branch"
+    - "apply single commit"
+  examples:
+    - query: "Cherry-pick commit abc1234"
+    - query: "Apply a specific commit from another branch"
+    - query: "Copy a commit to my current branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-cherry-pick
+  verified_at: "2026-08-01"
+
+- id: git-cherry-pick-range
+  technology: git
+  category: advanced
+  name: Cherry-Pick Range
+  intent: cherry_pick_range
+  command: "git cherry-pick <start-commit>..<end-commit>"
+  description: >
+    Apply a range of commits onto the current branch. The start commit is
+    exclusive and the end commit is inclusive.
+  tags:
+    - cherry-pick
+    - range
+    - multiple
+    - commits
+  aliases:
+    - "cherry pick range of commits"
+    - "apply multiple commits"
+    - "cherry pick several commits"
+    - "pick a range of commits"
+  examples:
+    - query: "Cherry-pick a range of commits"
+    - query: "Apply commits from abc1234 to def5678"
+    - query: "Cherry-pick multiple commits at once"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-cherry-pick
+  verified_at: "2026-08-01"
+
+- id: git-cherry-pick-abort
+  technology: git
+  category: advanced
+  name: Abort Cherry-Pick
+  intent: cherry_pick_abort
+  command: "git cherry-pick --abort"
+  description: >
+    Cancel the current cherry-pick operation and return to the pre-cherry-pick
+    state.
+  tags:
+    - cherry-pick
+    - abort
+    - cancel
+    - undo
+  aliases:
+    - "abort cherry pick"
+    - "cancel cherry pick"
+    - "stop cherry pick"
+    - "undo cherry pick"
+  examples:
+    - query: "Abort the cherry-pick"
+    - query: "Cancel the current cherry-pick operation"
+    - query: "Undo cherry-pick in progress"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-cherry-pick
+  verified_at: "2026-08-01"
+
+- id: git-stash-save
+  technology: git
+  category: staging
+  name: Stash Changes
+  intent: stash_save
+  command: "git stash push -m \"<message>\""
+  description: >
+    Save the current working directory and index state to a new stash entry
+    with an optional descriptive message.
+  tags:
+    - stash
+    - save
+    - store
+    - temporary
+  aliases:
+    - "stash my changes"
+    - "save changes temporarily"
+    - "put changes aside"
+    - "store work in progress"
+    - "stash with message"
+    - "shelve changes"
+  examples:
+    - query: "Stash my current changes"
+    - query: "Save my work in progress temporarily"
+    - query: "Stash changes with a message"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-list
+  technology: git
+  category: staging
+  name: List Stashes
+  intent: stash_list
+  command: "git stash list"
+  description: >
+    List all stash entries with their index, branch, and description.
+  tags:
+    - stash
+    - list
+    - show
+  aliases:
+    - "list stashes"
+    - "show all stashes"
+    - "what stashes do I have"
+    - "view stash entries"
+    - "see my stashes"
+  examples:
+    - query: "Show all my stashes"
+    - query: "List stash entries"
+    - query: "What stashes do I have?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-pop
+  technology: git
+  category: staging
+  name: Pop Stash
+  intent: stash_pop
+  command: "git stash pop"
+  description: >
+    Apply the most recent stash entry and remove it from the stash list.
+  tags:
+    - stash
+    - pop
+    - apply
+    - restore
+  aliases:
+    - "pop stash"
+    - "apply and remove stash"
+    - "restore stashed changes"
+    - "bring back stashed work"
+    - "unstash changes"
+  examples:
+    - query: "Pop the latest stash"
+    - query: "Restore my stashed changes"
+    - query: "Apply the most recent stash and remove it"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-apply
+  technology: git
+  category: staging
+  name: Apply Stash
+  intent: stash_apply
+  command: "git stash apply stash@{<n>}"
+  description: >
+    Apply a stash entry without removing it from the stash list. Specify the
+    stash index to apply a specific entry.
+  tags:
+    - stash
+    - apply
+    - restore
+    - keep
+  aliases:
+    - "apply stash without removing"
+    - "apply specific stash"
+    - "use stash but keep it"
+    - "apply stash entry"
+  examples:
+    - query: "Apply stash 2 without removing it"
+    - query: "Apply a specific stash entry"
+    - query: "Use the stash but keep it in the list"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-drop
+  technology: git
+  category: staging
+  name: Drop Stash
+  intent: stash_drop
+  command: "git stash drop stash@{<n>}"
+  description: >
+    Remove a specific stash entry from the stash list without applying it.
+  tags:
+    - stash
+    - drop
+    - remove
+    - delete
+  aliases:
+    - "drop a stash"
+    - "delete a stash entry"
+    - "remove stash"
+    - "discard stash"
+  examples:
+    - query: "Drop stash 0"
+    - query: "Delete a specific stash entry"
+    - query: "Remove a stash without applying"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-show
+  technology: git
+  category: staging
+  name: Show Stash Contents
+  intent: stash_show
+  command: "git stash show -p stash@{<n>}"
+  description: >
+    Show the changes recorded in a stash entry as a diff patch.
+  tags:
+    - stash
+    - show
+    - diff
+    - inspect
+  aliases:
+    - "show stash contents"
+    - "view stash diff"
+    - "inspect stash"
+    - "what is in stash"
+    - "preview stash changes"
+  examples:
+    - query: "Show me what is in stash 0"
+    - query: "View the diff of a stash entry"
+    - query: "Preview stash changes before applying"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-stash-clear
+  technology: git
+  category: staging
+  name: Clear All Stashes
+  intent: stash_clear
+  command: "git stash clear"
+  description: >
+    Remove all stash entries. This is irreversible and all stashed changes will
+    be lost.
+  tags:
+    - stash
+    - clear
+    - remove
+    - all
+    - destructive
+  aliases:
+    - "clear all stashes"
+    - "remove all stashes"
+    - "delete all stash entries"
+    - "empty stash list"
+  examples:
+    - query: "Clear all stashes"
+    - query: "Remove every stash entry"
+    - query: "Delete all my stashes"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-stash
+  verified_at: "2026-08-01"
+
+- id: git-remote-add
+  technology: git
+  category: remote
+  name: Add Remote
+  intent: add_remote
+  command: "git remote add <remote> <url>"
+  description: >
+    Add a new remote repository with the specified name and URL.
+  tags:
+    - remote
+    - add
+    - repository
+    - upstream
+  aliases:
+    - "add a remote"
+    - "add remote repository"
+    - "configure remote"
+    - "add upstream"
+    - "add origin"
+  examples:
+    - query: "Add a remote called upstream"
+    - query: "Add a new remote repository"
+    - query: "Configure an origin remote"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-remote-remove
+  technology: git
+  category: remote
+  name: Remove Remote
+  intent: remove_remote
+  command: "git remote remove <remote>"
+  description: >
+    Remove a remote and all associated remote-tracking branches and
+    configuration settings.
+  tags:
+    - remote
+    - remove
+    - delete
+  aliases:
+    - "remove a remote"
+    - "delete remote"
+    - "drop remote"
+    - "remove origin"
+  examples:
+    - query: "Remove the upstream remote"
+    - query: "Delete a remote repository"
+    - query: "Remove origin remote"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-remote-show
+  technology: git
+  category: remote
+  name: Show Remote Details
+  intent: show_remote
+  command: "git remote show <remote>"
+  description: >
+    Show detailed information about a remote including its fetch and push URLs,
+    tracked branches, and local configuration.
+  tags:
+    - remote
+    - show
+    - details
+    - info
+  aliases:
+    - "show remote details"
+    - "remote information"
+    - "inspect remote"
+    - "show origin info"
+    - "remote branch tracking info"
+  examples:
+    - query: "Show details about origin"
+    - query: "What URL does the remote point to?"
+    - query: "Show remote tracking information"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-remote-rename
+  technology: git
+  category: remote
+  name: Rename Remote
+  intent: rename_remote
+  command: "git remote rename <old-name> <new-name>"
+  description: >
+    Rename a remote repository reference.
+  tags:
+    - remote
+    - rename
+  aliases:
+    - "rename a remote"
+    - "change remote name"
+    - "rename origin"
+  examples:
+    - query: "Rename origin to upstream"
+    - query: "Change the name of a remote"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-remote-set-url
+  technology: git
+  category: remote
+  name: Set Remote URL
+  intent: set_remote_url
+  command: "git remote set-url <remote> <url>"
+  description: >
+    Change the URL of an existing remote repository.
+  tags:
+    - remote
+    - url
+    - set
+    - change
+  aliases:
+    - "change remote URL"
+    - "set remote URL"
+    - "update remote URL"
+    - "change origin URL"
+    - "switch remote URL"
+  examples:
+    - query: "Change the URL of origin"
+    - query: "Update the remote URL to a new one"
+    - query: "Switch from HTTPS to SSH remote"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-remote-verbose
+  technology: git
+  category: remote
+  name: List Remotes Verbose
+  intent: list_remotes_verbose
+  command: "git remote -v"
+  description: >
+    List all configured remotes with their fetch and push URLs.
+  tags:
+    - remote
+    - list
+    - verbose
+    - url
+  aliases:
+    - "list remotes"
+    - "show remote URLs"
+    - "show all remotes"
+    - "verbose remote list"
+    - "what remotes are configured"
+  examples:
+    - query: "Show all my remotes with URLs"
+    - query: "List all remote repositories"
+    - query: "What remotes are configured?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-remote
+  verified_at: "2026-08-01"
+
+- id: git-fetch-all
+  technology: git
+  category: remote
+  name: Fetch All Remotes
+  intent: fetch_all
+  command: "git fetch --all"
+  description: >
+    Download objects and refs from all configured remote repositories.
+  tags:
+    - fetch
+    - all
+    - remotes
+    - download
+  aliases:
+    - "fetch all remotes"
+    - "download from all remotes"
+    - "update all remote tracking branches"
+    - "fetch everything"
+  examples:
+    - query: "Fetch from all remotes"
+    - query: "Download updates from all remote repos"
+    - query: "Update all remote tracking branches"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-fetch
+  verified_at: "2026-08-01"
+
+- id: git-fetch-prune
+  technology: git
+  category: remote
+  name: Fetch and Prune
+  intent: fetch_prune
+  command: "git fetch --prune"
+  description: >
+    Fetch from the remote and remove any remote-tracking references that no
+    longer exist on the remote.
+  tags:
+    - fetch
+    - prune
+    - cleanup
+    - remote
+  aliases:
+    - "fetch and prune"
+    - "cleanup stale remote branches"
+    - "remove deleted remote branches"
+    - "prune remote tracking branches"
+    - "fetch with cleanup"
+  examples:
+    - query: "Fetch and remove stale remote branches"
+    - query: "Clean up deleted remote-tracking branches"
+    - query: "Prune remote branches that no longer exist"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-fetch
+  verified_at: "2026-08-01"
+
+- id: git-pull
+  technology: git
+  category: remote
+  name: Pull Changes
+  intent: pull_changes
+  command: "git pull"
+  description: >
+    Fetch from the remote and merge changes into the current branch. Equivalent
+    to git fetch followed by git merge.
+  tags:
+    - pull
+    - fetch
+    - merge
+    - update
+    - download
+  aliases:
+    - "pull changes"
+    - "update from remote"
+    - "download and merge"
+    - "get latest changes"
+    - "sync with remote"
+  examples:
+    - query: "Pull the latest changes"
+    - query: "Update my branch from remote"
+    - query: "Get the latest code from origin"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-pull
+  verified_at: "2026-08-01"
+
+- id: git-pull-rebase
+  technology: git
+  category: remote
+  name: Pull with Rebase
+  intent: pull_rebase
+  command: "git pull --rebase"
+  description: >
+    Fetch from the remote and rebase the current branch on top of the upstream
+    branch instead of merging. Creates a cleaner linear history.
+  tags:
+    - pull
+    - rebase
+    - linear
+    - update
+  aliases:
+    - "pull with rebase"
+    - "rebase pull"
+    - "pull and rebase"
+    - "update branch with rebase"
+    - "linear pull"
+  examples:
+    - query: "Pull and rebase my changes on top"
+    - query: "Update with a rebase instead of merge"
+    - query: "Pull with rebase for clean history"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-pull
+  verified_at: "2026-08-01"
+
+- id: git-push
+  technology: git
+  category: remote
+  name: Push Changes
+  intent: push_changes
+  command: "git push"
+  description: >
+    Upload local branch commits to the configured remote repository.
+  tags:
+    - push
+    - upload
+    - remote
+    - publish
+  aliases:
+    - "push changes"
+    - "upload to remote"
+    - "publish commits"
+    - "push to origin"
+    - "send changes to remote"
+  examples:
+    - query: "Push my commits to the remote"
+    - query: "Upload my changes to origin"
+    - query: "Publish my branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-push-force
+  technology: git
+  category: remote
+  name: Force Push
+  intent: push_force
+  command: "git push --force"
+  description: >
+    Force push to the remote, overwriting the remote branch history. This is
+    destructive and can cause data loss for collaborators.
+  tags:
+    - push
+    - force
+    - overwrite
+    - destructive
+    - dangerous
+  aliases:
+    - "force push"
+    - "push force"
+    - "overwrite remote branch"
+    - "force update remote"
+    - "push -f"
+  examples:
+    - query: "Force push my branch"
+    - query: "Overwrite the remote branch with my local"
+    - query: "Force push after rebase"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-push-force-with-lease
+  technology: git
+  category: remote
+  name: Force Push with Lease
+  intent: push_force_with_lease
+  command: "git push --force-with-lease"
+  description: >
+    Force push only if the remote branch matches the expected state. Safer than
+    --force because it prevents overwriting others' work.
+  tags:
+    - push
+    - force
+    - safe
+    - lease
+    - protection
+  aliases:
+    - "safe force push"
+    - "force push with lease"
+    - "force push safely"
+    - "protected force push"
+    - "push force with lease"
+  examples:
+    - query: "Force push safely with lease"
+    - query: "Push force but check for others' changes first"
+    - query: "Safe force push after rebase"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-push-set-upstream
+  technology: git
+  category: remote
+  name: Push and Set Upstream
+  intent: push_set_upstream
+  command: "git push -u <remote> <branch>"
+  description: >
+    Push the branch to the remote and set the upstream tracking reference so
+    future pushes and pulls work without specifying the remote.
+  tags:
+    - push
+    - upstream
+    - tracking
+    - set
+    - first-push
+  aliases:
+    - "push and set upstream"
+    - "push with tracking"
+    - "first push to remote"
+    - "set upstream and push"
+    - "publish branch to remote"
+    - "push new branch to remote"
+  examples:
+    - query: "Push my new branch and set upstream"
+    - query: "Publish my branch to origin for the first time"
+    - query: "Set the upstream tracking branch"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-push-tags
+  technology: git
+  category: remote
+  name: Push All Tags
+  intent: push_tags
+  command: "git push --tags"
+  description: >
+    Push all local tags to the remote repository.
+  tags:
+    - push
+    - tags
+    - remote
+    - publish
+  aliases:
+    - "push all tags"
+    - "push tags to remote"
+    - "upload tags"
+    - "publish tags"
+    - "send tags to origin"
+  examples:
+    - query: "Push all tags to the remote"
+    - query: "Upload my tags to origin"
+    - query: "Publish all tags"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-list-tags
+  technology: git
+  category: tags
+  name: List Tags
+  intent: list_tags
+  command: "git tag"
+  description: >
+    List all tags in the repository in alphabetical order.
+  tags:
+    - tag
+    - list
+    - version
+    - release
+  aliases:
+    - "list tags"
+    - "show all tags"
+    - "what tags exist"
+    - "view tags"
+    - "list versions"
+  examples:
+    - query: "Show all tags"
+    - query: "List all version tags"
+    - query: "What tags are in this repo?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-tag
+  verified_at: "2026-08-01"
+
+- id: git-create-tag
+  technology: git
+  category: tags
+  name: Create Lightweight Tag
+  intent: create_tag
+  command: "git tag <tag>"
+  description: >
+    Create a lightweight tag pointing to the current HEAD commit.
+  tags:
+    - tag
+    - create
+    - lightweight
+    - version
+  aliases:
+    - "create a tag"
+    - "tag current commit"
+    - "add lightweight tag"
+    - "make a tag"
+    - "create version tag"
+  examples:
+    - query: "Create a tag called v1.0"
+    - query: "Tag the current commit"
+    - query: "Make a lightweight tag"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-tag
+  verified_at: "2026-08-01"
+
+- id: git-create-annotated-tag
+  technology: git
+  category: tags
+  name: Create Annotated Tag
+  intent: create_annotated_tag
+  command: "git tag -a <tag> -m \"<message>\""
+  description: >
+    Create an annotated tag with a message. Annotated tags store tagger name,
+    email, date, and are recommended for releases.
+  tags:
+    - tag
+    - annotated
+    - release
+    - version
+    - message
+  aliases:
+    - "create annotated tag"
+    - "tag with message"
+    - "create release tag"
+    - "annotated version tag"
+    - "make a signed tag"
+  examples:
+    - query: "Create an annotated tag v2.0 with a message"
+    - query: "Make a release tag with description"
+    - query: "Tag this commit with annotation"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-tag
+  verified_at: "2026-08-01"
+
+- id: git-delete-tag
+  technology: git
+  category: tags
+  name: Delete Tag
+  intent: delete_tag
+  command: "git tag -d <tag>"
+  description: >
+    Delete a local tag.
+  tags:
+    - tag
+    - delete
+    - remove
+  aliases:
+    - "delete a tag"
+    - "remove a tag"
+    - "drop tag"
+    - "delete version tag"
+  examples:
+    - query: "Delete tag v1.0"
+    - query: "Remove a local tag"
+    - query: "Delete an old tag"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-tag
+  verified_at: "2026-08-01"
+
+- id: git-push-single-tag
+  technology: git
+  category: tags
+  name: Push Single Tag
+  intent: push_single_tag
+  command: "git push <remote> <tag>"
+  description: >
+    Push a specific tag to the remote repository.
+  tags:
+    - tag
+    - push
+    - remote
+    - single
+  aliases:
+    - "push a specific tag"
+    - "push one tag"
+    - "upload a tag"
+    - "push tag to origin"
+  examples:
+    - query: "Push tag v1.0 to origin"
+    - query: "Upload a specific tag to the remote"
+    - query: "Push only one tag"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-diff-unstaged
+  technology: git
+  category: diff
+  name: Diff Unstaged Changes
+  intent: diff_unstaged
+  command: "git diff"
+  description: >
+    Show changes in the working directory that have not yet been staged.
+  tags:
+    - diff
+    - unstaged
+    - changes
+    - working-directory
+  aliases:
+    - "show unstaged changes"
+    - "diff working directory"
+    - "what changed but not staged"
+    - "view unstaged diff"
+    - "show modifications"
+  examples:
+    - query: "Show me the unstaged changes"
+    - query: "What have I changed but not staged?"
+    - query: "Show diff of working directory"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-diff
+  verified_at: "2026-08-01"
+
+- id: git-diff-staged
+  technology: git
+  category: diff
+  name: Diff Staged Changes
+  intent: diff_staged
+  command: "git diff --staged"
+  description: >
+    Show changes that have been staged for the next commit.
+  tags:
+    - diff
+    - staged
+    - cached
+    - index
+  aliases:
+    - "show staged changes"
+    - "diff staged files"
+    - "what is staged for commit"
+    - "view staged diff"
+    - "show cached diff"
+    - "diff index"
+  examples:
+    - query: "Show me what is staged for commit"
+    - query: "View the staged changes"
+    - query: "What will be committed?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-diff
+  verified_at: "2026-08-01"
+
+- id: git-diff-between-commits
+  technology: git
+  category: diff
+  name: Diff Between Commits
+  intent: diff_between_commits
+  command: "git diff <commit1> <commit2>"
+  description: >
+    Show the differences between two specific commits.
+  tags:
+    - diff
+    - commits
+    - compare
+    - history
+  aliases:
+    - "diff between commits"
+    - "compare two commits"
+    - "show changes between commits"
+    - "differences between revisions"
+    - "compare revisions"
+  examples:
+    - query: "Show diff between commit abc and def"
+    - query: "Compare two specific commits"
+    - query: "What changed between these two commits?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-diff
+  verified_at: "2026-08-01"
+
+- id: git-diff-between-branches
+  technology: git
+  category: diff
+  name: Diff Between Branches
+  intent: diff_between_branches
+  command: "git diff <branch1>..<branch2>"
+  description: >
+    Show the differences between two branches.
+  tags:
+    - diff
+    - branches
+    - compare
+  aliases:
+    - "diff between branches"
+    - "compare branches"
+    - "show branch differences"
+    - "what is different between branches"
+    - "branch comparison"
+  examples:
+    - query: "Show diff between main and develop"
+    - query: "Compare two branches"
+    - query: "What is different between feature and main?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-diff
+  verified_at: "2026-08-01"
+
+- id: git-show-commit
+  technology: git
+  category: history
+  name: Show Commit Details
+  intent: show_commit
+  command: "git show <commit>"
+  description: >
+    Show detailed information about a commit including the diff, author, date,
+    and commit message.
+  tags:
+    - show
+    - commit
+    - details
+    - inspect
+  aliases:
+    - "show commit details"
+    - "inspect a commit"
+    - "view commit info"
+    - "what did this commit change"
+    - "show commit diff"
+    - "examine commit"
+  examples:
+    - query: "Show details of commit abc1234"
+    - query: "What did this commit change?"
+    - query: "Inspect a specific commit"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-show
+  verified_at: "2026-08-01"
+
+- id: git-blame
+  technology: git
+  category: history
+  name: Blame File
+  intent: blame_file
+  command: "git blame <file>"
+  description: >
+    Show what revision and author last modified each line of a file.
+  tags:
+    - blame
+    - annotate
+    - author
+    - line-by-line
+    - history
+  aliases:
+    - "blame a file"
+    - "who wrote this line"
+    - "line-by-line history"
+    - "annotate file"
+    - "who last modified each line"
+    - "find who changed a line"
+  examples:
+    - query: "Who wrote each line in main.py?"
+    - query: "Blame this file to see authors"
+    - query: "Show line-by-line commit history for a file"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-blame
+  verified_at: "2026-08-01"
+
+- id: git-bisect-start
+  technology: git
+  category: advanced
+  name: Start Bisect
+  intent: bisect_start
+  command: "git bisect start"
+  description: >
+    Start a binary search session to find the commit that introduced a bug.
+  tags:
+    - bisect
+    - start
+    - debug
+    - binary-search
+    - bug
+  aliases:
+    - "start bisect"
+    - "begin binary search for bug"
+    - "find bad commit"
+    - "start git bisect"
+    - "debug with bisect"
+  examples:
+    - query: "Start a bisect to find the buggy commit"
+    - query: "Begin a binary search for the bug"
+    - query: "Use bisect to find when a bug was introduced"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-bisect
+  verified_at: "2026-08-01"
+
+- id: git-bisect-bad
+  technology: git
+  category: advanced
+  name: Mark Bisect Bad
+  intent: bisect_bad
+  command: "git bisect bad"
+  description: >
+    Mark the current commit as bad (containing the bug) during a bisect session.
+  tags:
+    - bisect
+    - bad
+    - mark
+    - bug
+  aliases:
+    - "mark as bad"
+    - "bisect bad"
+    - "this commit has the bug"
+    - "current commit is bad"
+  examples:
+    - query: "Mark the current commit as bad"
+    - query: "This commit has the bug"
+    - query: "Bisect bad"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-bisect
+  verified_at: "2026-08-01"
+
+- id: git-bisect-good
+  technology: git
+  category: advanced
+  name: Mark Bisect Good
+  intent: bisect_good
+  command: "git bisect good"
+  description: >
+    Mark the current commit as good (not containing the bug) during a bisect
+    session.
+  tags:
+    - bisect
+    - good
+    - mark
+  aliases:
+    - "mark as good"
+    - "bisect good"
+    - "this commit is fine"
+    - "current commit is good"
+  examples:
+    - query: "Mark the current commit as good"
+    - query: "This commit does not have the bug"
+    - query: "Bisect good"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-bisect
+  verified_at: "2026-08-01"
+
+- id: git-bisect-reset
+  technology: git
+  category: advanced
+  name: Reset Bisect
+  intent: bisect_reset
+  command: "git bisect reset"
+  description: >
+    End the bisect session and return to the original branch.
+  tags:
+    - bisect
+    - reset
+    - end
+    - finish
+  aliases:
+    - "end bisect"
+    - "reset bisect"
+    - "finish bisect"
+    - "stop bisecting"
+    - "exit bisect"
+  examples:
+    - query: "End the bisect session"
+    - query: "Reset bisect and go back"
+    - query: "Finish bisecting"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-bisect
+  verified_at: "2026-08-01"
+
+- id: git-submodule-add
+  technology: git
+  category: advanced
+  name: Add Submodule
+  intent: submodule_add
+  command: "git submodule add <url> <path>"
+  description: >
+    Add a repository as a submodule at the specified path.
+  tags:
+    - submodule
+    - add
+    - dependency
+    - nested
+  aliases:
+    - "add a submodule"
+    - "add submodule repository"
+    - "include another repo as submodule"
+    - "add nested repository"
+  examples:
+    - query: "Add a submodule from a URL"
+    - query: "Include another repo as a submodule"
+    - query: "Add a Git submodule at a path"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-submodule
+  verified_at: "2026-08-01"
+
+- id: git-submodule-update
+  technology: git
+  category: advanced
+  name: Update Submodules
+  intent: submodule_update
+  command: "git submodule update --init --recursive"
+  description: >
+    Initialize and update all submodules recursively, cloning them if needed.
+  tags:
+    - submodule
+    - update
+    - init
+    - recursive
+  aliases:
+    - "update submodules"
+    - "initialize submodules"
+    - "clone submodules"
+    - "init and update submodules"
+    - "fetch submodule code"
+  examples:
+    - query: "Initialize and update all submodules"
+    - query: "Clone submodules after cloning the repo"
+    - query: "Update submodules recursively"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-submodule
+  verified_at: "2026-08-01"
+
+- id: git-submodule-init
+  technology: git
+  category: advanced
+  name: Initialize Submodules
+  intent: submodule_init
+  command: "git submodule init"
+  description: >
+    Initialize submodule configuration from .gitmodules to the local config.
+  tags:
+    - submodule
+    - init
+    - configure
+  aliases:
+    - "init submodules"
+    - "initialize submodule config"
+    - "set up submodules"
+  examples:
+    - query: "Initialize submodule configuration"
+    - query: "Set up submodules locally"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-submodule
+  verified_at: "2026-08-01"
+
+- id: git-submodule-sync
+  technology: git
+  category: advanced
+  name: Sync Submodules
+  intent: submodule_sync
+  command: "git submodule sync --recursive"
+  description: >
+    Synchronize submodule URLs from .gitmodules to the local .git/config
+    recursively.
+  tags:
+    - submodule
+    - sync
+    - url
+    - update
+  aliases:
+    - "sync submodule URLs"
+    - "synchronize submodules"
+    - "update submodule URLs"
+    - "fix submodule URLs"
+  examples:
+    - query: "Sync submodule URLs with .gitmodules"
+    - query: "Synchronize submodules recursively"
+    - query: "Fix out-of-date submodule URLs"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-submodule
+  verified_at: "2026-08-01"
+
+- id: git-reflog
+  technology: git
+  category: advanced
+  name: View Reflog
+  intent: view_reflog
+  command: "git reflog"
+  description: >
+    Show a log of all changes to HEAD, including commits, resets, rebases, and
+    checkouts. Useful for recovering lost commits.
+  tags:
+    - reflog
+    - history
+    - recovery
+    - undo
+    - safety-net
+  aliases:
+    - "show reflog"
+    - "view reference log"
+    - "recover lost commit"
+    - "find deleted commit"
+    - "HEAD history"
+    - "undo history"
+    - "show all HEAD changes"
+  examples:
+    - query: "Show the reflog"
+    - query: "Find a commit I lost after reset"
+    - query: "Show history of HEAD movements"
+    - query: "Recover a lost commit"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-reflog
+  verified_at: "2026-08-01"
+
+- id: git-clean-dry-run
+  technology: git
+  category: advanced
+  name: Clean Dry Run
+  intent: clean_dry_run
+  command: "git clean -n"
+  description: >
+    Show which untracked files would be removed without actually deleting them.
+    A safe preview before running git clean.
+  tags:
+    - clean
+    - dry-run
+    - preview
+    - untracked
+  aliases:
+    - "preview clean"
+    - "dry run clean"
+    - "show what clean would delete"
+    - "preview untracked file removal"
+    - "check clean results"
+  examples:
+    - query: "Show what files git clean would remove"
+    - query: "Preview clean without deleting"
+    - query: "Dry run of git clean"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-clean
+  verified_at: "2026-08-01"
+
+- id: git-clean-force
+  technology: git
+  category: advanced
+  name: Clean Untracked Files
+  intent: clean_force
+  command: "git clean -fd"
+  description: >
+    Remove untracked files and directories from the working tree. The -f flag
+    is required to force the operation and -d includes directories.
+  tags:
+    - clean
+    - force
+    - untracked
+    - remove
+    - directories
+    - destructive
+  aliases:
+    - "remove untracked files"
+    - "clean working directory"
+    - "delete untracked files and folders"
+    - "force clean"
+    - "remove all untracked"
+  examples:
+    - query: "Remove all untracked files and directories"
+    - query: "Clean the working directory"
+    - query: "Delete all untracked files"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-clean
+  verified_at: "2026-08-01"
+
+- id: git-revert
+  technology: git
+  category: advanced
+  name: Revert Commit
+  intent: revert_commit
+  command: "git revert <commit>"
+  description: >
+    Create a new commit that undoes the changes introduced by the specified
+    commit. This is a safe way to undo changes without rewriting history.
+  tags:
+    - revert
+    - undo
+    - safe
+    - history
+    - rollback
+  aliases:
+    - "revert a commit"
+    - "undo a commit safely"
+    - "rollback a commit"
+    - "reverse a commit"
+    - "create undo commit"
+    - "safely undo changes"
+  examples:
+    - query: "Revert commit abc1234"
+    - query: "Undo a commit without rewriting history"
+    - query: "Safely reverse the last commit"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-revert
+  verified_at: "2026-08-01"
+
+- id: git-am
+  technology: git
+  category: advanced
+  name: Apply Patches
+  intent: apply_patches
+  command: "git am <patch-file>"
+  description: >
+    Apply a series of patches from mailbox-formatted patch files, creating
+    commits for each patch.
+  tags:
+    - am
+    - patch
+    - apply
+    - mailbox
+    - email
+  aliases:
+    - "apply patches"
+    - "apply patch file"
+    - "apply email patches"
+    - "apply mailbox patches"
+    - "apply formatted patch"
+  examples:
+    - query: "Apply a patch file"
+    - query: "Apply patches from email"
+    - query: "Apply a formatted patch to my repo"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-am
+  verified_at: "2026-08-01"
+
+- id: git-format-patch
+  technology: git
+  category: advanced
+  name: Format Patch
+  intent: format_patch
+  command: "git format-patch <commit>"
+  description: >
+    Generate patch files in mailbox format for commits since the specified
+    commit. Commonly used for sharing changes via email.
+  tags:
+    - format-patch
+    - patch
+    - export
+    - email
+    - share
+  aliases:
+    - "create patch files"
+    - "format patches"
+    - "export commits as patches"
+    - "generate patch for email"
+    - "make patch file"
+  examples:
+    - query: "Create patch files for the last 3 commits"
+    - query: "Generate patches since main"
+    - query: "Export commits as patch files"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-format-patch
+  verified_at: "2026-08-01"
+
+- id: git-worktree-add
+  technology: git
+  category: advanced
+  name: Add Worktree
+  intent: worktree_add
+  command: "git worktree add <path> <branch>"
+  description: >
+    Create a new working tree linked to the repository at the specified path,
+    checked out to the given branch. Allows working on multiple branches
+    simultaneously.
+  tags:
+    - worktree
+    - add
+    - multiple
+    - parallel
+    - branch
+  aliases:
+    - "add a worktree"
+    - "create linked worktree"
+    - "work on multiple branches"
+    - "parallel branch checkout"
+    - "new working directory"
+  examples:
+    - query: "Create a worktree for the hotfix branch"
+    - query: "Add a worktree so I can work on two branches"
+    - query: "Set up a parallel working directory"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-worktree
+  verified_at: "2026-08-01"
+
+- id: git-worktree-list
+  technology: git
+  category: advanced
+  name: List Worktrees
+  intent: worktree_list
+  command: "git worktree list"
+  description: >
+    List all linked working trees with their paths, HEAD commits, and branch
+    names.
+  tags:
+    - worktree
+    - list
+    - show
+  aliases:
+    - "list worktrees"
+    - "show all worktrees"
+    - "what worktrees exist"
+    - "view linked worktrees"
+  examples:
+    - query: "List all worktrees"
+    - query: "Show linked working trees"
+    - query: "What worktrees do I have?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-worktree
+  verified_at: "2026-08-01"
+
+- id: git-worktree-remove
+  technology: git
+  category: advanced
+  name: Remove Worktree
+  intent: worktree_remove
+  command: "git worktree remove <path>"
+  description: >
+    Remove a linked working tree and its administrative files.
+  tags:
+    - worktree
+    - remove
+    - delete
+    - cleanup
+  aliases:
+    - "remove a worktree"
+    - "delete worktree"
+    - "cleanup worktree"
+    - "remove linked working tree"
+  examples:
+    - query: "Remove the worktree at /tmp/hotfix"
+    - query: "Delete a linked working tree"
+    - query: "Clean up an old worktree"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-worktree
+  verified_at: "2026-08-01"
+
+- id: git-config-user-name
+  technology: git
+  category: config
+  name: Set User Name
+  intent: config_user_name
+  command: "git config --global user.name \"<name>\""
+  description: >
+    Set the global Git user name used for commit authorship.
+  tags:
+    - config
+    - user
+    - name
+    - global
+    - setup
+  aliases:
+    - "set git username"
+    - "configure author name"
+    - "set global user name"
+    - "change git name"
+    - "set commit author name"
+  examples:
+    - query: "Set my Git username"
+    - query: "Configure my author name globally"
+    - query: "Change the name used in commits"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-config
+  verified_at: "2026-08-01"
+
+- id: git-config-user-email
+  technology: git
+  category: config
+  name: Set User Email
+  intent: config_user_email
+  command: "git config --global user.email \"<email>\""
+  description: >
+    Set the global Git user email used for commit authorship.
+  tags:
+    - config
+    - user
+    - email
+    - global
+    - setup
+  aliases:
+    - "set git email"
+    - "configure author email"
+    - "set global user email"
+    - "change git email"
+    - "set commit author email"
+  examples:
+    - query: "Set my Git email"
+    - query: "Configure my author email globally"
+    - query: "Change the email used in commits"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-config
+  verified_at: "2026-08-01"
+
+- id: git-config-list
+  technology: git
+  category: config
+  name: List Configuration
+  intent: config_list
+  command: "git config --list"
+  description: >
+    List all Git configuration settings from all levels (system, global, local).
+  tags:
+    - config
+    - list
+    - settings
+    - show
+  aliases:
+    - "list git config"
+    - "show all settings"
+    - "view git configuration"
+    - "show config values"
+    - "what is my git config"
+  examples:
+    - query: "Show all Git configuration settings"
+    - query: "List my Git config"
+    - query: "What are my Git settings?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-config
+  verified_at: "2026-08-01"
+
+- id: git-init
+  technology: git
+  category: config
+  name: Initialize Repository
+  intent: init_repo
+  command: "git init"
+  description: >
+    Create a new Git repository in the current directory by initializing a
+    .git directory.
+  tags:
+    - init
+    - create
+    - new
+    - repository
+    - setup
+  aliases:
+    - "initialize a repo"
+    - "create a new git repo"
+    - "start a new repository"
+    - "git init"
+    - "set up a new repo"
+    - "create .git directory"
+  examples:
+    - query: "Initialize a new Git repository"
+    - query: "Create a new repo in this directory"
+    - query: "Start a new Git project"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-init
+  verified_at: "2026-08-01"
+
+- id: git-clone
+  technology: git
+  category: remote
+  name: Clone Repository
+  intent: clone_repo
+  command: "git clone <url>"
+  description: >
+    Clone a remote repository into a new directory, creating a local copy with
+    full history.
+  tags:
+    - clone
+    - copy
+    - download
+    - repository
+    - remote
+  aliases:
+    - "clone a repo"
+    - "download a repository"
+    - "copy a remote repo"
+    - "git clone"
+    - "clone from URL"
+    - "get a copy of a repo"
+  examples:
+    - query: "Clone a repository from GitHub"
+    - query: "Download a remote repo"
+    - query: "Clone a project from a URL"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-clone
+  verified_at: "2026-08-01"
+
+- id: git-add-file
+  technology: git
+  category: staging
+  name: Stage File
+  intent: stage_file
+  command: "git add <file>"
+  description: >
+    Add a specific file to the staging area (index) for the next commit.
+  tags:
+    - add
+    - stage
+    - file
+    - index
+  aliases:
+    - "stage a file"
+    - "add file to staging"
+    - "git add file"
+    - "prepare file for commit"
+    - "add to index"
+  examples:
+    - query: "Stage main.py for commit"
+    - query: "Add a file to the staging area"
+    - query: "Prepare a file for the next commit"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-add
+  verified_at: "2026-08-01"
+
+- id: git-add-all
+  technology: git
+  category: staging
+  name: Stage All Changes
+  intent: stage_all
+  command: "git add -A"
+  description: >
+    Stage all changes including new, modified, and deleted files across the
+    entire working tree.
+  tags:
+    - add
+    - stage
+    - all
+    - everything
+  aliases:
+    - "stage all changes"
+    - "add everything"
+    - "stage all files"
+    - "add all modified files"
+    - "git add all"
+    - "stage everything for commit"
+  examples:
+    - query: "Stage all changes for commit"
+    - query: "Add everything to staging"
+    - query: "Stage all modified and new files"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-add
+  verified_at: "2026-08-01"
+
+- id: git-commit
+  technology: git
+  category: staging
+  name: Commit Changes
+  intent: commit_changes
+  command: "git commit -m \"<message>\""
+  description: >
+    Create a new commit with the staged changes and a descriptive commit
+    message.
+  tags:
+    - commit
+    - save
+    - snapshot
+    - message
+  aliases:
+    - "commit changes"
+    - "save changes"
+    - "create a commit"
+    - "commit with message"
+    - "make a commit"
+    - "record changes"
+  examples:
+    - query: "Commit staged changes with a message"
+    - query: "Create a commit"
+    - query: "Save my staged changes"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-commit
+  verified_at: "2026-08-01"
+
+- id: git-commit-amend
+  technology: git
+  category: staging
+  name: Amend Last Commit
+  intent: commit_amend
+  command: "git commit --amend"
+  description: >
+    Modify the most recent commit by adding staged changes or editing the
+    commit message. This rewrites the commit history.
+  tags:
+    - commit
+    - amend
+    - edit
+    - modify
+    - fix
+  aliases:
+    - "amend last commit"
+    - "edit last commit"
+    - "fix last commit"
+    - "modify previous commit"
+    - "change commit message"
+    - "add to last commit"
+  examples:
+    - query: "Amend the last commit"
+    - query: "Change the last commit message"
+    - query: "Add a forgotten file to the last commit"
+  risk: warning
+  documentation:
+    url: https://git-scm.com/docs/git-commit
+  verified_at: "2026-08-01"
+
+- id: git-delete-remote-branch
+  technology: git
+  category: remote
+  name: Delete Remote Branch
+  intent: delete_remote_branch
+  command: "git push <remote> --delete <branch>"
+  description: >
+    Delete a branch on the remote repository.
+  tags:
+    - push
+    - delete
+    - remote
+    - branch
+    - cleanup
+  aliases:
+    - "delete remote branch"
+    - "remove branch from remote"
+    - "delete branch on origin"
+    - "remove remote branch"
+    - "cleanup remote branch"
+  examples:
+    - query: "Delete a branch on the remote"
+    - query: "Remove a branch from origin"
+    - query: "Delete feature-login from the remote"
+  risk: dangerous
+  documentation:
+    url: https://git-scm.com/docs/git-push
+  verified_at: "2026-08-01"
+
+- id: git-log-search
+  technology: git
+  category: history
+  name: Search Commit Messages
+  intent: search_commits
+  command: "git log --grep=\"<pattern>\""
+  description: >
+    Search commit messages for a pattern and show only matching commits.
+  tags:
+    - log
+    - search
+    - grep
+    - filter
+    - find
+  aliases:
+    - "search commit messages"
+    - "find commits by message"
+    - "grep commit log"
+    - "search log for keyword"
+    - "find commit with message"
+  examples:
+    - query: "Find commits mentioning 'login'"
+    - query: "Search commit messages for a keyword"
+    - query: "Which commits mention the bug fix?"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-log
+  verified_at: "2026-08-01"
+
+- id: git-add-patch
+  technology: git
+  category: staging
+  name: Stage Partial Changes
+  intent: stage_patch
+  command: "git add -p <file>"
+  description: >
+    Interactively select hunks of changes in a file to stage, allowing partial
+    staging of file modifications.
+  tags:
+    - add
+    - patch
+    - partial
+    - interactive
+    - hunk
+  aliases:
+    - "stage partial changes"
+    - "add patch mode"
+    - "stage part of a file"
+    - "interactive staging"
+    - "select hunks to stage"
+    - "partial git add"
+  examples:
+    - query: "Stage only some changes in a file"
+    - query: "Interactively choose which changes to stage"
+    - query: "Add only part of a file to staging"
+  risk: safe
+  documentation:
+    url: https://git-scm.com/docs/git-add
+  verified_at: "2026-08-01"

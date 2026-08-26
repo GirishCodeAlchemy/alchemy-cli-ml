@@ -1,0 +1,28 @@
+services:
+  alchemyai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      - "3000:3000"
+    volumes:
+      - model-data:/app/ml/models
+      - index-data:/app/ml/data/processed
+    environment:
+      - ALCHEMYAI_API_HOST=0.0.0.0
+      - ALCHEMYAI_API_PORT=8000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+volumes:
+  model-data:
+  index-data:

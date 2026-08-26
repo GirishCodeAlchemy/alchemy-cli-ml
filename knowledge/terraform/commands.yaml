@@ -1,0 +1,1596 @@
+# AlchemyCLI AI - Terraform Commands
+# Comprehensive reference for Terraform CLI operations
+# Verified against official HashiCorp Terraform documentation
+
+- id: terraform-init-basic
+  technology: terraform
+  category: init
+  name: Initialize Terraform Project
+  intent: init_project
+  command: terraform init
+  description: >
+    Initializes a Terraform working directory by downloading provider plugins,
+    initializing the backend, and installing modules referenced in the configuration.
+    This is the first command to run for any new or cloned Terraform project.
+  tags:
+    - init
+    - setup
+    - providers
+    - backend
+    - modules
+  aliases:
+    - initialize terraform project
+    - set up terraform
+    - download terraform providers
+    - terraform init command
+    - start terraform project
+    - install terraform plugins
+  examples:
+    - query: "How do I initialize a new Terraform project?"
+    - query: "Set up Terraform in the current directory"
+    - query: "Download Terraform providers and modules"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/init
+  verified_at: "2026-08-01"
+
+- id: terraform-init-upgrade
+  technology: terraform
+  category: init
+  name: Initialize with Provider Upgrade
+  intent: init_upgrade
+  command: terraform init -upgrade
+  description: >
+    Initializes the Terraform working directory and upgrades all previously-installed
+    plugins and modules to the newest versions that comply with the configured version
+    constraints. Useful when you want to pick up new provider releases.
+  tags:
+    - init
+    - upgrade
+    - providers
+    - modules
+    - update
+  aliases:
+    - upgrade terraform providers
+    - update terraform plugins
+    - terraform init upgrade
+    - upgrade terraform modules
+    - update provider versions
+  examples:
+    - query: "How do I upgrade my Terraform providers to the latest version?"
+    - query: "Update all Terraform plugins and modules"
+    - query: "Upgrade provider versions in my project"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/init
+  verified_at: "2026-08-01"
+
+- id: terraform-init-reconfigure
+  technology: terraform
+  category: init
+  name: Initialize with Backend Reconfiguration
+  intent: init_reconfigure
+  command: terraform init -reconfigure
+  description: >
+    Reconfigures the backend, ignoring any saved configuration. This is used when
+    you need to change the backend configuration without migrating existing state.
+    It disregards any existing backend configuration and prevents Terraform from
+    attempting to migrate the existing state.
+  tags:
+    - init
+    - backend
+    - reconfigure
+    - state
+  aliases:
+    - reconfigure terraform backend
+    - change terraform backend
+    - reset backend configuration
+    - reinitialize terraform backend
+    - terraform init reconfigure
+  examples:
+    - query: "How do I change the Terraform backend without migrating state?"
+    - query: "Reconfigure my Terraform backend settings"
+    - query: "Reset the backend configuration in Terraform"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/init
+  verified_at: "2026-08-01"
+
+- id: terraform-init-backend-config
+  technology: terraform
+  category: init
+  name: Initialize with Backend Config File
+  intent: init_backend_config
+  command: terraform init -backend-config=<file>
+  description: >
+    Initializes Terraform with additional backend configuration provided in a
+    separate file. This is commonly used to supply sensitive backend settings
+    like access keys or connection strings that should not be stored in the
+    main configuration files.
+  tags:
+    - init
+    - backend
+    - config
+    - credentials
+    - secrets
+  aliases:
+    - terraform init with backend config
+    - pass backend configuration file
+    - initialize with external backend config
+    - set backend config during init
+    - terraform backend config file
+  examples:
+    - query: "How do I pass backend config during terraform init?"
+    - query: "Initialize Terraform with a separate backend configuration file"
+    - query: "Supply backend credentials during initialization"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/init
+  verified_at: "2026-08-01"
+
+- id: terraform-plan-basic
+  technology: terraform
+  category: planning
+  name: Create Execution Plan
+  intent: create_plan
+  command: terraform plan
+  description: >
+    Creates an execution plan showing what actions Terraform will take to reach
+    the desired state defined in the configuration files. This command does not
+    make any changes to real infrastructure and is safe to run at any time.
+  tags:
+    - plan
+    - preview
+    - diff
+    - dry-run
+    - changes
+  aliases:
+    - preview terraform changes
+    - terraform dry run
+    - show planned infrastructure changes
+    - check what terraform will do
+    - terraform plan command
+    - see terraform execution plan
+  examples:
+    - query: "How do I preview what Terraform will change?"
+    - query: "Run a Terraform dry run"
+    - query: "Show me what infrastructure changes Terraform will make"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/plan
+  verified_at: "2026-08-01"
+
+- id: terraform-plan-var
+  technology: terraform
+  category: planning
+  name: Plan with Variable
+  intent: plan_with_variable
+  command: terraform plan -var '<variable>=<value>'
+  description: >
+    Creates an execution plan while setting a specific input variable value
+    on the command line. This overrides any default values or values set in
+    variable definition files.
+  tags:
+    - plan
+    - variables
+    - parameters
+    - input
+  aliases:
+    - terraform plan with variable
+    - pass variable to terraform plan
+    - set variable during plan
+    - terraform plan var flag
+    - override variable in plan
+  examples:
+    - query: "How do I pass a variable to terraform plan?"
+    - query: "Run terraform plan with a specific variable value"
+    - query: "Override a variable when planning"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/plan
+  verified_at: "2026-08-01"
+
+- id: terraform-plan-var-file
+  technology: terraform
+  category: planning
+  name: Plan with Variable File
+  intent: plan_with_var_file
+  command: terraform plan -var-file=<file>
+  description: >
+    Creates an execution plan using variable definitions from a specified file.
+    The file should contain variable assignments in HCL or JSON format. This is
+    useful for managing different environments with separate variable files.
+  tags:
+    - plan
+    - variables
+    - var-file
+    - environments
+    - tfvars
+  aliases:
+    - terraform plan with var file
+    - use tfvars file with plan
+    - pass variable file to plan
+    - plan with environment variables file
+    - terraform plan var-file
+  examples:
+    - query: "How do I use a tfvars file with terraform plan?"
+    - query: "Plan with variables from a specific file"
+    - query: "Run terraform plan using my staging.tfvars file"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/plan
+  verified_at: "2026-08-01"
+
+- id: terraform-plan-out
+  technology: terraform
+  category: planning
+  name: Save Plan to File
+  intent: plan_output
+  command: terraform plan -out=<file>
+  description: >
+    Creates an execution plan and saves it to a binary file. The saved plan can
+    later be passed to terraform apply to guarantee that exactly the planned
+    changes are applied. This is the recommended workflow for production deployments.
+  tags:
+    - plan
+    - save
+    - output
+    - file
+    - production
+  aliases:
+    - save terraform plan to file
+    - export terraform plan
+    - terraform plan output file
+    - store plan for later apply
+    - save execution plan
+  examples:
+    - query: "How do I save a Terraform plan to a file?"
+    - query: "Export the execution plan for later use"
+    - query: "Save my Terraform plan so I can apply it later"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/plan
+  verified_at: "2026-08-01"
+
+- id: terraform-plan-target
+  technology: terraform
+  category: planning
+  name: Plan for Specific Resource
+  intent: plan_target_resource
+  command: terraform plan -target=<resource>
+  description: >
+    Creates an execution plan that only targets a specific resource and its
+    dependencies. This is useful for focusing on a particular resource when
+    debugging or when you need to apply changes incrementally. Use sparingly
+    as it can lead to configuration drift.
+  tags:
+    - plan
+    - target
+    - resource
+    - selective
+    - focused
+  aliases:
+    - terraform plan for specific resource
+    - target a single resource in plan
+    - plan only one resource
+    - selective terraform plan
+    - terraform plan target flag
+  examples:
+    - query: "How do I plan changes for only one resource?"
+    - query: "Target a specific resource in terraform plan"
+    - query: "Run terraform plan for just my EC2 instance"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/plan
+  verified_at: "2026-08-01"
+
+- id: terraform-apply-basic
+  technology: terraform
+  category: execution
+  name: Apply Changes
+  intent: apply_changes
+  command: terraform apply
+  description: >
+    Applies the changes required to reach the desired state of the configuration.
+    By default, Terraform will generate a new plan and prompt for approval before
+    making any changes to real infrastructure.
+  tags:
+    - apply
+    - deploy
+    - create
+    - update
+    - infrastructure
+  aliases:
+    - apply terraform changes
+    - deploy terraform infrastructure
+    - terraform apply command
+    - execute terraform plan
+    - provision infrastructure with terraform
+    - run terraform apply
+  examples:
+    - query: "How do I apply my Terraform configuration?"
+    - query: "Deploy the infrastructure defined in my Terraform files"
+    - query: "Apply Terraform changes to my cloud environment"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/apply
+  verified_at: "2026-08-01"
+
+- id: terraform-apply-auto-approve
+  technology: terraform
+  category: execution
+  name: Apply without Confirmation
+  intent: apply_auto_approve
+  command: terraform apply -auto-approve
+  description: >
+    Applies the Terraform configuration changes without prompting for interactive
+    approval. This skips the confirmation step and immediately applies all changes.
+    Commonly used in CI/CD pipelines but should be used with caution in production.
+  tags:
+    - apply
+    - auto-approve
+    - non-interactive
+    - automation
+    - ci-cd
+  aliases:
+    - terraform apply without confirmation
+    - auto approve terraform apply
+    - skip terraform apply prompt
+    - terraform apply in CI/CD
+    - non-interactive terraform apply
+    - apply terraform without asking
+  examples:
+    - query: "How do I apply Terraform changes without confirmation?"
+    - query: "Run terraform apply in a CI/CD pipeline"
+    - query: "Skip the approval prompt in terraform apply"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/apply
+  verified_at: "2026-08-01"
+
+- id: terraform-apply-plan-file
+  technology: terraform
+  category: execution
+  name: Apply Saved Plan
+  intent: apply_saved_plan
+  command: terraform apply <file>
+  description: >
+    Applies a previously saved plan file. When a plan file is provided, Terraform
+    will apply exactly the changes shown in the plan without prompting for approval.
+    This is the recommended workflow for production deployments to ensure only
+    reviewed changes are applied.
+  tags:
+    - apply
+    - plan-file
+    - saved-plan
+    - production
+    - deterministic
+  aliases:
+    - apply saved terraform plan
+    - terraform apply from plan file
+    - apply a previously saved plan
+    - execute saved plan
+    - apply plan file
+  examples:
+    - query: "How do I apply a saved Terraform plan?"
+    - query: "Apply the plan file I saved earlier"
+    - query: "Execute a Terraform plan from a file"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/apply
+  verified_at: "2026-08-01"
+
+- id: terraform-apply-target
+  technology: terraform
+  category: execution
+  name: Apply to Specific Resource
+  intent: apply_target_resource
+  command: terraform apply -target=<resource>
+  description: >
+    Applies changes only to the specified resource and its dependencies. This
+    limits the scope of the apply operation. Use sparingly as targeting specific
+    resources can leave your infrastructure in an inconsistent state relative
+    to the configuration.
+  tags:
+    - apply
+    - target
+    - resource
+    - selective
+  aliases:
+    - terraform apply specific resource
+    - apply changes to one resource
+    - target a resource in terraform apply
+    - selective terraform apply
+    - apply only to specific resource
+  examples:
+    - query: "How do I apply changes to just one specific resource?"
+    - query: "Target a specific resource during terraform apply"
+    - query: "Apply terraform changes only to my database resource"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/apply
+  verified_at: "2026-08-01"
+
+- id: terraform-apply-var
+  technology: terraform
+  category: execution
+  name: Apply with Variable
+  intent: apply_with_variable
+  command: terraform apply -var '<variable>=<value>'
+  description: >
+    Applies the Terraform configuration while setting a specific input variable
+    value on the command line. This overrides any default values defined in the
+    configuration or variable definition files.
+  tags:
+    - apply
+    - variables
+    - parameters
+    - input
+  aliases:
+    - terraform apply with variable
+    - pass variable to terraform apply
+    - set variable during apply
+    - terraform apply var flag
+    - override variable in apply
+  examples:
+    - query: "How do I pass a variable to terraform apply?"
+    - query: "Set a variable value when applying Terraform changes"
+    - query: "Override a variable during terraform apply"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/apply
+  verified_at: "2026-08-01"
+
+- id: terraform-destroy-basic
+  technology: terraform
+  category: execution
+  name: Destroy All Infrastructure
+  intent: destroy_infrastructure
+  command: terraform destroy
+  description: >
+    Destroys all infrastructure managed by the current Terraform configuration.
+    Terraform will prompt for confirmation before destroying any resources. This
+    is equivalent to running terraform apply with all resources removed from
+    the configuration.
+  tags:
+    - destroy
+    - teardown
+    - delete
+    - remove
+    - cleanup
+  aliases:
+    - destroy terraform infrastructure
+    - tear down terraform resources
+    - delete all terraform resources
+    - terraform destroy command
+    - remove terraform managed infrastructure
+    - clean up terraform resources
+  examples:
+    - query: "How do I destroy all Terraform-managed infrastructure?"
+    - query: "Tear down the entire Terraform environment"
+    - query: "Delete all resources created by Terraform"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/destroy
+  verified_at: "2026-08-01"
+
+- id: terraform-destroy-auto-approve
+  technology: terraform
+  category: execution
+  name: Destroy without Confirmation
+  intent: destroy_auto_approve
+  command: terraform destroy -auto-approve
+  description: >
+    Destroys all Terraform-managed infrastructure without prompting for
+    confirmation. This is extremely dangerous and should only be used in
+    automated cleanup scenarios for non-production environments.
+  tags:
+    - destroy
+    - auto-approve
+    - non-interactive
+    - automation
+    - dangerous
+  aliases:
+    - terraform destroy without confirmation
+    - auto approve terraform destroy
+    - force destroy terraform
+    - terraform destroy in CI/CD
+    - non-interactive terraform destroy
+  examples:
+    - query: "How do I destroy Terraform resources without confirmation?"
+    - query: "Force destroy all infrastructure without prompts"
+    - query: "Auto-approve terraform destroy for automated cleanup"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/destroy
+  verified_at: "2026-08-01"
+
+- id: terraform-destroy-target
+  technology: terraform
+  category: execution
+  name: Destroy Specific Resource
+  intent: destroy_target_resource
+  command: terraform destroy -target=<resource>
+  description: >
+    Destroys only the specified resource and any resources that depend on it.
+    This allows for selective destruction of individual resources rather than
+    tearing down the entire infrastructure.
+  tags:
+    - destroy
+    - target
+    - resource
+    - selective
+    - delete
+  aliases:
+    - destroy specific terraform resource
+    - delete one terraform resource
+    - target resource for destruction
+    - selectively destroy terraform resource
+    - terraform destroy single resource
+  examples:
+    - query: "How do I destroy just one specific resource in Terraform?"
+    - query: "Delete a specific resource managed by Terraform"
+    - query: "Target a resource for destruction with terraform destroy"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/destroy
+  verified_at: "2026-08-01"
+
+- id: terraform-validate
+  technology: terraform
+  category: formatting
+  name: Validate Configuration
+  intent: validate_config
+  command: terraform validate
+  description: >
+    Validates the Terraform configuration files in the current directory for
+    correctness. It checks for syntax errors, internal consistency, and whether
+    attribute names and value types are correct. Does not access any remote
+    services or check state.
+  tags:
+    - validate
+    - check
+    - syntax
+    - errors
+    - lint
+  aliases:
+    - validate terraform files
+    - check terraform syntax
+    - terraform configuration validation
+    - verify terraform code
+    - lint terraform files
+    - terraform validate command
+  examples:
+    - query: "How do I validate my Terraform configuration?"
+    - query: "Check my Terraform files for syntax errors"
+    - query: "Verify that my Terraform code is correct"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/validate
+  verified_at: "2026-08-01"
+
+- id: terraform-fmt-check
+  technology: terraform
+  category: formatting
+  name: Check Formatting
+  intent: check_formatting
+  command: terraform fmt -check
+  description: >
+    Checks whether the Terraform configuration files are properly formatted
+    without modifying them. Returns a non-zero exit code if any files are not
+    formatted correctly. Commonly used in CI/CD pipelines to enforce consistent
+    code style.
+  tags:
+    - fmt
+    - format
+    - check
+    - style
+    - lint
+    - ci-cd
+  aliases:
+    - check terraform formatting
+    - verify terraform code style
+    - terraform format check
+    - lint terraform format
+    - check if terraform files are formatted
+  examples:
+    - query: "How do I check if my Terraform files are properly formatted?"
+    - query: "Verify Terraform code formatting in CI/CD"
+    - query: "Check Terraform formatting without making changes"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/fmt
+  verified_at: "2026-08-01"
+
+- id: terraform-fmt-recursive
+  technology: terraform
+  category: formatting
+  name: Format Recursively
+  intent: format_recursive
+  command: terraform fmt -recursive
+  description: >
+    Formats all Terraform configuration files in the current directory and all
+    subdirectories recursively. This ensures consistent formatting across the
+    entire project structure including nested modules.
+  tags:
+    - fmt
+    - format
+    - recursive
+    - style
+    - modules
+  aliases:
+    - format all terraform files recursively
+    - terraform fmt recursive
+    - format terraform in all subdirectories
+    - format entire terraform project
+    - recursive terraform formatting
+  examples:
+    - query: "How do I format all Terraform files including subdirectories?"
+    - query: "Recursively format my entire Terraform project"
+    - query: "Format Terraform files in all nested modules"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/fmt
+  verified_at: "2026-08-01"
+
+- id: terraform-fmt-diff
+  technology: terraform
+  category: formatting
+  name: Format with Diff
+  intent: format_diff
+  command: terraform fmt -diff
+  description: >
+    Formats Terraform configuration files and displays the differences between
+    the original and formatted content. This shows exactly what changes the
+    formatter will make, useful for reviewing formatting changes before applying.
+  tags:
+    - fmt
+    - format
+    - diff
+    - preview
+    - changes
+  aliases:
+    - terraform fmt with diff
+    - show formatting changes
+    - preview terraform format changes
+    - terraform format diff
+    - display format differences
+  examples:
+    - query: "How do I see what changes terraform fmt will make?"
+    - query: "Show the diff of Terraform formatting changes"
+    - query: "Preview formatting changes before applying"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/fmt
+  verified_at: "2026-08-01"
+
+- id: terraform-show-state
+  technology: terraform
+  category: state
+  name: Show Current State
+  intent: show_state
+  command: terraform show
+  description: >
+    Reads and outputs the current Terraform state in a human-readable format.
+    Shows all resources currently tracked in the state file along with their
+    attribute values. Useful for inspecting the current state of managed
+    infrastructure.
+  tags:
+    - show
+    - state
+    - inspect
+    - resources
+    - attributes
+  aliases:
+    - show terraform state
+    - display terraform resources
+    - inspect terraform state
+    - view current infrastructure state
+    - terraform show command
+    - read terraform state
+  examples:
+    - query: "How do I view the current Terraform state?"
+    - query: "Show all resources in my Terraform state"
+    - query: "Inspect the current state of my infrastructure"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/show
+  verified_at: "2026-08-01"
+
+- id: terraform-show-plan
+  technology: terraform
+  category: state
+  name: Show Saved Plan
+  intent: show_plan
+  command: terraform show <file>
+  description: >
+    Reads and outputs a saved Terraform plan file in a human-readable format.
+    Shows the planned changes including which resources will be created,
+    modified, or destroyed. This is useful for reviewing a saved plan before
+    applying it.
+  tags:
+    - show
+    - plan
+    - review
+    - inspect
+    - changes
+  aliases:
+    - show saved terraform plan
+    - display plan file contents
+    - review terraform plan file
+    - inspect saved plan
+    - view terraform plan details
+  examples:
+    - query: "How do I view the contents of a saved Terraform plan?"
+    - query: "Show what a saved plan file will do"
+    - query: "Review a Terraform plan before applying"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/show
+  verified_at: "2026-08-01"
+
+- id: terraform-state-list
+  technology: terraform
+  category: state
+  name: List Resources in State
+  intent: list_state
+  command: terraform state list
+  description: >
+    Lists all resource instances tracked in the current Terraform state. Each
+    resource is displayed with its full address, making it easy to identify
+    resources for other state manipulation commands.
+  tags:
+    - state
+    - list
+    - resources
+    - inventory
+    - managed
+  aliases:
+    - list terraform resources
+    - show all resources in state
+    - terraform state list command
+    - list managed infrastructure
+    - inventory of terraform resources
+    - what resources does terraform manage
+  examples:
+    - query: "How do I list all resources in my Terraform state?"
+    - query: "Show all resources managed by Terraform"
+    - query: "Get an inventory of Terraform-managed resources"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/list
+  verified_at: "2026-08-01"
+
+- id: terraform-state-show
+  technology: terraform
+  category: state
+  name: Show Resource Details in State
+  intent: show_state_resource
+  command: terraform state show <resource>
+  description: >
+    Displays the attributes and current values of a specific resource instance
+    in the Terraform state. Provides detailed information about a single resource
+    including all of its computed and configured attributes.
+  tags:
+    - state
+    - show
+    - resource
+    - details
+    - attributes
+    - inspect
+  aliases:
+    - show terraform resource details
+    - inspect specific resource in state
+    - terraform state show resource
+    - view resource attributes
+    - get resource details from state
+  examples:
+    - query: "How do I see the details of a specific resource in Terraform state?"
+    - query: "Show attributes of a resource in my Terraform state"
+    - query: "Inspect a specific resource managed by Terraform"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/show
+  verified_at: "2026-08-01"
+
+- id: terraform-state-rm
+  technology: terraform
+  category: state
+  name: Remove Resource from State
+  intent: remove_state_resource
+  command: terraform state rm <resource>
+  description: >
+    Removes a specific resource instance from the Terraform state without
+    destroying the actual infrastructure resource. The resource will no longer
+    be managed by Terraform but will continue to exist. Useful when you need
+    to stop managing a resource or move it to a different state.
+  tags:
+    - state
+    - remove
+    - unmanage
+    - detach
+    - orphan
+  aliases:
+    - remove resource from terraform state
+    - unmanage terraform resource
+    - detach resource from state
+    - terraform state rm command
+    - stop managing a resource
+    - remove resource without destroying
+  examples:
+    - query: "How do I remove a resource from Terraform state without deleting it?"
+    - query: "Stop managing a resource in Terraform"
+    - query: "Detach a resource from Terraform state"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/rm
+  verified_at: "2026-08-01"
+
+- id: terraform-state-mv
+  technology: terraform
+  category: state
+  name: Move Resource in State
+  intent: move_state_resource
+  command: terraform state mv <source> <destination>
+  description: >
+    Moves a resource instance from one address to another within the Terraform
+    state. This is used when refactoring configurations, such as renaming a
+    resource or moving it into a module, without causing Terraform to destroy
+    and recreate the actual infrastructure.
+  tags:
+    - state
+    - move
+    - rename
+    - refactor
+    - reorganize
+  aliases:
+    - move terraform resource in state
+    - rename terraform resource
+    - refactor terraform resource address
+    - terraform state mv command
+    - move resource to module
+    - reorganize terraform state
+  examples:
+    - query: "How do I rename a resource in Terraform state?"
+    - query: "Move a resource to a different address in state"
+    - query: "Refactor resource names without recreating infrastructure"
+    - query: "Move a resource into a module in Terraform state"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/mv
+  verified_at: "2026-08-01"
+
+- id: terraform-state-pull
+  technology: terraform
+  category: state
+  name: Pull Remote State
+  intent: pull_state
+  command: terraform state pull
+  description: >
+    Manually downloads and outputs the current state from the configured backend.
+    The state is written to stdout in JSON format. This is useful for inspecting
+    remote state, creating backups, or piping state data to other tools.
+  tags:
+    - state
+    - pull
+    - download
+    - remote
+    - backup
+    - json
+  aliases:
+    - pull terraform remote state
+    - download terraform state
+    - get remote state json
+    - terraform state pull command
+    - backup terraform state
+    - export state from backend
+  examples:
+    - query: "How do I download the remote Terraform state?"
+    - query: "Pull the Terraform state from the backend"
+    - query: "Create a backup of my Terraform remote state"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/pull
+  verified_at: "2026-08-01"
+
+- id: terraform-state-push
+  technology: terraform
+  category: state
+  name: Push State to Backend
+  intent: push_state
+  command: terraform state push <file>
+  description: >
+    Manually uploads a local state file to the configured remote backend. This
+    is an advanced command that can overwrite the remote state and should be used
+    with extreme caution. Primarily used for disaster recovery or state migration
+    scenarios.
+  tags:
+    - state
+    - push
+    - upload
+    - remote
+    - backend
+    - migration
+  aliases:
+    - push terraform state to remote
+    - upload state to backend
+    - terraform state push command
+    - overwrite remote state
+    - migrate terraform state
+    - restore terraform state
+  examples:
+    - query: "How do I push a local state file to the remote backend?"
+    - query: "Upload a Terraform state file to the backend"
+    - query: "Restore a Terraform state from a backup file"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/state/push
+  verified_at: "2026-08-01"
+
+- id: terraform-import
+  technology: terraform
+  category: state
+  name: Import Existing Resource
+  intent: import_resource
+  command: terraform import <resource> <id>
+  description: >
+    Imports an existing infrastructure resource into the Terraform state, allowing
+    Terraform to begin managing it. You must write a corresponding resource block
+    in your configuration before importing. The resource ID format varies by
+    provider and resource type.
+  tags:
+    - import
+    - existing
+    - adopt
+    - manage
+    - migration
+  aliases:
+    - import existing resource into terraform
+    - terraform import command
+    - adopt existing infrastructure
+    - bring resource under terraform management
+    - import cloud resource to terraform
+    - manage existing resource with terraform
+  examples:
+    - query: "How do I import an existing resource into Terraform?"
+    - query: "Bring an existing AWS EC2 instance under Terraform management"
+    - query: "Import a manually created resource into Terraform state"
+    - query: "How do I adopt existing infrastructure with Terraform?"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/import
+  verified_at: "2026-08-01"
+
+- id: terraform-output-all
+  technology: terraform
+  category: output
+  name: Show All Outputs
+  intent: show_outputs
+  command: terraform output
+  description: >
+    Displays all output values defined in the Terraform configuration. Outputs
+    are used to extract information about the infrastructure, such as IP addresses,
+    DNS names, or resource identifiers after applying the configuration.
+  tags:
+    - output
+    - values
+    - display
+    - results
+    - information
+  aliases:
+    - show terraform outputs
+    - display output values
+    - terraform output command
+    - get terraform output
+    - view all outputs
+    - list terraform outputs
+  examples:
+    - query: "How do I see all Terraform output values?"
+    - query: "Display the outputs from my Terraform configuration"
+    - query: "Show the results after terraform apply"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/output
+  verified_at: "2026-08-01"
+
+- id: terraform-output-specific
+  technology: terraform
+  category: output
+  name: Show Specific Output
+  intent: show_specific_output
+  command: terraform output <name>
+  description: >
+    Displays the value of a specific named output from the Terraform state.
+    This is useful for extracting individual values to use in scripts or
+    other automation workflows.
+  tags:
+    - output
+    - specific
+    - single
+    - value
+    - named
+  aliases:
+    - show specific terraform output
+    - get one output value
+    - terraform output by name
+    - extract specific output
+    - query terraform output
+  examples:
+    - query: "How do I get a specific output value from Terraform?"
+    - query: "Show just the IP address output from Terraform"
+    - query: "Extract a single output value by name"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/output
+  verified_at: "2026-08-01"
+
+- id: terraform-output-json
+  technology: terraform
+  category: output
+  name: Show Outputs as JSON
+  intent: show_outputs_json
+  command: terraform output -json
+  description: >
+    Displays all Terraform output values in JSON format. This is useful for
+    programmatic consumption of outputs in scripts, CI/CD pipelines, or other
+    automation tools that can parse JSON.
+  tags:
+    - output
+    - json
+    - machine-readable
+    - automation
+    - api
+  aliases:
+    - terraform output json format
+    - get outputs as json
+    - machine readable terraform output
+    - terraform output for automation
+    - export outputs as json
+  examples:
+    - query: "How do I get Terraform outputs in JSON format?"
+    - query: "Export Terraform outputs as JSON for scripting"
+    - query: "Get machine-readable output from Terraform"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/output
+  verified_at: "2026-08-01"
+
+- id: terraform-output-raw
+  technology: terraform
+  category: output
+  name: Show Raw Output Value
+  intent: show_output_raw
+  command: terraform output -raw <name>
+  description: >
+    Displays the value of a specific output without any formatting or quotes.
+    This is ideal for use in shell scripts where you need the raw value without
+    JSON encoding or extra quotation marks.
+  tags:
+    - output
+    - raw
+    - unformatted
+    - shell
+    - scripting
+  aliases:
+    - terraform output raw value
+    - get unquoted output
+    - raw terraform output
+    - terraform output for shell script
+    - plain text terraform output
+  examples:
+    - query: "How do I get a raw unquoted output value from Terraform?"
+    - query: "Get a Terraform output value without quotes for a script"
+    - query: "Extract plain text output from Terraform"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/output
+  verified_at: "2026-08-01"
+
+- id: terraform-refresh
+  technology: terraform
+  category: state
+  name: Refresh State
+  intent: refresh_state
+  command: terraform refresh
+  description: >
+    Updates the Terraform state to match the real-world infrastructure. This
+    reads the current state of all managed resources and updates the state file
+    accordingly. Note that terraform plan and terraform apply already perform
+    a refresh by default.
+  tags:
+    - refresh
+    - state
+    - sync
+    - update
+    - reconcile
+  aliases:
+    - refresh terraform state
+    - sync state with real infrastructure
+    - update terraform state
+    - reconcile terraform state
+    - terraform refresh command
+    - detect infrastructure drift
+  examples:
+    - query: "How do I sync Terraform state with actual infrastructure?"
+    - query: "Refresh the Terraform state to detect drift"
+    - query: "Update the state file to match real resources"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/refresh
+  verified_at: "2026-08-01"
+
+- id: terraform-workspace-list
+  technology: terraform
+  category: workspaces
+  name: List Workspaces
+  intent: list_workspaces
+  command: terraform workspace list
+  description: >
+    Lists all existing Terraform workspaces for the current configuration.
+    The current workspace is indicated with an asterisk (*). Workspaces allow
+    you to manage multiple distinct sets of infrastructure resources from the
+    same configuration.
+  tags:
+    - workspace
+    - list
+    - environments
+    - isolation
+  aliases:
+    - list terraform workspaces
+    - show all workspaces
+    - terraform workspace list command
+    - view available workspaces
+    - display workspaces
+  examples:
+    - query: "How do I list all Terraform workspaces?"
+    - query: "Show available workspaces in Terraform"
+    - query: "What workspaces exist in my Terraform project?"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/workspace/list
+  verified_at: "2026-08-01"
+
+- id: terraform-workspace-new
+  technology: terraform
+  category: workspaces
+  name: Create New Workspace
+  intent: create_workspace
+  command: terraform workspace new <name>
+  description: >
+    Creates a new Terraform workspace and switches to it. Each workspace has
+    its own state data, allowing you to manage separate instances of the same
+    infrastructure configuration, such as development, staging, and production
+    environments.
+  tags:
+    - workspace
+    - new
+    - create
+    - environment
+    - isolation
+  aliases:
+    - create terraform workspace
+    - new terraform workspace
+    - add workspace in terraform
+    - terraform workspace new command
+    - create new environment workspace
+  examples:
+    - query: "How do I create a new Terraform workspace?"
+    - query: "Create a staging workspace in Terraform"
+    - query: "Set up a new workspace for a separate environment"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/workspace/new
+  verified_at: "2026-08-01"
+
+- id: terraform-workspace-select
+  technology: terraform
+  category: workspaces
+  name: Select Workspace
+  intent: select_workspace
+  command: terraform workspace select <name>
+  description: >
+    Switches to the specified Terraform workspace. All subsequent commands will
+    operate against the state associated with the selected workspace. This allows
+    you to switch between different environments or infrastructure instances.
+  tags:
+    - workspace
+    - select
+    - switch
+    - environment
+    - change
+  aliases:
+    - switch terraform workspace
+    - select terraform workspace
+    - change workspace
+    - terraform workspace select command
+    - switch to different workspace
+  examples:
+    - query: "How do I switch to a different Terraform workspace?"
+    - query: "Select the production workspace in Terraform"
+    - query: "Change to a different Terraform workspace"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/workspace/select
+  verified_at: "2026-08-01"
+
+- id: terraform-workspace-delete
+  technology: terraform
+  category: workspaces
+  name: Delete Workspace
+  intent: delete_workspace
+  command: terraform workspace delete <name>
+  description: >
+    Deletes an existing Terraform workspace. The workspace must be empty (have
+    no resources in its state) before it can be deleted. You cannot delete the
+    currently selected workspace or the default workspace.
+  tags:
+    - workspace
+    - delete
+    - remove
+    - cleanup
+  aliases:
+    - delete terraform workspace
+    - remove terraform workspace
+    - terraform workspace delete command
+    - clean up unused workspace
+    - destroy terraform workspace
+  examples:
+    - query: "How do I delete a Terraform workspace?"
+    - query: "Remove an unused workspace in Terraform"
+    - query: "Clean up old Terraform workspaces"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/workspace/delete
+  verified_at: "2026-08-01"
+
+- id: terraform-workspace-show
+  technology: terraform
+  category: workspaces
+  name: Show Current Workspace
+  intent: show_workspace
+  command: terraform workspace show
+  description: >
+    Displays the name of the currently selected Terraform workspace. This is
+    useful in scripts and automation to verify which workspace is active
+    before running other commands.
+  tags:
+    - workspace
+    - show
+    - current
+    - active
+  aliases:
+    - show current terraform workspace
+    - which terraform workspace am I in
+    - display active workspace
+    - terraform workspace show command
+    - check current workspace
+  examples:
+    - query: "How do I see which Terraform workspace I'm currently in?"
+    - query: "Show the current active workspace"
+    - query: "Check which workspace is selected"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/workspace/show
+  verified_at: "2026-08-01"
+
+- id: terraform-providers
+  technology: terraform
+  category: providers
+  name: List Required Providers
+  intent: list_providers
+  command: terraform providers
+  description: >
+    Shows the providers required by the current configuration along with their
+    version constraints and the source addresses. This provides an overview
+    of all provider dependencies for the project.
+  tags:
+    - providers
+    - dependencies
+    - versions
+    - requirements
+  aliases:
+    - list terraform providers
+    - show required providers
+    - terraform providers command
+    - view provider dependencies
+    - check provider requirements
+    - what providers does my config need
+  examples:
+    - query: "How do I see which providers my Terraform configuration needs?"
+    - query: "List all provider dependencies in my project"
+    - query: "Show the required provider versions"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/providers
+  verified_at: "2026-08-01"
+
+- id: terraform-providers-lock
+  technology: terraform
+  category: providers
+  name: Lock Provider Versions
+  intent: lock_providers
+  command: terraform providers lock
+  description: >
+    Updates the dependency lock file (.terraform.lock.hcl) to include hashes
+    for all providers on the specified platforms. This ensures reproducible
+    installations across different operating systems and architectures.
+  tags:
+    - providers
+    - lock
+    - versions
+    - reproducible
+    - platforms
+  aliases:
+    - lock terraform provider versions
+    - update provider lock file
+    - terraform providers lock command
+    - generate provider hashes
+    - lock dependency versions
+  examples:
+    - query: "How do I lock Terraform provider versions?"
+    - query: "Update the Terraform dependency lock file"
+    - query: "Generate provider hashes for multiple platforms"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/providers/lock
+  verified_at: "2026-08-01"
+
+- id: terraform-providers-mirror
+  technology: terraform
+  category: providers
+  name: Mirror Providers Locally
+  intent: mirror_providers
+  command: terraform providers mirror <path>
+  description: >
+    Downloads the providers required by the current configuration and saves
+    them to a local directory in a layout compatible with filesystem mirrors.
+    This is useful for creating air-gapped or offline installations of
+    Terraform providers.
+  tags:
+    - providers
+    - mirror
+    - offline
+    - air-gapped
+    - download
+    - local
+  aliases:
+    - mirror terraform providers locally
+    - download providers for offline use
+    - terraform providers mirror command
+    - create local provider mirror
+    - air-gapped terraform providers
+  examples:
+    - query: "How do I mirror Terraform providers for offline use?"
+    - query: "Download providers to a local directory"
+    - query: "Set up an air-gapped Terraform provider mirror"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/providers/mirror
+  verified_at: "2026-08-01"
+
+- id: terraform-graph
+  technology: terraform
+  category: planning
+  name: Generate Resource Graph
+  intent: generate_graph
+  command: terraform graph
+  description: >
+    Outputs a visual representation of the Terraform resource dependency graph
+    in DOT format. The output can be piped to GraphViz tools like dot to render
+    a visual diagram of resource dependencies and relationships.
+  tags:
+    - graph
+    - visualization
+    - dependencies
+    - dot
+    - graphviz
+  aliases:
+    - generate terraform dependency graph
+    - visualize terraform resources
+    - terraform graph command
+    - show resource dependencies
+    - create terraform diagram
+    - terraform dependency visualization
+  examples:
+    - query: "How do I visualize Terraform resource dependencies?"
+    - query: "Generate a dependency graph of my Terraform resources"
+    - query: "Create a visual diagram of Terraform infrastructure"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/graph
+  verified_at: "2026-08-01"
+
+- id: terraform-force-unlock
+  technology: terraform
+  category: state
+  name: Force Unlock State
+  intent: force_unlock_state
+  command: terraform force-unlock <lock-id>
+  description: >
+    Manually unlocks the Terraform state if it has been left in a locked state
+    due to a failed operation, crash, or interrupted process. Requires the lock
+    ID which is typically shown in the error message. Use with extreme caution
+    to avoid state corruption from concurrent operations.
+  tags:
+    - unlock
+    - state
+    - lock
+    - force
+    - recovery
+    - stuck
+  aliases:
+    - unlock terraform state
+    - force unlock terraform
+    - terraform state is locked
+    - remove terraform state lock
+    - fix locked terraform state
+    - terraform force-unlock command
+    - unlock stuck terraform state
+  examples:
+    - query: "How do I unlock a locked Terraform state?"
+    - query: "My Terraform state is stuck in a locked state"
+    - query: "Force unlock the state after a failed terraform apply"
+    - query: "Remove a stale lock from Terraform state"
+  risk: dangerous
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/force-unlock
+  verified_at: "2026-08-01"
+
+- id: terraform-taint
+  technology: terraform
+  category: state
+  name: Taint Resource
+  intent: taint_resource
+  command: terraform taint <resource>
+  description: >
+    Marks a resource instance as tainted, forcing it to be destroyed and
+    recreated on the next terraform apply. This command is deprecated in
+    favor of using the -replace option with terraform apply, but is still
+    widely used in existing workflows.
+  tags:
+    - taint
+    - recreate
+    - replace
+    - deprecated
+    - force
+  aliases:
+    - taint terraform resource
+    - mark resource for recreation
+    - force recreate terraform resource
+    - terraform taint command
+    - schedule resource replacement
+    - mark resource as tainted
+  examples:
+    - query: "How do I force Terraform to recreate a resource?"
+    - query: "Mark a resource for recreation on next apply"
+    - query: "Taint a resource to force its replacement"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/taint
+  verified_at: "2026-08-01"
+
+- id: terraform-untaint
+  technology: terraform
+  category: state
+  name: Untaint Resource
+  intent: untaint_resource
+  command: terraform untaint <resource>
+  description: >
+    Removes the tainted status from a resource instance, reversing the effect
+    of the taint command. This prevents the resource from being destroyed and
+    recreated on the next apply if it was previously tainted by mistake.
+  tags:
+    - untaint
+    - undo
+    - restore
+    - cancel
+  aliases:
+    - untaint terraform resource
+    - remove taint from resource
+    - cancel resource recreation
+    - terraform untaint command
+    - undo taint on resource
+  examples:
+    - query: "How do I untaint a resource in Terraform?"
+    - query: "Remove the tainted status from a resource"
+    - query: "Cancel a scheduled resource recreation"
+  risk: warning
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/untaint
+  verified_at: "2026-08-01"
+
+- id: terraform-console
+  technology: terraform
+  category: planning
+  name: Interactive Console
+  intent: open_console
+  command: terraform console
+  description: >
+    Opens an interactive console for evaluating Terraform expressions. You can
+    test interpolations, function calls, and reference values from the state.
+    Useful for debugging complex expressions before using them in configuration.
+  tags:
+    - console
+    - interactive
+    - expressions
+    - debug
+    - repl
+    - testing
+  aliases:
+    - open terraform console
+    - terraform interactive mode
+    - test terraform expressions
+    - terraform repl
+    - debug terraform expressions
+    - evaluate terraform functions
+  examples:
+    - query: "How do I test Terraform expressions interactively?"
+    - query: "Open the Terraform interactive console"
+    - query: "Debug a Terraform expression before using it"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/console
+  verified_at: "2026-08-01"
+
+- id: terraform-version
+  technology: terraform
+  category: init
+  name: Show Terraform Version
+  intent: show_version
+  command: terraform version
+  description: >
+    Displays the current version of Terraform CLI and all installed provider
+    plugins. Also checks for newer versions of Terraform and notifies if an
+    update is available.
+  tags:
+    - version
+    - info
+    - providers
+    - update
+  aliases:
+    - check terraform version
+    - show terraform version
+    - what version of terraform
+    - terraform version command
+    - display terraform version info
+  examples:
+    - query: "What version of Terraform am I running?"
+    - query: "Check the installed Terraform version"
+    - query: "Show Terraform and provider versions"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/version
+  verified_at: "2026-08-01"
+
+- id: terraform-login
+  technology: terraform
+  category: init
+  name: Login to Terraform Cloud
+  intent: login_cloud
+  command: terraform login
+  description: >
+    Authenticates with Terraform Cloud or Terraform Enterprise by generating
+    and storing an API token. This enables access to remote state storage,
+    remote operations, and private module registries provided by Terraform
+    Cloud.
+  tags:
+    - login
+    - authentication
+    - terraform-cloud
+    - token
+    - api
+  aliases:
+    - login to terraform cloud
+    - authenticate terraform
+    - terraform cloud authentication
+    - terraform login command
+    - connect to terraform cloud
+    - terraform enterprise login
+  examples:
+    - query: "How do I log in to Terraform Cloud?"
+    - query: "Authenticate with Terraform Cloud from the CLI"
+    - query: "Set up Terraform Cloud authentication"
+  risk: safe
+  documentation:
+    url: https://developer.hashicorp.com/terraform/cli/commands/login
+  verified_at: "2026-08-01"

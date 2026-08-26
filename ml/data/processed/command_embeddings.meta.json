@@ -1,0 +1,1681 @@
+{
+  "dimension": 384,
+  "index_type": "flat",
+  "count": 558,
+  "metadata": [
+    {
+      "command_id": "docker-list-running-containers"
+    },
+    {
+      "command_id": "docker-list-all-containers"
+    },
+    {
+      "command_id": "docker-list-containers-filtered"
+    },
+    {
+      "command_id": "docker-run-basic"
+    },
+    {
+      "command_id": "docker-run-detached"
+    },
+    {
+      "command_id": "docker-run-with-ports"
+    },
+    {
+      "command_id": "docker-run-with-volume"
+    },
+    {
+      "command_id": "docker-run-with-env"
+    },
+    {
+      "command_id": "docker-run-with-name"
+    },
+    {
+      "command_id": "docker-view-logs"
+    },
+    {
+      "command_id": "docker-follow-logs"
+    },
+    {
+      "command_id": "docker-logs-tail"
+    },
+    {
+      "command_id": "docker-logs-timestamps"
+    },
+    {
+      "command_id": "docker-logs-since"
+    },
+    {
+      "command_id": "docker-exec-shell"
+    },
+    {
+      "command_id": "docker-exec-command"
+    },
+    {
+      "command_id": "docker-inspect-container"
+    },
+    {
+      "command_id": "docker-container-stats"
+    },
+    {
+      "command_id": "docker-container-stats-no-stream"
+    },
+    {
+      "command_id": "docker-stop-container"
+    },
+    {
+      "command_id": "docker-start-container"
+    },
+    {
+      "command_id": "docker-restart-container"
+    },
+    {
+      "command_id": "docker-remove-container"
+    },
+    {
+      "command_id": "docker-force-remove-container"
+    },
+    {
+      "command_id": "docker-copy-to-container"
+    },
+    {
+      "command_id": "docker-copy-from-container"
+    },
+    {
+      "command_id": "docker-export-container"
+    },
+    {
+      "command_id": "docker-import-container"
+    },
+    {
+      "command_id": "docker-list-images"
+    },
+    {
+      "command_id": "docker-list-dangling-images"
+    },
+    {
+      "command_id": "docker-pull-image"
+    },
+    {
+      "command_id": "docker-build-image"
+    },
+    {
+      "command_id": "docker-tag-image"
+    },
+    {
+      "command_id": "docker-push-image"
+    },
+    {
+      "command_id": "docker-remove-image"
+    },
+    {
+      "command_id": "docker-inspect-image"
+    },
+    {
+      "command_id": "docker-image-history"
+    },
+    {
+      "command_id": "docker-save-image"
+    },
+    {
+      "command_id": "docker-load-image"
+    },
+    {
+      "command_id": "docker-list-networks"
+    },
+    {
+      "command_id": "docker-create-network"
+    },
+    {
+      "command_id": "docker-inspect-network"
+    },
+    {
+      "command_id": "docker-connect-network"
+    },
+    {
+      "command_id": "docker-disconnect-network"
+    },
+    {
+      "command_id": "docker-remove-network"
+    },
+    {
+      "command_id": "docker-list-volumes"
+    },
+    {
+      "command_id": "docker-create-volume"
+    },
+    {
+      "command_id": "docker-inspect-volume"
+    },
+    {
+      "command_id": "docker-remove-volume"
+    },
+    {
+      "command_id": "docker-prune-volumes"
+    },
+    {
+      "command_id": "docker-system-info"
+    },
+    {
+      "command_id": "docker-system-disk-usage"
+    },
+    {
+      "command_id": "docker-system-events"
+    },
+    {
+      "command_id": "docker-prune-containers"
+    },
+    {
+      "command_id": "docker-prune-images"
+    },
+    {
+      "command_id": "docker-system-prune"
+    },
+    {
+      "command_id": "docker-compose-up"
+    },
+    {
+      "command_id": "docker-compose-down"
+    },
+    {
+      "command_id": "docker-compose-logs"
+    },
+    {
+      "command_id": "docker-compose-restart"
+    },
+    {
+      "command_id": "docker-compose-build"
+    },
+    {
+      "command_id": "docker-compose-ps"
+    },
+    {
+      "command_id": "docker-compose-exec"
+    },
+    {
+      "command_id": "docker-compose-pull"
+    },
+    {
+      "command_id": "docker-compose-config"
+    },
+    {
+      "command_id": "docker-buildx-build"
+    },
+    {
+      "command_id": "docker-buildx-create-builder"
+    },
+    {
+      "command_id": "docker-buildx-list-builders"
+    },
+    {
+      "command_id": "docker-buildx-use"
+    },
+    {
+      "command_id": "git-view-status"
+    },
+    {
+      "command_id": "git-short-status"
+    },
+    {
+      "command_id": "git-view-log"
+    },
+    {
+      "command_id": "git-log-oneline"
+    },
+    {
+      "command_id": "git-log-graph"
+    },
+    {
+      "command_id": "git-log-by-author"
+    },
+    {
+      "command_id": "git-log-date-range"
+    },
+    {
+      "command_id": "git-log-file-history"
+    },
+    {
+      "command_id": "git-list-local-branches"
+    },
+    {
+      "command_id": "git-list-remote-branches"
+    },
+    {
+      "command_id": "git-list-all-branches"
+    },
+    {
+      "command_id": "git-create-branch"
+    },
+    {
+      "command_id": "git-delete-branch"
+    },
+    {
+      "command_id": "git-switch-branch"
+    },
+    {
+      "command_id": "git-create-and-switch-branch"
+    },
+    {
+      "command_id": "git-rename-branch"
+    },
+    {
+      "command_id": "git-checkout-branch"
+    },
+    {
+      "command_id": "git-checkout-file"
+    },
+    {
+      "command_id": "git-checkout-commit"
+    },
+    {
+      "command_id": "git-merge"
+    },
+    {
+      "command_id": "git-merge-no-ff"
+    },
+    {
+      "command_id": "git-merge-abort"
+    },
+    {
+      "command_id": "git-rebase"
+    },
+    {
+      "command_id": "git-rebase-interactive"
+    },
+    {
+      "command_id": "git-rebase-onto"
+    },
+    {
+      "command_id": "git-rebase-abort"
+    },
+    {
+      "command_id": "git-rebase-continue"
+    },
+    {
+      "command_id": "git-reset-soft"
+    },
+    {
+      "command_id": "git-reset-mixed"
+    },
+    {
+      "command_id": "git-reset-hard"
+    },
+    {
+      "command_id": "git-reset-file"
+    },
+    {
+      "command_id": "git-cherry-pick"
+    },
+    {
+      "command_id": "git-cherry-pick-range"
+    },
+    {
+      "command_id": "git-cherry-pick-abort"
+    },
+    {
+      "command_id": "git-stash-save"
+    },
+    {
+      "command_id": "git-stash-list"
+    },
+    {
+      "command_id": "git-stash-pop"
+    },
+    {
+      "command_id": "git-stash-apply"
+    },
+    {
+      "command_id": "git-stash-drop"
+    },
+    {
+      "command_id": "git-stash-show"
+    },
+    {
+      "command_id": "git-stash-clear"
+    },
+    {
+      "command_id": "git-remote-add"
+    },
+    {
+      "command_id": "git-remote-remove"
+    },
+    {
+      "command_id": "git-remote-show"
+    },
+    {
+      "command_id": "git-remote-rename"
+    },
+    {
+      "command_id": "git-remote-set-url"
+    },
+    {
+      "command_id": "git-remote-verbose"
+    },
+    {
+      "command_id": "git-fetch-all"
+    },
+    {
+      "command_id": "git-fetch-prune"
+    },
+    {
+      "command_id": "git-pull"
+    },
+    {
+      "command_id": "git-pull-rebase"
+    },
+    {
+      "command_id": "git-push"
+    },
+    {
+      "command_id": "git-push-force"
+    },
+    {
+      "command_id": "git-push-force-with-lease"
+    },
+    {
+      "command_id": "git-push-set-upstream"
+    },
+    {
+      "command_id": "git-push-tags"
+    },
+    {
+      "command_id": "git-list-tags"
+    },
+    {
+      "command_id": "git-create-tag"
+    },
+    {
+      "command_id": "git-create-annotated-tag"
+    },
+    {
+      "command_id": "git-delete-tag"
+    },
+    {
+      "command_id": "git-push-single-tag"
+    },
+    {
+      "command_id": "git-diff-unstaged"
+    },
+    {
+      "command_id": "git-diff-staged"
+    },
+    {
+      "command_id": "git-diff-between-commits"
+    },
+    {
+      "command_id": "git-diff-between-branches"
+    },
+    {
+      "command_id": "git-show-commit"
+    },
+    {
+      "command_id": "git-blame"
+    },
+    {
+      "command_id": "git-bisect-start"
+    },
+    {
+      "command_id": "git-bisect-bad"
+    },
+    {
+      "command_id": "git-bisect-good"
+    },
+    {
+      "command_id": "git-bisect-reset"
+    },
+    {
+      "command_id": "git-submodule-add"
+    },
+    {
+      "command_id": "git-submodule-update"
+    },
+    {
+      "command_id": "git-submodule-init"
+    },
+    {
+      "command_id": "git-submodule-sync"
+    },
+    {
+      "command_id": "git-reflog"
+    },
+    {
+      "command_id": "git-clean-dry-run"
+    },
+    {
+      "command_id": "git-clean-force"
+    },
+    {
+      "command_id": "git-revert"
+    },
+    {
+      "command_id": "git-am"
+    },
+    {
+      "command_id": "git-format-patch"
+    },
+    {
+      "command_id": "git-worktree-add"
+    },
+    {
+      "command_id": "git-worktree-list"
+    },
+    {
+      "command_id": "git-worktree-remove"
+    },
+    {
+      "command_id": "git-config-user-name"
+    },
+    {
+      "command_id": "git-config-user-email"
+    },
+    {
+      "command_id": "git-config-list"
+    },
+    {
+      "command_id": "git-init"
+    },
+    {
+      "command_id": "git-clone"
+    },
+    {
+      "command_id": "git-add-file"
+    },
+    {
+      "command_id": "git-add-all"
+    },
+    {
+      "command_id": "git-commit"
+    },
+    {
+      "command_id": "git-commit-amend"
+    },
+    {
+      "command_id": "git-delete-remote-branch"
+    },
+    {
+      "command_id": "git-log-search"
+    },
+    {
+      "command_id": "git-add-patch"
+    },
+    {
+      "command_id": "go-check-version"
+    },
+    {
+      "command_id": "go-run-file"
+    },
+    {
+      "command_id": "go-build-basic"
+    },
+    {
+      "command_id": "go-build-output"
+    },
+    {
+      "command_id": "go-build-ldflags"
+    },
+    {
+      "command_id": "go-test-basic"
+    },
+    {
+      "command_id": "go-test-verbose"
+    },
+    {
+      "command_id": "go-test-specific"
+    },
+    {
+      "command_id": "go-test-coverage"
+    },
+    {
+      "command_id": "go-test-coverage-profile"
+    },
+    {
+      "command_id": "go-test-coverage-html"
+    },
+    {
+      "command_id": "go-fmt"
+    },
+    {
+      "command_id": "go-vet"
+    },
+    {
+      "command_id": "go-mod-init"
+    },
+    {
+      "command_id": "go-mod-tidy"
+    },
+    {
+      "command_id": "go-mod-download"
+    },
+    {
+      "command_id": "go-mod-vendor"
+    },
+    {
+      "command_id": "go-mod-graph"
+    },
+    {
+      "command_id": "go-get-package"
+    },
+    {
+      "command_id": "go-list-packages"
+    },
+    {
+      "command_id": "go-list-modules"
+    },
+    {
+      "command_id": "go-env-show"
+    },
+    {
+      "command_id": "go-env-specific"
+    },
+    {
+      "command_id": "go-env-set"
+    },
+    {
+      "command_id": "go-install-package"
+    },
+    {
+      "command_id": "go-doc"
+    },
+    {
+      "command_id": "go-tool-pprof"
+    },
+    {
+      "command_id": "go-generate"
+    },
+    {
+      "command_id": "go-cross-compile"
+    },
+    {
+      "command_id": "go-build-tags"
+    },
+    {
+      "command_id": "go-test-bench"
+    },
+    {
+      "command_id": "go-test-race"
+    },
+    {
+      "command_id": "go-run-race"
+    },
+    {
+      "command_id": "go-clean-cache"
+    },
+    {
+      "command_id": "go-clean-testcache"
+    },
+    {
+      "command_id": "go-work-init"
+    },
+    {
+      "command_id": "go-work-use"
+    },
+    {
+      "command_id": "go-work-sync"
+    },
+    {
+      "command_id": "kafka-list-topics"
+    },
+    {
+      "command_id": "kafka-describe-topic"
+    },
+    {
+      "command_id": "kafka-create-topic"
+    },
+    {
+      "command_id": "kafka-delete-topic"
+    },
+    {
+      "command_id": "kafka-increase-partitions"
+    },
+    {
+      "command_id": "kafka-produce-message"
+    },
+    {
+      "command_id": "kafka-produce-with-key"
+    },
+    {
+      "command_id": "kafka-produce-with-headers"
+    },
+    {
+      "command_id": "kafka-produce-with-serializer"
+    },
+    {
+      "command_id": "kafka-consume-messages"
+    },
+    {
+      "command_id": "kafka-consume-from-beginning"
+    },
+    {
+      "command_id": "kafka-consume-from-offset"
+    },
+    {
+      "command_id": "kafka-consume-with-key"
+    },
+    {
+      "command_id": "kafka-consume-with-headers"
+    },
+    {
+      "command_id": "kafka-consume-with-timestamp"
+    },
+    {
+      "command_id": "kafka-consume-with-deserializer"
+    },
+    {
+      "command_id": "kafka-list-consumer-groups"
+    },
+    {
+      "command_id": "kafka-describe-consumer-group"
+    },
+    {
+      "command_id": "kafka-consumer-group-members"
+    },
+    {
+      "command_id": "kafka-consumer-group-lag"
+    },
+    {
+      "command_id": "kafka-delete-consumer-group"
+    },
+    {
+      "command_id": "kafka-reset-offsets-to-earliest"
+    },
+    {
+      "command_id": "kafka-reset-offsets-to-latest"
+    },
+    {
+      "command_id": "kafka-reset-offsets-to-timestamp"
+    },
+    {
+      "command_id": "kafka-reset-offsets-to-offset"
+    },
+    {
+      "command_id": "kafka-reset-offsets-by-duration"
+    },
+    {
+      "command_id": "kafka-describe-topic-config"
+    },
+    {
+      "command_id": "kafka-alter-topic-config"
+    },
+    {
+      "command_id": "kafka-describe-broker-config"
+    },
+    {
+      "command_id": "kafka-alter-broker-config"
+    },
+    {
+      "command_id": "kafka-describe-cluster"
+    },
+    {
+      "command_id": "kafka-list-acls"
+    },
+    {
+      "command_id": "kafka-add-acl"
+    },
+    {
+      "command_id": "kafka-remove-acl"
+    },
+    {
+      "command_id": "kafka-reassign-partitions-generate"
+    },
+    {
+      "command_id": "kafka-reassign-partitions-execute"
+    },
+    {
+      "command_id": "kafka-reassign-partitions-verify"
+    },
+    {
+      "command_id": "kafka-describe-log-dirs"
+    },
+    {
+      "command_id": "kafka-dump-log"
+    },
+    {
+      "command_id": "kafka-describe-topic-config-all"
+    },
+    {
+      "command_id": "kafka-delete-topic-config"
+    },
+    {
+      "command_id": "kafka-create-topic-with-config"
+    },
+    {
+      "command_id": "kafka-consume-with-group"
+    },
+    {
+      "command_id": "kafka-consume-max-messages"
+    },
+    {
+      "command_id": "kubernetes-get-pods"
+    },
+    {
+      "command_id": "kubernetes-get-pods-all-namespaces"
+    },
+    {
+      "command_id": "kubernetes-get-pods-wide"
+    },
+    {
+      "command_id": "kubernetes-describe-pod"
+    },
+    {
+      "command_id": "kubernetes-get-deployments"
+    },
+    {
+      "command_id": "kubernetes-describe-deployment"
+    },
+    {
+      "command_id": "kubernetes-get-services"
+    },
+    {
+      "command_id": "kubernetes-describe-service"
+    },
+    {
+      "command_id": "kubernetes-get-nodes"
+    },
+    {
+      "command_id": "kubernetes-describe-node"
+    },
+    {
+      "command_id": "kubernetes-get-namespaces"
+    },
+    {
+      "command_id": "kubernetes-view-logs"
+    },
+    {
+      "command_id": "kubernetes-view-logs-previous"
+    },
+    {
+      "command_id": "kubernetes-follow-logs"
+    },
+    {
+      "command_id": "kubernetes-logs-container"
+    },
+    {
+      "command_id": "kubernetes-exec-into-pod"
+    },
+    {
+      "command_id": "kubernetes-exec-command"
+    },
+    {
+      "command_id": "kubernetes-port-forward"
+    },
+    {
+      "command_id": "kubernetes-port-forward-service"
+    },
+    {
+      "command_id": "kubernetes-cp-from-pod"
+    },
+    {
+      "command_id": "kubernetes-cp-to-pod"
+    },
+    {
+      "command_id": "kubernetes-rollout-restart"
+    },
+    {
+      "command_id": "kubernetes-rollout-status"
+    },
+    {
+      "command_id": "kubernetes-rollout-history"
+    },
+    {
+      "command_id": "kubernetes-rollout-undo"
+    },
+    {
+      "command_id": "kubernetes-scale-deployment"
+    },
+    {
+      "command_id": "kubernetes-delete-pod"
+    },
+    {
+      "command_id": "kubernetes-delete-deployment"
+    },
+    {
+      "command_id": "kubernetes-apply"
+    },
+    {
+      "command_id": "kubernetes-diff"
+    },
+    {
+      "command_id": "kubernetes-get-events"
+    },
+    {
+      "command_id": "kubernetes-top-pods"
+    },
+    {
+      "command_id": "kubernetes-top-nodes"
+    },
+    {
+      "command_id": "kubernetes-get-pods-by-label"
+    },
+    {
+      "command_id": "kubernetes-label-resource"
+    },
+    {
+      "command_id": "kubernetes-annotate-resource"
+    },
+    {
+      "command_id": "kubernetes-taint-node"
+    },
+    {
+      "command_id": "kubernetes-remove-taint"
+    },
+    {
+      "command_id": "kubernetes-get-configmaps"
+    },
+    {
+      "command_id": "kubernetes-describe-configmap"
+    },
+    {
+      "command_id": "kubernetes-create-configmap"
+    },
+    {
+      "command_id": "kubernetes-get-secrets"
+    },
+    {
+      "command_id": "kubernetes-describe-secret"
+    },
+    {
+      "command_id": "kubernetes-decode-secret"
+    },
+    {
+      "command_id": "kubernetes-get-service-accounts"
+    },
+    {
+      "command_id": "kubernetes-get-roles"
+    },
+    {
+      "command_id": "kubernetes-get-rolebindings"
+    },
+    {
+      "command_id": "kubernetes-get-clusterroles"
+    },
+    {
+      "command_id": "kubernetes-get-clusterrolebindings"
+    },
+    {
+      "command_id": "kubernetes-get-ingress"
+    },
+    {
+      "command_id": "kubernetes-describe-ingress"
+    },
+    {
+      "command_id": "kubernetes-get-endpoints"
+    },
+    {
+      "command_id": "kubernetes-expose-deployment"
+    },
+    {
+      "command_id": "kubernetes-get-pv"
+    },
+    {
+      "command_id": "kubernetes-get-pvc"
+    },
+    {
+      "command_id": "kubernetes-get-storage-classes"
+    },
+    {
+      "command_id": "kubernetes-get-jobs"
+    },
+    {
+      "command_id": "kubernetes-delete-job"
+    },
+    {
+      "command_id": "kubernetes-get-cronjobs"
+    },
+    {
+      "command_id": "kubernetes-get-daemonsets"
+    },
+    {
+      "command_id": "kubernetes-get-statefulsets"
+    },
+    {
+      "command_id": "kubernetes-describe-statefulset"
+    },
+    {
+      "command_id": "kubernetes-get-hpa"
+    },
+    {
+      "command_id": "kubernetes-describe-hpa"
+    },
+    {
+      "command_id": "kubernetes-get-network-policies"
+    },
+    {
+      "command_id": "kubernetes-describe-network-policy"
+    },
+    {
+      "command_id": "kubernetes-get-pdb"
+    },
+    {
+      "command_id": "kubernetes-describe-pdb"
+    },
+    {
+      "command_id": "kubernetes-apply-dry-run"
+    },
+    {
+      "command_id": "kubernetes-delete-resource-by-file"
+    },
+    {
+      "command_id": "kubernetes-get-resource-yaml"
+    },
+    {
+      "command_id": "kubernetes-get-resource-json"
+    },
+    {
+      "command_id": "kubernetes-cordon-node"
+    },
+    {
+      "command_id": "kubernetes-uncordon-node"
+    },
+    {
+      "command_id": "kubernetes-drain-node"
+    },
+    {
+      "command_id": "kubernetes-delete-namespace"
+    },
+    {
+      "command_id": "kubernetes-create-namespace"
+    },
+    {
+      "command_id": "kubernetes-set-context-namespace"
+    },
+    {
+      "command_id": "kubernetes-get-contexts"
+    },
+    {
+      "command_id": "kubernetes-use-context"
+    },
+    {
+      "command_id": "kubernetes-logs-tail"
+    },
+    {
+      "command_id": "kubernetes-edit-resource"
+    },
+    {
+      "command_id": "kubernetes-patch-resource"
+    },
+    {
+      "command_id": "kubernetes-get-replicasets"
+    },
+    {
+      "command_id": "kubernetes-delete-pods-by-label"
+    },
+    {
+      "command_id": "kubernetes-wait-condition"
+    },
+    {
+      "command_id": "kubernetes-api-resources"
+    },
+    {
+      "command_id": "kubernetes-cluster-info"
+    },
+    {
+      "command_id": "kubernetes-create-secret-generic"
+    },
+    {
+      "command_id": "kubernetes-create-secret-tls"
+    },
+    {
+      "command_id": "kubernetes-scale-statefulset"
+    },
+    {
+      "command_id": "kubernetes-autoscale-deployment"
+    },
+    {
+      "command_id": "kubernetes-delete-all-pods"
+    },
+    {
+      "command_id": "kubernetes-run-pod"
+    },
+    {
+      "command_id": "kubernetes-run-pod-interactive"
+    },
+    {
+      "command_id": "kubernetes-get-pod-jsonpath"
+    },
+    {
+      "command_id": "kubernetes-delete-service"
+    },
+    {
+      "command_id": "kubernetes-set-image"
+    },
+    {
+      "command_id": "kubernetes-get-resource-custom-columns"
+    },
+    {
+      "command_id": "kubernetes-force-delete-pod"
+    },
+    {
+      "command_id": "kubernetes-logs-since"
+    },
+    {
+      "command_id": "kubernetes-describe-cronjob"
+    },
+    {
+      "command_id": "linux-find-files"
+    },
+    {
+      "command_id": "linux-find-directories"
+    },
+    {
+      "command_id": "linux-find-large-files"
+    },
+    {
+      "command_id": "linux-find-recent-files"
+    },
+    {
+      "command_id": "linux-grep-text"
+    },
+    {
+      "command_id": "linux-grep-ignore-case"
+    },
+    {
+      "command_id": "linux-sed-replace"
+    },
+    {
+      "command_id": "linux-awk-print-column"
+    },
+    {
+      "command_id": "linux-sort-file"
+    },
+    {
+      "command_id": "linux-sort-numeric"
+    },
+    {
+      "command_id": "linux-uniq"
+    },
+    {
+      "command_id": "linux-uniq-count"
+    },
+    {
+      "command_id": "linux-cut-field"
+    },
+    {
+      "command_id": "linux-xargs"
+    },
+    {
+      "command_id": "linux-head"
+    },
+    {
+      "command_id": "linux-tail"
+    },
+    {
+      "command_id": "linux-tail-follow"
+    },
+    {
+      "command_id": "linux-wc"
+    },
+    {
+      "command_id": "linux-tee"
+    },
+    {
+      "command_id": "linux-df"
+    },
+    {
+      "command_id": "linux-du"
+    },
+    {
+      "command_id": "linux-du-top-dirs"
+    },
+    {
+      "command_id": "linux-free"
+    },
+    {
+      "command_id": "linux-ps-aux"
+    },
+    {
+      "command_id": "linux-ps-top-memory"
+    },
+    {
+      "command_id": "linux-ps-top-cpu"
+    },
+    {
+      "command_id": "linux-top"
+    },
+    {
+      "command_id": "linux-lsof-port"
+    },
+    {
+      "command_id": "linux-ss-listening"
+    },
+    {
+      "command_id": "linux-netstat-connections"
+    },
+    {
+      "command_id": "linux-kill-process"
+    },
+    {
+      "command_id": "linux-kill-force"
+    },
+    {
+      "command_id": "linux-kill-by-name"
+    },
+    {
+      "command_id": "linux-env-vars"
+    },
+    {
+      "command_id": "linux-export-var"
+    },
+    {
+      "command_id": "linux-chmod"
+    },
+    {
+      "command_id": "linux-chown"
+    },
+    {
+      "command_id": "linux-systemctl-status"
+    },
+    {
+      "command_id": "linux-systemctl-start"
+    },
+    {
+      "command_id": "linux-systemctl-stop"
+    },
+    {
+      "command_id": "linux-systemctl-restart"
+    },
+    {
+      "command_id": "linux-systemctl-enable"
+    },
+    {
+      "command_id": "linux-systemctl-list"
+    },
+    {
+      "command_id": "linux-journalctl"
+    },
+    {
+      "command_id": "linux-journalctl-since"
+    },
+    {
+      "command_id": "linux-curl-get"
+    },
+    {
+      "command_id": "linux-curl-post"
+    },
+    {
+      "command_id": "linux-curl-headers"
+    },
+    {
+      "command_id": "linux-wget-download"
+    },
+    {
+      "command_id": "linux-tar-create"
+    },
+    {
+      "command_id": "linux-tar-extract"
+    },
+    {
+      "command_id": "linux-zip"
+    },
+    {
+      "command_id": "linux-unzip"
+    },
+    {
+      "command_id": "linux-ssh-connect"
+    },
+    {
+      "command_id": "linux-ssh-key"
+    },
+    {
+      "command_id": "linux-scp-upload"
+    },
+    {
+      "command_id": "linux-scp-download"
+    },
+    {
+      "command_id": "linux-rsync"
+    },
+    {
+      "command_id": "linux-ip-address"
+    },
+    {
+      "command_id": "linux-dig"
+    },
+    {
+      "command_id": "linux-ping"
+    },
+    {
+      "command_id": "linux-hostname"
+    },
+    {
+      "command_id": "linux-watch"
+    },
+    {
+      "command_id": "linux-crontab-list"
+    },
+    {
+      "command_id": "linux-crontab-edit"
+    },
+    {
+      "command_id": "linux-rm-rf"
+    },
+    {
+      "command_id": "linux-uptime"
+    },
+    {
+      "command_id": "linux-who"
+    },
+    {
+      "command_id": "linux-history"
+    },
+    {
+      "command_id": "python-check-version"
+    },
+    {
+      "command_id": "python-check-version-python3"
+    },
+    {
+      "command_id": "python-pip-install-package"
+    },
+    {
+      "command_id": "python-pip-install-requirements"
+    },
+    {
+      "command_id": "python-pip-install-version"
+    },
+    {
+      "command_id": "python-pip-install-editable"
+    },
+    {
+      "command_id": "python-pip-list"
+    },
+    {
+      "command_id": "python-pip-freeze"
+    },
+    {
+      "command_id": "python-pip-show"
+    },
+    {
+      "command_id": "python-pip-uninstall"
+    },
+    {
+      "command_id": "python-pip-upgrade-pip"
+    },
+    {
+      "command_id": "python-pip-upgrade-package"
+    },
+    {
+      "command_id": "python-create-venv"
+    },
+    {
+      "command_id": "python-activate-venv"
+    },
+    {
+      "command_id": "python-deactivate-venv"
+    },
+    {
+      "command_id": "python-run-module"
+    },
+    {
+      "command_id": "python-run-script"
+    },
+    {
+      "command_id": "python-run-inline-code"
+    },
+    {
+      "command_id": "python-pytest-run-all"
+    },
+    {
+      "command_id": "python-pytest-specific-file"
+    },
+    {
+      "command_id": "python-pytest-specific-test"
+    },
+    {
+      "command_id": "python-pytest-verbose"
+    },
+    {
+      "command_id": "python-pytest-coverage"
+    },
+    {
+      "command_id": "python-pytest-markers"
+    },
+    {
+      "command_id": "python-pytest-stop-first-failure"
+    },
+    {
+      "command_id": "python-ruff-check"
+    },
+    {
+      "command_id": "python-ruff-fix"
+    },
+    {
+      "command_id": "python-ruff-format"
+    },
+    {
+      "command_id": "python-mypy-check"
+    },
+    {
+      "command_id": "python-black-format"
+    },
+    {
+      "command_id": "python-isort-imports"
+    },
+    {
+      "command_id": "python-poetry-install"
+    },
+    {
+      "command_id": "python-poetry-add"
+    },
+    {
+      "command_id": "python-poetry-remove"
+    },
+    {
+      "command_id": "python-poetry-update"
+    },
+    {
+      "command_id": "python-poetry-build"
+    },
+    {
+      "command_id": "python-poetry-run"
+    },
+    {
+      "command_id": "python-poetry-lock"
+    },
+    {
+      "command_id": "python-uv-pip-install"
+    },
+    {
+      "command_id": "python-uv-pip-compile"
+    },
+    {
+      "command_id": "python-uv-venv"
+    },
+    {
+      "command_id": "python-uv-run"
+    },
+    {
+      "command_id": "python-uv-sync"
+    },
+    {
+      "command_id": "python-pip-compile"
+    },
+    {
+      "command_id": "python-pdb-debugger"
+    },
+    {
+      "command_id": "python-http-server"
+    },
+    {
+      "command_id": "python-json-tool"
+    },
+    {
+      "command_id": "python-set-pythonpath"
+    },
+    {
+      "command_id": "python-pip-cache-purge"
+    },
+    {
+      "command_id": "python-pip-check"
+    },
+    {
+      "command_id": "rust-check-rustc-version"
+    },
+    {
+      "command_id": "rust-check-cargo-version"
+    },
+    {
+      "command_id": "rust-new-binary-project"
+    },
+    {
+      "command_id": "rust-new-library-project"
+    },
+    {
+      "command_id": "rust-init-project"
+    },
+    {
+      "command_id": "rust-build-debug"
+    },
+    {
+      "command_id": "rust-build-release"
+    },
+    {
+      "command_id": "rust-run-debug"
+    },
+    {
+      "command_id": "rust-run-release"
+    },
+    {
+      "command_id": "rust-test-all"
+    },
+    {
+      "command_id": "rust-test-specific"
+    },
+    {
+      "command_id": "rust-test-module"
+    },
+    {
+      "command_id": "rust-test-show-output"
+    },
+    {
+      "command_id": "rust-check"
+    },
+    {
+      "command_id": "rust-fmt"
+    },
+    {
+      "command_id": "rust-clippy"
+    },
+    {
+      "command_id": "rust-clippy-fix"
+    },
+    {
+      "command_id": "rust-update-dependencies"
+    },
+    {
+      "command_id": "rust-add-dependency"
+    },
+    {
+      "command_id": "rust-remove-dependency"
+    },
+    {
+      "command_id": "rust-dependency-tree"
+    },
+    {
+      "command_id": "rust-clean"
+    },
+    {
+      "command_id": "rust-doc-generate"
+    },
+    {
+      "command_id": "rust-doc-open"
+    },
+    {
+      "command_id": "rust-bench"
+    },
+    {
+      "command_id": "rust-publish"
+    },
+    {
+      "command_id": "rust-build-with-features"
+    },
+    {
+      "command_id": "rust-build-all-features"
+    },
+    {
+      "command_id": "rust-build-no-default-features"
+    },
+    {
+      "command_id": "rust-cross-compile"
+    },
+    {
+      "command_id": "rust-rustup-show"
+    },
+    {
+      "command_id": "rust-rustup-update"
+    },
+    {
+      "command_id": "rust-rustup-default"
+    },
+    {
+      "command_id": "rust-rustup-target-add"
+    },
+    {
+      "command_id": "rust-rustup-component-add"
+    },
+    {
+      "command_id": "rust-rustup-toolchain-install"
+    },
+    {
+      "command_id": "rust-rustup-toolchain-list"
+    },
+    {
+      "command_id": "rust-cargo-watch"
+    },
+    {
+      "command_id": "rust-cargo-expand"
+    },
+    {
+      "command_id": "rust-cargo-audit"
+    },
+    {
+      "command_id": "terraform-init-basic"
+    },
+    {
+      "command_id": "terraform-init-upgrade"
+    },
+    {
+      "command_id": "terraform-init-reconfigure"
+    },
+    {
+      "command_id": "terraform-init-backend-config"
+    },
+    {
+      "command_id": "terraform-plan-basic"
+    },
+    {
+      "command_id": "terraform-plan-var"
+    },
+    {
+      "command_id": "terraform-plan-var-file"
+    },
+    {
+      "command_id": "terraform-plan-out"
+    },
+    {
+      "command_id": "terraform-plan-target"
+    },
+    {
+      "command_id": "terraform-apply-basic"
+    },
+    {
+      "command_id": "terraform-apply-auto-approve"
+    },
+    {
+      "command_id": "terraform-apply-plan-file"
+    },
+    {
+      "command_id": "terraform-apply-target"
+    },
+    {
+      "command_id": "terraform-apply-var"
+    },
+    {
+      "command_id": "terraform-destroy-basic"
+    },
+    {
+      "command_id": "terraform-destroy-auto-approve"
+    },
+    {
+      "command_id": "terraform-destroy-target"
+    },
+    {
+      "command_id": "terraform-validate"
+    },
+    {
+      "command_id": "terraform-fmt-check"
+    },
+    {
+      "command_id": "terraform-fmt-recursive"
+    },
+    {
+      "command_id": "terraform-fmt-diff"
+    },
+    {
+      "command_id": "terraform-show-state"
+    },
+    {
+      "command_id": "terraform-show-plan"
+    },
+    {
+      "command_id": "terraform-state-list"
+    },
+    {
+      "command_id": "terraform-state-show"
+    },
+    {
+      "command_id": "terraform-state-rm"
+    },
+    {
+      "command_id": "terraform-state-mv"
+    },
+    {
+      "command_id": "terraform-state-pull"
+    },
+    {
+      "command_id": "terraform-state-push"
+    },
+    {
+      "command_id": "terraform-import"
+    },
+    {
+      "command_id": "terraform-output-all"
+    },
+    {
+      "command_id": "terraform-output-specific"
+    },
+    {
+      "command_id": "terraform-output-json"
+    },
+    {
+      "command_id": "terraform-output-raw"
+    },
+    {
+      "command_id": "terraform-refresh"
+    },
+    {
+      "command_id": "terraform-workspace-list"
+    },
+    {
+      "command_id": "terraform-workspace-new"
+    },
+    {
+      "command_id": "terraform-workspace-select"
+    },
+    {
+      "command_id": "terraform-workspace-delete"
+    },
+    {
+      "command_id": "terraform-workspace-show"
+    },
+    {
+      "command_id": "terraform-providers"
+    },
+    {
+      "command_id": "terraform-providers-lock"
+    },
+    {
+      "command_id": "terraform-providers-mirror"
+    },
+    {
+      "command_id": "terraform-graph"
+    },
+    {
+      "command_id": "terraform-force-unlock"
+    },
+    {
+      "command_id": "terraform-taint"
+    },
+    {
+      "command_id": "terraform-untaint"
+    },
+    {
+      "command_id": "terraform-console"
+    },
+    {
+      "command_id": "terraform-version"
+    },
+    {
+      "command_id": "terraform-login"
+    }
+  ]
+}

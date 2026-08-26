@@ -1,0 +1,98 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "alchemycli-ai"
+version = "0.1.0"
+description = "Ask your terminal. Find the right command."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "AlchemyCLI AI", email = "alchemycli@example.com" },
+]
+keywords = ["cli", "commands", "ai", "ml", "developer-tools", "cheatsheet"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "sentence-transformers>=2.7.0",
+    "torch>=2.0.0",
+    "scikit-learn>=1.4.0",
+    "numpy>=1.26.0",
+    "faiss-cpu>=1.8.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "rich>=13.7.0",
+    "click>=8.1.0",
+    "fastapi>=0.110.0",
+    "uvicorn[standard]>=0.27.0",
+    "pyperclip>=1.8.0",
+    "platformdirs>=4.0.0",
+    "rapidfuzz>=3.6.0",
+    "prompt-toolkit>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.23.0",
+    "httpx>=0.27.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+]
+train = [
+    "pandas>=2.2.0",
+    "matplotlib>=3.8.0",
+    "seaborn>=0.13.0",
+    "tqdm>=4.66.0",
+]
+
+[project.scripts]
+alchemyai = "alchemyai.cli:main"
+alchemyai-ml = "alchemy_ml.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/GirishCodeAlchemy/alchemy-cli-ml"
+Documentation = "https://github.com/GirishCodeAlchemy/alchemy-cli-ml/tree/main/docs"
+Repository = "https://github.com/GirishCodeAlchemy/alchemy-cli-ml"
+Issues = "https://github.com/GirishCodeAlchemy/alchemy-cli-ml/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["ml/src/alchemy_ml", "cli/src/alchemyai"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "SIM", "TCH"]
+ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["alchemy_ml", "alchemyai"]
+
+[tool.pytest.ini_options]
+testpaths = ["ml/tests", "cli/tests", "api/tests", "tests"]
+pythonpath = ["ml/src", "cli/src", "api/src"]
+addopts = "-v --tb=short"
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true

@@ -1,0 +1,1343 @@
+# AlchemyCLI AI - Rust Commands
+
+- id: rust-check-rustc-version
+  technology: rust
+  category: compiler
+  name: Check Rust Compiler Version
+  intent: check_rustc_version
+  command: rustc --version
+  description: >
+    Displays the currently installed Rust compiler (rustc) version, commit hash,
+    and commit date. Useful for verifying your Rust installation and ensuring
+    compatibility with project requirements.
+  tags:
+    - rust
+    - version
+    - compiler
+    - rustc
+  aliases:
+    - what version of rust do I have
+    - check rust version
+    - show rustc version
+    - rust compiler version
+    - which rust version is installed
+  examples:
+    - query: "What version of Rust is installed?"
+    - query: "Show me the rustc version"
+    - query: "Check my Rust compiler version"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/rustc/command-line-arguments.html
+  verified_at: "2026-08-01"
+
+- id: rust-check-cargo-version
+  technology: rust
+  category: build
+  name: Check Cargo Version
+  intent: check_cargo_version
+  command: cargo --version
+  description: >
+    Displays the currently installed Cargo version. Cargo is Rust's package
+    manager and build system, used for managing dependencies, building projects,
+    running tests, and publishing crates.
+  tags:
+    - rust
+    - cargo
+    - version
+    - package-manager
+  aliases:
+    - what version of cargo do I have
+    - check cargo version
+    - show cargo version
+    - cargo package manager version
+    - which cargo version is installed
+  examples:
+    - query: "What version of Cargo is installed?"
+    - query: "Show me the cargo version"
+    - query: "Check my Cargo version"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo.html
+  verified_at: "2026-08-01"
+
+- id: rust-new-binary-project
+  technology: rust
+  category: build
+  name: Create New Binary Project
+  intent: create_binary_project
+  command: cargo new <project>
+  description: >
+    Creates a new Rust binary (executable) project with the given name. Generates
+    a directory containing a Cargo.toml manifest file and a src/main.rs file with
+    a hello world program. Also initializes a Git repository by default.
+  tags:
+    - rust
+    - cargo
+    - new
+    - project
+    - binary
+    - scaffold
+  aliases:
+    - create a new rust project
+    - start a new rust binary project
+    - scaffold a rust application
+    - initialize a new rust app
+    - cargo new project
+    - create rust executable project
+  examples:
+    - query: "Create a new Rust project called my_app"
+    - query: "Start a new Rust binary project"
+    - query: "How do I scaffold a new Rust application?"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-new.html
+  verified_at: "2026-08-01"
+
+- id: rust-new-library-project
+  technology: rust
+  category: build
+  name: Create New Library Project
+  intent: create_library_project
+  command: cargo new --lib <project>
+  description: >
+    Creates a new Rust library project with the given name. Generates a directory
+    containing a Cargo.toml manifest file and a src/lib.rs file with an example
+    test. Libraries are meant to be used as dependencies by other Rust projects.
+  tags:
+    - rust
+    - cargo
+    - new
+    - library
+    - lib
+    - crate
+  aliases:
+    - create a new rust library
+    - start a new rust lib project
+    - scaffold a rust library
+    - cargo new lib
+    - create rust crate
+    - make a new rust library crate
+  examples:
+    - query: "Create a new Rust library called my_lib"
+    - query: "How do I create a Rust library project?"
+    - query: "Start a new Rust lib crate"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-new.html
+  verified_at: "2026-08-01"
+
+- id: rust-init-project
+  technology: rust
+  category: build
+  name: Initialize Project in Current Directory
+  intent: init_project
+  command: cargo init
+  description: >
+    Initializes a new Rust project in the current directory. Creates a Cargo.toml
+    manifest and a src/main.rs file (or src/lib.rs with --lib). Unlike cargo new,
+    this command works inside an existing directory and does not create a new
+    subdirectory.
+  tags:
+    - rust
+    - cargo
+    - init
+    - initialize
+    - project
+  aliases:
+    - initialize rust project in current directory
+    - cargo init current folder
+    - set up rust project here
+    - init rust in existing directory
+    - convert directory to rust project
+  examples:
+    - query: "Initialize a Rust project in the current directory"
+    - query: "How do I set up Rust in an existing folder?"
+    - query: "Convert this directory into a Rust project"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-init.html
+  verified_at: "2026-08-01"
+
+- id: rust-build-debug
+  technology: rust
+  category: build
+  name: Build Project (Debug)
+  intent: build_debug
+  command: cargo build
+  description: >
+    Compiles the current Rust project in debug mode. Debug builds include debug
+    symbols and disable optimizations, resulting in faster compilation but slower
+    runtime performance. The output binary is placed in target/debug/.
+  tags:
+    - rust
+    - cargo
+    - build
+    - compile
+    - debug
+  aliases:
+    - build rust project
+    - compile rust code
+    - cargo build debug
+    - build in debug mode
+    - compile my rust project
+    - rust debug build
+  examples:
+    - query: "Build my Rust project"
+    - query: "Compile the Rust project in debug mode"
+    - query: "How do I build a Rust project?"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-build.html
+  verified_at: "2026-08-01"
+
+- id: rust-build-release
+  technology: rust
+  category: build
+  name: Build Project (Release)
+  intent: build_release
+  command: cargo build --release
+  description: >
+    Compiles the current Rust project in release mode with optimizations enabled.
+    Release builds take longer to compile but produce optimized binaries suitable
+    for production deployment. The output binary is placed in target/release/.
+  tags:
+    - rust
+    - cargo
+    - build
+    - compile
+    - release
+    - optimize
+    - production
+  aliases:
+    - build rust in release mode
+    - compile rust for production
+    - cargo build release
+    - optimized rust build
+    - build rust with optimizations
+    - create production rust binary
+  examples:
+    - query: "Build my Rust project for production"
+    - query: "Compile with release optimizations"
+    - query: "How do I create an optimized Rust binary?"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-build.html
+  verified_at: "2026-08-01"
+
+- id: rust-run-debug
+  technology: rust
+  category: build
+  name: Run Project (Debug)
+  intent: run_debug
+  command: cargo run
+  description: >
+    Builds and runs the current Rust binary project in debug mode. If the project
+    has not been compiled yet, it will be built first. Arguments after -- are
+    passed to the binary. This is the most common way to run a Rust project
+    during development.
+  tags:
+    - rust
+    - cargo
+    - run
+    - execute
+    - debug
+  aliases:
+    - run rust project
+    - execute rust program
+    - cargo run
+    - start rust application
+    - run my rust app
+    - build and run rust
+  examples:
+    - query: "Run my Rust project"
+    - query: "Execute the Rust program"
+    - query: "How do I run a Rust application?"
+    - query: "Build and run my Rust code"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-run.html
+  verified_at: "2026-08-01"
+
+- id: rust-run-release
+  technology: rust
+  category: build
+  name: Run Project (Release)
+  intent: run_release
+  command: cargo run --release
+  description: >
+    Builds and runs the current Rust binary project in release mode with
+    optimizations enabled. Useful for testing performance-sensitive code or
+    running benchmarks outside the bench harness.
+  tags:
+    - rust
+    - cargo
+    - run
+    - execute
+    - release
+    - optimize
+  aliases:
+    - run rust in release mode
+    - execute rust with optimizations
+    - cargo run release
+    - run optimized rust
+    - run rust in production mode
+  examples:
+    - query: "Run my Rust project in release mode"
+    - query: "Execute with optimizations enabled"
+    - query: "How do I run Rust with release optimizations?"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-run.html
+  verified_at: "2026-08-01"
+
+- id: rust-test-all
+  technology: rust
+  category: test
+  name: Run All Tests
+  intent: run_all_tests
+  command: cargo test
+  description: >
+    Runs all tests in the current Rust project, including unit tests, integration
+    tests, documentation tests, and examples. Tests are compiled and executed in
+    parallel by default. Test output (stdout) is captured unless the test fails.
+  tags:
+    - rust
+    - cargo
+    - test
+    - unit-test
+    - integration-test
+    - doc-test
+  aliases:
+    - run all rust tests
+    - execute rust tests
+    - cargo test
+    - run test suite
+    - test rust project
+    - run unit tests in rust
+  examples:
+    - query: "Run all tests in my Rust project"
+    - query: "How do I run tests in Rust?"
+    - query: "Execute the full test suite"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-test.html
+  verified_at: "2026-08-01"
+
+- id: rust-test-specific
+  technology: rust
+  category: test
+  name: Run Specific Test
+  intent: run_specific_test
+  command: cargo test <test>
+  description: >
+    Runs only the tests whose names match the given filter string. The filter is
+    matched against the full test path, so you can filter by test function name,
+    module path, or any substring. Useful for running a single test or a small
+    group of related tests.
+  tags:
+    - rust
+    - cargo
+    - test
+    - filter
+    - specific
+  aliases:
+    - run a specific rust test
+    - run single test in rust
+    - filter rust tests by name
+    - cargo test specific function
+    - run one test
+    - test a specific function
+  examples:
+    - query: "Run only the test named test_add"
+    - query: "How do I run a single test in Rust?"
+    - query: "Filter tests by name in Cargo"
+    - query: "Run tests matching 'parse'"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-test.html
+  verified_at: "2026-08-01"
+
+- id: rust-test-module
+  technology: rust
+  category: test
+  name: Run Tests in Specific Module
+  intent: run_module_tests
+  command: "cargo test <module>::"
+  description: >
+    Runs all tests within a specific module by providing the module path followed
+    by double colons. For example, cargo test utils:: runs all tests in the utils
+    module. This leverages the test name filter to match the module prefix.
+  tags:
+    - rust
+    - cargo
+    - test
+    - module
+    - filter
+  aliases:
+    - run tests in a specific module
+    - test a rust module
+    - cargo test module
+    - run module-level tests
+    - test specific module in rust
+  examples:
+    - query: "Run all tests in the utils module"
+    - query: "How do I test a specific module in Rust?"
+    - query: "Run tests for the parser module"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-test.html
+  verified_at: "2026-08-01"
+
+- id: rust-test-show-output
+  technology: rust
+  category: test
+  name: Run Tests with Output
+  intent: run_tests_show_output
+  command: cargo test -- --show-output
+  description: >
+    Runs all tests and displays their stdout output even for passing tests. By
+    default, Cargo captures and hides stdout from passing tests. The --show-output
+    flag (passed after -- to the test binary) makes all output visible, which is
+    helpful for debugging with println! statements.
+  tags:
+    - rust
+    - cargo
+    - test
+    - output
+    - stdout
+    - debug
+  aliases:
+    - run rust tests with output
+    - show test output in rust
+    - cargo test show stdout
+    - see println in tests
+    - display test output
+    - run tests and show prints
+  examples:
+    - query: "Run tests and show println output"
+    - query: "How do I see stdout from passing tests?"
+    - query: "Run Rust tests with visible output"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-test.html
+  verified_at: "2026-08-01"
+
+- id: rust-check
+  technology: rust
+  category: build
+  name: Check Project for Errors
+  intent: check_project
+  command: cargo check
+  description: >
+    Analyzes the current project and reports errors without producing an output
+    binary. This is significantly faster than cargo build because it skips the
+    code generation step. Ideal for rapid feedback during development to catch
+    type errors and borrow checker issues.
+  tags:
+    - rust
+    - cargo
+    - check
+    - analyze
+    - compile-check
+    - fast
+  aliases:
+    - check rust project for errors
+    - verify rust code compiles
+    - cargo check
+    - fast rust compilation check
+    - check rust syntax
+    - validate rust code
+  examples:
+    - query: "Check my Rust code for errors without building"
+    - query: "Is my Rust code valid?"
+    - query: "Fast check for compilation errors"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-check.html
+  verified_at: "2026-08-01"
+
+- id: rust-fmt
+  technology: rust
+  category: formatting
+  name: Format Code
+  intent: format_code
+  command: cargo fmt
+  description: >
+    Formats all Rust source files in the project according to the official Rust
+    style guidelines using rustfmt. Ensures consistent code style across the
+    project. Configuration can be customized via a rustfmt.toml or .rustfmt.toml
+    file in the project root.
+  tags:
+    - rust
+    - cargo
+    - fmt
+    - format
+    - rustfmt
+    - style
+  aliases:
+    - format rust code
+    - run rustfmt
+    - cargo fmt
+    - auto-format rust files
+    - fix rust code style
+    - apply rust formatting
+    - format rust source files
+  examples:
+    - query: "Format my Rust code"
+    - query: "How do I auto-format Rust files?"
+    - query: "Run the Rust formatter"
+    - query: "Apply standard Rust formatting"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustfmt/
+  verified_at: "2026-08-01"
+
+- id: rust-clippy
+  technology: rust
+  category: formatting
+  name: Lint Code with Clippy
+  intent: lint_code
+  command: cargo clippy
+  description: >
+    Runs the Clippy linter on the project to catch common mistakes, suggest
+    idiomatic improvements, and detect potential bugs. Clippy provides hundreds
+    of lints categorized by severity (allow, warn, deny, forbid) and helps write
+    more idiomatic and performant Rust code.
+  tags:
+    - rust
+    - cargo
+    - clippy
+    - lint
+    - linter
+    - static-analysis
+    - code-quality
+  aliases:
+    - lint rust code
+    - run clippy
+    - cargo clippy
+    - check rust code quality
+    - rust static analysis
+    - find common rust mistakes
+    - rust code suggestions
+  examples:
+    - query: "Lint my Rust code with Clippy"
+    - query: "Run the Rust linter"
+    - query: "Check for common Rust mistakes"
+    - query: "How do I use Clippy?"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/clippy/
+  verified_at: "2026-08-01"
+
+- id: rust-clippy-fix
+  technology: rust
+  category: formatting
+  name: Auto-fix Clippy Warnings
+  intent: lint_fix
+  command: cargo clippy --fix
+  description: >
+    Runs Clippy and automatically applies suggested fixes to the source code.
+    This modifies files in place to resolve linting warnings that have
+    machine-applicable suggestions. Not all Clippy warnings can be auto-fixed;
+    some require manual intervention.
+  tags:
+    - rust
+    - cargo
+    - clippy
+    - fix
+    - auto-fix
+    - lint
+  aliases:
+    - auto fix clippy warnings
+    - cargo clippy fix
+    - automatically fix rust lint issues
+    - apply clippy suggestions
+    - fix rust linting errors automatically
+  examples:
+    - query: "Automatically fix Clippy warnings"
+    - query: "Apply Clippy's suggested fixes"
+    - query: "How do I auto-fix Rust lint issues?"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/clippy/
+  verified_at: "2026-08-01"
+
+- id: rust-update-dependencies
+  technology: rust
+  category: dependencies
+  name: Update Dependencies
+  intent: update_dependencies
+  command: cargo update
+  description: >
+    Updates all dependencies in the Cargo.lock file to the latest versions
+    allowed by the version requirements specified in Cargo.toml. This does not
+    modify Cargo.toml itself, only the lock file. Use -p <crate> to update a
+    specific dependency.
+  tags:
+    - rust
+    - cargo
+    - update
+    - dependencies
+    - lock
+    - upgrade
+  aliases:
+    - update rust dependencies
+    - cargo update
+    - upgrade rust crates
+    - update cargo lock file
+    - refresh dependency versions
+    - update all crates
+  examples:
+    - query: "Update all dependencies to their latest compatible versions"
+    - query: "How do I update Cargo.lock?"
+    - query: "Refresh dependency versions in my Rust project"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-update.html
+  verified_at: "2026-08-01"
+
+- id: rust-add-dependency
+  technology: rust
+  category: dependencies
+  name: Add a Dependency
+  intent: add_dependency
+  command: cargo add <crate>
+  description: >
+    Adds a new dependency to the project's Cargo.toml file. Fetches the latest
+    version from crates.io by default. Supports specifying version requirements,
+    features, and optional flags. Use --dev for dev-dependencies or --build for
+    build-dependencies.
+  tags:
+    - rust
+    - cargo
+    - add
+    - dependency
+    - crate
+    - install
+  aliases:
+    - add a rust dependency
+    - install a rust crate
+    - cargo add package
+    - add a crate to cargo.toml
+    - install rust package
+    - add dependency to rust project
+    - add a new crate
+  examples:
+    - query: "Add the serde crate to my project"
+    - query: "How do I add a dependency in Rust?"
+    - query: "Install the tokio crate"
+    - query: "Add reqwest as a dependency"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-add.html
+  verified_at: "2026-08-01"
+
+- id: rust-remove-dependency
+  technology: rust
+  category: dependencies
+  name: Remove a Dependency
+  intent: remove_dependency
+  command: cargo remove <crate>
+  description: >
+    Removes a dependency from the project's Cargo.toml file. The crate will no
+    longer be compiled or linked. Use --dev to remove a dev-dependency or --build
+    to remove a build-dependency.
+  tags:
+    - rust
+    - cargo
+    - remove
+    - dependency
+    - uninstall
+    - crate
+  aliases:
+    - remove a rust dependency
+    - uninstall a rust crate
+    - cargo remove package
+    - delete dependency from cargo.toml
+    - remove crate from project
+  examples:
+    - query: "Remove the serde crate from my project"
+    - query: "How do I remove a dependency in Rust?"
+    - query: "Uninstall a crate from Cargo.toml"
+  risk: warning
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-remove.html
+  verified_at: "2026-08-01"
+
+- id: rust-dependency-tree
+  technology: rust
+  category: dependencies
+  name: Show Dependency Tree
+  intent: show_dependency_tree
+  command: cargo tree
+  description: >
+    Displays the dependency tree of the current project as a hierarchical text
+    graph. Shows all direct and transitive dependencies, their versions, and
+    feature flags. Useful for understanding the full dependency graph and
+    identifying duplicate or conflicting versions.
+  tags:
+    - rust
+    - cargo
+    - tree
+    - dependencies
+    - graph
+    - transitive
+  aliases:
+    - show rust dependency tree
+    - cargo tree
+    - list all dependencies recursively
+    - visualize dependency graph
+    - show transitive dependencies
+    - display dependency hierarchy
+  examples:
+    - query: "Show the dependency tree for my Rust project"
+    - query: "What are all my transitive dependencies?"
+    - query: "Visualize the crate dependency graph"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-tree.html
+  verified_at: "2026-08-01"
+
+- id: rust-clean
+  technology: rust
+  category: build
+  name: Clean Build Artifacts
+  intent: clean_build
+  command: cargo clean
+  description: >
+    Removes the entire target/ directory, deleting all compiled artifacts,
+    intermediate files, and cached build output. Frees disk space and forces a
+    full rebuild on the next cargo build. Useful when encountering stale build
+    artifacts or to reclaim disk space.
+  tags:
+    - rust
+    - cargo
+    - clean
+    - target
+    - artifacts
+    - disk-space
+  aliases:
+    - clean rust build artifacts
+    - cargo clean
+    - delete target directory
+    - remove compiled rust files
+    - clear rust build cache
+    - free up rust build space
+  examples:
+    - query: "Clean the build artifacts for my Rust project"
+    - query: "Delete the target directory"
+    - query: "How do I clear the Rust build cache?"
+  risk: dangerous
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-clean.html
+  verified_at: "2026-08-01"
+
+- id: rust-doc-generate
+  technology: rust
+  category: documentation
+  name: Generate Documentation
+  intent: generate_docs
+  command: cargo doc
+  description: >
+    Generates HTML documentation for the current project and all its dependencies
+    from doc comments (///) in the source code. Documentation is output to
+    target/doc/. This is the standard way to produce API reference documentation
+    for Rust libraries and applications.
+  tags:
+    - rust
+    - cargo
+    - doc
+    - documentation
+    - api
+    - rustdoc
+  aliases:
+    - generate rust documentation
+    - cargo doc
+    - build rust docs
+    - create api docs
+    - generate rustdoc
+    - build documentation for rust project
+  examples:
+    - query: "Generate documentation for my Rust project"
+    - query: "How do I build Rust docs?"
+    - query: "Create API documentation from doc comments"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
+  verified_at: "2026-08-01"
+
+- id: rust-doc-open
+  technology: rust
+  category: documentation
+  name: Generate and Open Documentation
+  intent: generate_and_open_docs
+  command: cargo doc --open
+  description: >
+    Generates HTML documentation for the current project and opens it in the
+    default web browser. Combines documentation generation with immediate viewing,
+    making it convenient for browsing API docs during development.
+  tags:
+    - rust
+    - cargo
+    - doc
+    - documentation
+    - browser
+    - open
+  aliases:
+    - generate and open rust docs
+    - cargo doc open
+    - view rust documentation in browser
+    - open rust api docs
+    - browse rust documentation
+  examples:
+    - query: "Generate docs and open them in the browser"
+    - query: "View my Rust project's documentation"
+    - query: "Open the generated Rust docs"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-doc.html
+  verified_at: "2026-08-01"
+
+- id: rust-bench
+  technology: rust
+  category: test
+  name: Run Benchmarks
+  intent: run_benchmarks
+  command: cargo bench
+  description: >
+    Compiles and runs benchmark tests in the project. Benchmarks measure the
+    performance of code and report timing statistics. Requires the nightly
+    toolchain for the built-in #[bench] attribute, or use the criterion crate
+    for stable Rust benchmarks.
+  tags:
+    - rust
+    - cargo
+    - bench
+    - benchmark
+    - performance
+    - nightly
+  aliases:
+    - run rust benchmarks
+    - cargo bench
+    - benchmark rust code
+    - run performance tests
+    - measure rust performance
+    - execute benchmarks
+  examples:
+    - query: "Run benchmarks for my Rust project"
+    - query: "How do I benchmark Rust code?"
+    - query: "Measure the performance of my Rust functions"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-bench.html
+  verified_at: "2026-08-01"
+
+- id: rust-publish
+  technology: rust
+  category: dependencies
+  name: Publish Crate to crates.io
+  intent: publish_crate
+  command: cargo publish
+  description: >
+    Packages and uploads the current crate to crates.io, the Rust community's
+    crate registry. Requires authentication with an API token. The crate must
+    have a unique name, valid version, and proper metadata in Cargo.toml.
+    Published versions are permanent and cannot be deleted.
+  tags:
+    - rust
+    - cargo
+    - publish
+    - crates.io
+    - registry
+    - release
+  aliases:
+    - publish rust crate
+    - upload to crates.io
+    - cargo publish
+    - release rust package
+    - publish rust library
+    - deploy crate to registry
+  examples:
+    - query: "Publish my crate to crates.io"
+    - query: "How do I upload a Rust package to the registry?"
+    - query: "Release my Rust library to crates.io"
+  risk: dangerous
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-publish.html
+  verified_at: "2026-08-01"
+
+- id: rust-build-with-features
+  technology: rust
+  category: build
+  name: Build with Specific Features
+  intent: build_with_features
+  command: cargo build --features <feature>
+  description: >
+    Builds the project with specific optional features enabled. Features are
+    defined in Cargo.toml and allow conditional compilation of code. Multiple
+    features can be specified as a comma-separated list. This controls which
+    parts of the code and dependencies are included in the build.
+  tags:
+    - rust
+    - cargo
+    - build
+    - features
+    - conditional-compilation
+  aliases:
+    - build rust with features
+    - enable cargo features
+    - compile with specific features
+    - cargo build features flag
+    - build with optional features
+    - activate rust feature flags
+  examples:
+    - query: "Build my project with the 'serde' feature enabled"
+    - query: "How do I enable features when building?"
+    - query: "Compile with specific feature flags"
+    - query: "Build with multiple features enabled"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/reference/features.html
+  verified_at: "2026-08-01"
+
+- id: rust-build-all-features
+  technology: rust
+  category: build
+  name: Build with All Features
+  intent: build_all_features
+  command: cargo build --all-features
+  description: >
+    Builds the project with all optional features enabled. This is useful for
+    CI/CD pipelines to ensure all feature combinations compile correctly, and
+    for generating complete documentation that covers all feature-gated items.
+  tags:
+    - rust
+    - cargo
+    - build
+    - features
+    - all-features
+  aliases:
+    - build rust with all features
+    - enable all cargo features
+    - compile with every feature
+    - cargo build all features
+    - build with all optional features enabled
+  examples:
+    - query: "Build my project with all features enabled"
+    - query: "How do I compile with every feature?"
+    - query: "Enable all optional features for building"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/reference/features.html
+  verified_at: "2026-08-01"
+
+- id: rust-build-no-default-features
+  technology: rust
+  category: build
+  name: Build without Default Features
+  intent: build_no_default_features
+  command: cargo build --no-default-features
+  description: >
+    Builds the project with default features disabled. Default features are those
+    listed under [features] default = [...] in Cargo.toml. This is useful for
+    testing minimal builds or when you want to explicitly opt-in to only specific
+    features.
+  tags:
+    - rust
+    - cargo
+    - build
+    - features
+    - no-default
+    - minimal
+  aliases:
+    - build rust without default features
+    - disable default features
+    - cargo build no default features
+    - minimal rust build
+    - build without defaults
+  examples:
+    - query: "Build without default features"
+    - query: "Disable default features in my Rust build"
+    - query: "How do I do a minimal build without defaults?"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/reference/features.html
+  verified_at: "2026-08-01"
+
+- id: rust-cross-compile
+  technology: rust
+  category: build
+  name: Cross Compile for Target
+  intent: cross_compile
+  command: cargo build --target <target>
+  description: >
+    Cross-compiles the project for a specific target platform. The target is
+    specified as a target triple (e.g., x86_64-unknown-linux-gnu,
+    aarch64-apple-darwin, wasm32-unknown-unknown). Requires the target toolchain
+    to be installed via rustup target add. Output is placed in target/<target>/.
+  tags:
+    - rust
+    - cargo
+    - build
+    - cross-compile
+    - target
+    - platform
+  aliases:
+    - cross compile rust
+    - build rust for different platform
+    - cargo build target
+    - compile for linux from mac
+    - build for wasm
+    - cross compilation rust
+    - build for another architecture
+  examples:
+    - query: "Cross-compile my Rust project for Linux"
+    - query: "Build for WebAssembly"
+    - query: "How do I compile Rust for a different architecture?"
+    - query: "Build for aarch64-unknown-linux-gnu"
+  risk: safe
+  documentation:
+    url: https://doc.rust-lang.org/cargo/commands/cargo-build.html
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-show
+  technology: rust
+  category: toolchain
+  name: Show Installed Toolchains
+  intent: show_toolchains
+  command: rustup show
+  description: >
+    Displays information about the currently installed Rust toolchains, the active
+    toolchain, the default toolchain, installed targets, and the rustup home
+    directory. Provides a comprehensive overview of your Rust installation.
+  tags:
+    - rust
+    - rustup
+    - toolchain
+    - show
+    - info
+  aliases:
+    - show rust toolchains
+    - rustup show
+    - list installed rust versions
+    - what rust toolchains are installed
+    - show rustup info
+    - display rust installation details
+  examples:
+    - query: "Show my installed Rust toolchains"
+    - query: "What Rust versions do I have installed?"
+    - query: "Display rustup installation info"
+  risk: safe
+  documentation:
+    url: https://rust-lang.github.io/rustup/
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-update
+  technology: rust
+  category: toolchain
+  name: Update Rust Toolchains
+  intent: update_toolchains
+  command: rustup update
+  description: >
+    Updates all installed Rust toolchains to the latest available versions. This
+    updates the Rust compiler, Cargo, standard library, and all installed
+    components for each toolchain (stable, beta, nightly). Also self-updates
+    rustup itself.
+  tags:
+    - rust
+    - rustup
+    - update
+    - upgrade
+    - toolchain
+  aliases:
+    - update rust
+    - rustup update
+    - upgrade rust to latest version
+    - update rust compiler
+    - update all rust toolchains
+    - get latest rust version
+  examples:
+    - query: "Update Rust to the latest version"
+    - query: "How do I upgrade my Rust installation?"
+    - query: "Update all Rust toolchains"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustup/
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-default
+  technology: rust
+  category: toolchain
+  name: Set Default Toolchain
+  intent: set_default_toolchain
+  command: rustup default <toolchain>
+  description: >
+    Sets the default Rust toolchain used when no override is active. Common
+    values are stable, beta, or nightly. You can also specify a specific version
+    like stable-2024-01-01 or a full target triple. The default toolchain is used
+    by all cargo and rustc invocations unless overridden.
+  tags:
+    - rust
+    - rustup
+    - default
+    - toolchain
+    - stable
+    - nightly
+  aliases:
+    - set default rust toolchain
+    - rustup default
+    - switch to stable rust
+    - use nightly rust by default
+    - change default rust version
+    - set rust to nightly
+  examples:
+    - query: "Set the default Rust toolchain to stable"
+    - query: "Switch to nightly Rust"
+    - query: "How do I change the default Rust version?"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustup/
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-target-add
+  technology: rust
+  category: toolchain
+  name: Add Compilation Target
+  intent: add_compilation_target
+  command: rustup target add <target>
+  description: >
+    Installs a new compilation target for the active Rust toolchain. Required
+    before cross-compiling with cargo build --target. Common targets include
+    wasm32-unknown-unknown for WebAssembly, x86_64-unknown-linux-musl for static
+    Linux binaries, and aarch64-apple-darwin for Apple Silicon.
+  tags:
+    - rust
+    - rustup
+    - target
+    - cross-compile
+    - platform
+    - install
+  aliases:
+    - add rust compilation target
+    - rustup target add
+    - install cross compilation target
+    - add wasm target
+    - add linux target
+    - install rust target platform
+  examples:
+    - query: "Add the WebAssembly target"
+    - query: "Install the Linux musl target for static binaries"
+    - query: "How do I add a cross-compilation target?"
+    - query: "Add aarch64-apple-darwin target"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustup/cross-compilation.html
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-component-add
+  technology: rust
+  category: toolchain
+  name: Add Toolchain Component
+  intent: add_toolchain_component
+  command: rustup component add <component>
+  description: >
+    Installs an additional component for the active Rust toolchain. Common
+    components include rustfmt (code formatter), clippy (linter), rust-src
+    (standard library source), rust-analyzer (language server), and llvm-tools
+    (LLVM utilities for code coverage).
+  tags:
+    - rust
+    - rustup
+    - component
+    - install
+    - toolchain
+  aliases:
+    - add rust component
+    - rustup component add
+    - install rustfmt
+    - install clippy
+    - add rust-analyzer
+    - install rust component
+    - add llvm-tools
+  examples:
+    - query: "Install the Clippy component"
+    - query: "Add rust-analyzer to my toolchain"
+    - query: "How do I install rustfmt?"
+    - query: "Add the rust-src component"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustup/concepts/components.html
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-toolchain-install
+  technology: rust
+  category: toolchain
+  name: Install Toolchain
+  intent: install_toolchain
+  command: rustup toolchain install <toolchain>
+  description: >
+    Installs a specific Rust toolchain. Toolchain names can be channel names
+    (stable, beta, nightly), specific dates (nightly-2024-01-15), or full
+    specifications (stable-x86_64-unknown-linux-gnu). Multiple toolchains can
+    coexist and be switched between.
+  tags:
+    - rust
+    - rustup
+    - toolchain
+    - install
+    - nightly
+    - stable
+    - beta
+  aliases:
+    - install rust toolchain
+    - rustup toolchain install
+    - install nightly rust
+    - install specific rust version
+    - add new rust toolchain
+    - install beta rust
+  examples:
+    - query: "Install the nightly Rust toolchain"
+    - query: "How do I install a specific Rust version?"
+    - query: "Install the beta toolchain"
+  risk: warning
+  documentation:
+    url: https://rust-lang.github.io/rustup/concepts/toolchains.html
+  verified_at: "2026-08-01"
+
+- id: rust-rustup-toolchain-list
+  technology: rust
+  category: toolchain
+  name: List Installed Toolchains
+  intent: list_toolchains
+  command: rustup toolchain list
+  description: >
+    Lists all installed Rust toolchains on the system. Shows each toolchain name
+    and marks the currently active default. Useful for seeing which versions of
+    Rust are available locally.
+  tags:
+    - rust
+    - rustup
+    - toolchain
+    - list
+  aliases:
+    - list rust toolchains
+    - rustup toolchain list
+    - show all installed toolchains
+    - what toolchains do I have
+    - list installed rust versions
+  examples:
+    - query: "List all installed Rust toolchains"
+    - query: "What Rust toolchains do I have?"
+    - query: "Show installed Rust versions"
+  risk: safe
+  documentation:
+    url: https://rust-lang.github.io/rustup/concepts/toolchains.html
+  verified_at: "2026-08-01"
+
+- id: rust-cargo-watch
+  technology: rust
+  category: build
+  name: Watch for Changes
+  intent: watch_changes
+  command: cargo watch -x run
+  description: >
+    Watches the project source files for changes and automatically re-runs the
+    specified cargo command when files are modified. Requires the cargo-watch
+    crate to be installed (cargo install cargo-watch). Common usage includes
+    -x run, -x test, and -x check for continuous feedback during development.
+  tags:
+    - rust
+    - cargo
+    - watch
+    - auto-reload
+    - development
+    - live
+  aliases:
+    - watch rust project for changes
+    - cargo watch
+    - auto rebuild on save
+    - live reload rust
+    - watch and run rust
+    - continuous rust compilation
+    - auto rerun on file change
+  examples:
+    - query: "Watch my Rust project and rerun on changes"
+    - query: "How do I set up auto-reload for Rust?"
+    - query: "Automatically rebuild when files change"
+    - query: "Watch and run tests on save"
+  risk: safe
+  documentation:
+    url: https://crates.io/crates/cargo-watch
+  verified_at: "2026-08-01"
+
+- id: rust-cargo-expand
+  technology: rust
+  category: compiler
+  name: Expand Macros
+  intent: expand_macros
+  command: cargo expand
+  description: >
+    Expands all macros in the crate and displays the resulting Rust source code.
+    Requires the cargo-expand crate to be installed (cargo install cargo-expand)
+    and the nightly toolchain. Invaluable for debugging procedural macros,
+    derive macros, and understanding what macro-generated code looks like.
+  tags:
+    - rust
+    - cargo
+    - expand
+    - macro
+    - debug
+    - nightly
+  aliases:
+    - expand rust macros
+    - cargo expand
+    - show expanded macro code
+    - debug rust macros
+    - view macro expansion
+    - see generated macro code
+  examples:
+    - query: "Expand all macros in my Rust project"
+    - query: "How do I see what a Rust macro generates?"
+    - query: "Debug a derive macro expansion"
+    - query: "Show the expanded code from macros"
+  risk: safe
+  documentation:
+    url: https://crates.io/crates/cargo-expand
+  verified_at: "2026-08-01"
+
+- id: rust-cargo-audit
+  technology: rust
+  category: dependencies
+  name: Security Audit Dependencies
+  intent: security_audit
+  command: cargo audit
+  description: >
+    Audits the project's dependencies for known security vulnerabilities by
+    checking against the RustSec Advisory Database. Requires the cargo-audit
+    crate to be installed (cargo install cargo-audit). Reports any crates with
+    known CVEs or security advisories and suggests updated versions.
+  tags:
+    - rust
+    - cargo
+    - audit
+    - security
+    - vulnerability
+    - cve
+    - rustsec
+  aliases:
+    - audit rust dependencies for security
+    - cargo audit
+    - check for vulnerable crates
+    - scan for security issues
+    - find cve in rust dependencies
+    - rust security scan
+    - check rust dependencies for vulnerabilities
+  examples:
+    - query: "Audit my Rust dependencies for security vulnerabilities"
+    - query: "Check if any crates have known CVEs"
+    - query: "Run a security scan on my Rust project"
+    - query: "Are my dependencies safe?"
+  risk: safe
+  documentation:
+    url: https://crates.io/crates/cargo-audit
+  verified_at: "2026-08-01"
