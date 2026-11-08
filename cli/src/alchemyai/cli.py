@@ -304,6 +304,58 @@ def context_clear() -> None:
 
 
 @main.command()
+@click.option("--full", is_flag=True, help="Full rebuild (dataset + embeddings + classifier)")
+def reload(full: bool) -> None:
+    """Reload knowledge base (fast incremental or full rebuild).
+
+    Default: reloads YAML → rebuilds FAISS index (seconds).
+    --full: regenerates dataset, embeddings, and retrains classifier.
+    """
+    import time
+
+    engine = _get_engine()
+    start = time.monotonic()
+
+    if full:
+        console.print("\n  Running full ML pipeline rebuild...\n", style="info")
+        # 1. Reload commands
+        count = engine.load_commands()
+        console.print(f"  Loaded {count} commands", style="dim")
+        # 2. Rebuild index
+        engine.build_index()
+        engine.save_index()
+        console.print("  FAISS index rebuilt", style="dim")
+        # 3. Rebuild dataset + retrain classifier
+        from alchemy_ml.config import get_config
+        from alchemy_ml.dataset import build_dataset
+        config = get_config()
+        output_dir = config.data_dir / "processed"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        stats = build_dataset(config.knowledge_dir, output_dir, config)
+        console.print(f"  Dataset: {stats['total_examples']} examples", style="dim")
+        # Retrain
+        from alchemy_ml.classifier import IntentClassifier
+        from alchemy_ml.dataset import load_training_data
+        data_path = output_dir / "train.jsonl"
+        if data_path.exists():
+            queries, technologies, intents = load_training_data(data_path)
+            classifier = IntentClassifier()
+            classifier.fit(queries, technologies, intents)
+            classifier.save(config.classifier_path)
+            console.print("  Classifier retrained", style="dim")
+    else:
+        console.print("\n  Fast reload: YAML → FAISS index...\n", style="info")
+        count = engine.load_commands()
+        console.print(f"  Loaded {count} commands", style="dim")
+        engine.build_index()
+        engine.save_index()
+        console.print("  FAISS index rebuilt", style="dim")
+
+    elapsed = time.monotonic() - start
+    console.print(f"\n  ✓ Reload complete in {elapsed:.1f}s\n", style="green")
+
+
+@main.command()
 def favorites() -> None:
     """Show saved favorite commands."""
     from pathlib import Path
@@ -347,6 +399,18 @@ def update() -> None:
     console.print("\n  Checking for updates...", style="info")
     console.print(f"  Current version: {__version__}", style="dim")
     console.print("  You are up to date.\n", style="green")
+
+
+@main.command()
+def browse() -> None:
+    """Browse commands interactively (fzf-style).
+
+    Two-level navigation: pick a technology, then browse its commands
+    with a live preview pane. Requires fzf for the best experience.
+    """
+    from .browse import run_browse
+    engine = _get_engine()
+    run_browse(engine)
 
 
 @main.command()

@@ -1,0 +1,360 @@
+name: Auto-Deploy Pipeline
+
+# ── Triggers ──────────────────────────────────────────────────
+# Fully automated: knowledge or web changes on main → rebuild → deploy
+on:
+  push:
+    branches: [main]
+    paths:
+      - "knowledge/**"
+      - "web/**"
+      - "ml/src/**"
+      - "ml/config/**"
+      - "api/**"
+
+  # Allow manual trigger with options
+  workflow_dispatch:
+    inputs:
+      skip_ml_rebuild:
+        description: "Skip ML pipeline rebuild"
+        type: boolean
+        default: false
+      deploy_web:
+        description: "Deploy web UI to Vercel"
+        type: boolean
+        default: true
+      deploy_docker:
+        description: "Build & push Docker image"
+        type: boolean
+        default: true
+      commit_artifacts:
+        description: "Commit ML artifacts back to repo"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  PYTHONPATH: ml/src:cli/src
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+# ── Jobs ──────────────────────────────────────────────────────
+jobs:
+  # ────────────────────────────────────────────────────────────
+  # 1. Detect what changed
+  # ────────────────────────────────────────────────────────────
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      knowledge_changed: ${{ steps.changes.outputs.knowledge }}
+      web_changed: ${{ steps.changes.outputs.web }}
+      ml_changed: ${{ steps.changes.outputs.ml }}
+      api_changed: ${{ steps.changes.outputs.api }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            knowledge:
+              - 'knowledge/**'
+            web:
+              - 'web/**'
+            ml:
+              - 'ml/src/**'
+              - 'ml/config/**'
+            api:
+              - 'api/**'
+
+  # ────────────────────────────────────────────────────────────
+  # 2. Validate knowledge YAML
+  # ────────────────────────────────────────────────────────────
+  validate-knowledge:
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.knowledge_changed == 'true' ||
+      needs.detect-changes.outputs.ml_changed == 'true' ||
+      (github.event_name == 'workflow_dispatch' && !inputs.skip_ml_rebuild)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml pydantic
+
+      - name: Validate knowledge YAML
+        run: |
+          python3 -c "
+          import yaml, sys
+          from pathlib import Path
+          errors = []
+          total = 0
+          for f in sorted(Path('knowledge').rglob('*.yaml')):
+              try:
+                  data = yaml.safe_load(f.read_text())
+                  if not isinstance(data, list):
+                      errors.append(f'{f}: expected list, got {type(data).__name__}')
+                      continue
+                  for i, entry in enumerate(data):
+                      if not isinstance(entry, dict):
+                          errors.append(f'{f}[{i}]: expected dict')
+                      elif 'id' not in entry or 'command' not in entry:
+                          errors.append(f'{f}[{i}]: missing id or command')
+                      else:
+                          total += 1
+              except Exception as e:
+                  errors.append(f'{f}: {e}')
+          if errors:
+              print('::error::Knowledge validation failed')
+              for e in errors:
+                  print(f'  ✗ {e}')
+              sys.exit(1)
+          print(f'✓ Validated {total} commands across {len(list(Path(\"knowledge\").rglob(\"*.yaml\")))} files')
+          "
+
+      - name: Validate with Pydantic models
+        run: |
+          pip install -e ".[train]"
+          python3 -c "
+          from alchemy_ml.inference import InferenceEngine
+          e = InferenceEngine()
+          count = e.load_commands()
+          techs = e.get_all_technologies()
+          print(f'✓ {count} commands loaded across {len(techs)} technologies')
+          for t in sorted(techs):
+              cmds = e.get_commands_by_technology(t)
+              print(f'  {t}: {len(cmds)} commands')
+          "
+
+  # ────────────────────────────────────────────────────────────
+  # 3. Rebuild ML pipeline (dataset → embeddings → classifier)
+  # ────────────────────────────────────────────────────────────
+  rebuild-ml:
+    runs-on: ubuntu-latest
+    needs: validate-knowledge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -e ".[train]"
+
+      - name: Build training dataset
+        run: |
+          echo "::group::Dataset build"
+          python -m alchemy_ml.cli dataset
+          echo "::endgroup::"
+
+      - name: Build FAISS index
+        run: |
+          echo "::group::Embeddings & FAISS"
+          python -m alchemy_ml.cli embeddings
+          echo "::endgroup::"
+
+      - name: Train classifier
+        run: |
+          echo "::group::Classifier training"
+          python -m alchemy_ml.cli train
+          echo "::endgroup::"
+
+      - name: Evaluate
+        run: |
+          echo "::group::Evaluation"
+          python -m alchemy_ml.cli evaluate
+          echo "::endgroup::"
+
+      - name: Run regression tests
+        run: |
+          echo "::group::Regression"
+          python -m alchemy_ml.cli regression || echo "::warning::Regression tests had failures"
+          echo "::endgroup::"
+
+      - name: Upload ML artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ml-artifacts
+          path: |
+            ml/data/processed/
+            ml/models/
+            ml/reports/
+          retention-days: 30
+
+  # ────────────────────────────────────────────────────────────
+  # 4. Commit ML artifacts back to repo
+  # ────────────────────────────────────────────────────────────
+  commit-artifacts:
+    runs-on: ubuntu-latest
+    needs: rebuild-ml
+    if: |
+      always() && needs.rebuild-ml.result == 'success' &&
+      (github.event_name != 'workflow_dispatch' || inputs.commit_artifacts)
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download ML artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ml-artifacts
+          path: .
+
+      - name: Commit updated artifacts
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Stage only generated ML artifacts
+          git add -f ml/data/processed/*.faiss \
+                     ml/data/processed/*.npy \
+                     ml/data/processed/*.json \
+                     ml/data/processed/*.jsonl \
+                     ml/models/classifier/ \
+                     ml/reports/ 2>/dev/null || true
+
+          if git diff --cached --quiet; then
+            echo "No artifact changes to commit"
+          else
+            git commit -m "chore: auto-update ML artifacts [skip ci]
+
+          Triggered by: ${{ github.event_name }}
+          Commit: ${{ github.sha }}
+          Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            git push
+            echo "✓ ML artifacts committed"
+          fi
+
+  # ────────────────────────────────────────────────────────────
+  # 5. Deploy web UI to Vercel
+  # ────────────────────────────────────────────────────────────
+  deploy-web:
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.web_changed == 'true' ||
+      needs.detect-changes.outputs.knowledge_changed == 'true' ||
+      (github.event_name == 'workflow_dispatch' && inputs.deploy_web)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: cd web && npm ci
+
+      - name: Build web UI
+        run: cd web && npm run build
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL || '' }}
+
+      - name: Deploy to Vercel
+        run: |
+          npm i -g vercel@latest
+          cd web
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Post deployment URL
+        run: |
+          echo "### 🚀 Web UI Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Vercel deployment triggered successfully." >> $GITHUB_STEP_SUMMARY
+
+  # ────────────────────────────────────────────────────────────
+  # 6. Build & push Docker image
+  # ────────────────────────────────────────────────────────────
+  deploy-docker:
+    runs-on: ubuntu-latest
+    needs: [rebuild-ml, detect-changes]
+    if: |
+      always() &&
+      (needs.rebuild-ml.result == 'success' || needs.rebuild-ml.result == 'skipped') &&
+      (
+        needs.detect-changes.outputs.knowledge_changed == 'true' ||
+        needs.detect-changes.outputs.api_changed == 'true' ||
+        needs.detect-changes.outputs.ml_changed == 'true' ||
+        (github.event_name == 'workflow_dispatch' && inputs.deploy_docker)
+      )
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha
+            type=raw,value=latest
+
+      - name: Download ML artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ml-artifacts
+          path: .
+        continue-on-error: true
+
+      - name: Build & push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Post Docker info
+        run: |
+          echo "### 🐳 Docker Image Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.meta.outputs.tags }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+  # ────────────────────────────────────────────────────────────
+  # 7. Summary notification
+  # ────────────────────────────────────────────────────────────
+  summary:
+    runs-on: ubuntu-latest
+    needs: [detect-changes, validate-knowledge, rebuild-ml, commit-artifacts, deploy-web, deploy-docker]
+    if: always()
+    steps:
+      - name: Pipeline summary
+        run: |
+          echo "## Deploy Pipeline Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Knowledge validation | ${{ needs.validate-knowledge.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ML pipeline rebuild | ${{ needs.rebuild-ml.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit artifacts | ${{ needs.commit-artifacts.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Deploy web (Vercel) | ${{ needs.deploy-web.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Deploy Docker (GHCR) | ${{ needs.deploy-docker.result || 'skipped' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Changes detected:**" >> $GITHUB_STEP_SUMMARY
+          echo "- Knowledge: ${{ needs.detect-changes.outputs.knowledge_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Web: ${{ needs.detect-changes.outputs.web_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- ML: ${{ needs.detect-changes.outputs.ml_changed }}" >> $GITHUB_STEP_SUMMARY
+          echo "- API: ${{ needs.detect-changes.outputs.api_changed }}" >> $GITHUB_STEP_SUMMARY

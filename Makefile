@@ -1,4 +1,4 @@
-.PHONY: setup install dev test lint validate dataset embeddings train evaluate benchmark build docker release clean web web-build web-dev serve help
+.PHONY: setup install dev test lint validate dataset embeddings train evaluate benchmark build docker release clean web web-build web-dev serve help browse reload reload-full knowledge-validate
 
 PYTHON := python3
 UV := uv
@@ -91,6 +91,24 @@ web-build: ## Build web for production
 	cd web && npm run build
 
 web: web-install web-dev ## Install and start web dev server
+
+# ─── Browse & Knowledge ──────────────────────────────────────
+
+browse: ## Browse commands interactively (fzf-style)
+	$(PYTHON) -m alchemyai browse
+
+reload: ## Fast reload knowledge (YAML → FAISS, seconds)
+	$(PYTHON) -m alchemyai reload
+
+reload-full: ## Full knowledge rebuild (dataset + embeddings + classifier)
+	$(PYTHON) -m alchemyai reload --full
+
+knowledge-validate: ## Validate all knowledge YAML files
+	@$(PYTHON) -c "from alchemy_ml.inference import InferenceEngine; \
+		e = InferenceEngine(); count = e.load_commands(); \
+		techs = e.get_all_technologies(); \
+		print(f'  ✓ {count} commands across {len(techs)} technologies'); \
+		[print(f'    {t}: {len(e.get_commands_by_technology(t))} commands') for t in sorted(techs)]"
 
 # ─── Server ───────────────────────────────────────────────────
 

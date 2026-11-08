@@ -1,0 +1,284 @@
+# ─── Tool Versions ──────────────────────────────────────────────
+[tools]
+python = "3.11"
+node = "21"
+
+# ─── Environment Variables ──────────────────────────────────────
+[env]
+PYTHON = "python3"
+UV = "uv"
+PIP = "pip"
+VITE_API_URL = "http://localhost:8000"
+ALCHEMYAI_API_HOST = "0.0.0.0"
+ALCHEMYAI_API_PORT = "8000"
+
+# ─────────────────────────────────────────────────────────────────
+# Setup
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.setup]
+description = "Full project setup (Python + Web)"
+depends = ["setup:python", "web:install"]
+
+[tasks."setup:python"]
+description = "Install Python dependencies"
+run = "uv sync || pip install -e '.[dev,train]'"
+
+[tasks.install]
+description = "Install in production mode"
+run = "pip install -e ."
+
+[tasks.dev]
+description = "Install with dev dependencies"
+run = "pip install -e '.[dev,train]'"
+
+# ─────────────────────────────────────────────────────────────────
+# ML Pipeline
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.dataset]
+description = "Build training dataset from knowledge base"
+run = """
+python3 -m alchemy_ml.cli dataset
+echo "✓ Dataset built"
+"""
+
+[tasks.embeddings]
+description = "Generate embeddings and build FAISS index"
+run = """
+python3 -m alchemy_ml.cli embeddings
+echo "✓ Embeddings built"
+"""
+
+[tasks.train]
+description = "Train intent classifier"
+run = """
+python3 -m alchemy_ml.cli train
+echo "✓ Training complete"
+"""
+
+[tasks.evaluate]
+description = "Evaluate model on test data"
+run = """
+python3 -m alchemy_ml.cli evaluate
+echo "✓ Evaluation complete"
+"""
+
+[tasks.benchmark]
+description = "Run benchmark with latency measurements"
+run = "python3 -m alchemy_ml.cli benchmark"
+
+[tasks.ml-pipeline]
+description = "Run full ML pipeline (dataset → embeddings → train → evaluate)"
+depends = ["dataset", "embeddings", "train", "evaluate"]
+run = 'echo "✓ Full ML pipeline complete"'
+
+# ─────────────────────────────────────────────────────────────────
+# Testing
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.test]
+description = "Run all tests"
+run = "python3 -m pytest ml/tests/ cli/tests/ api/tests/ tests/ -v"
+
+[tasks."test:ml"]
+description = "Run ML tests only"
+run = "python3 -m pytest ml/tests/ -v"
+
+[tasks."test:cli"]
+description = "Run CLI tests only"
+run = "python3 -m pytest cli/tests/ -v"
+
+[tasks."test:api"]
+description = "Run API tests only"
+run = "python3 -m pytest api/tests/ -v"
+
+[tasks."test:cov"]
+description = "Run tests with coverage"
+run = "python3 -m pytest --cov=alchemy_ml --cov=alchemyai --cov-report=html --cov-report=term"
+
+[tasks.regression]
+description = "Run ML regression tests"
+run = "python3 -m alchemy_ml.cli regression"
+
+# ─────────────────────────────────────────────────────────────────
+# Code Quality
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.lint]
+description = "Run linter"
+run = """
+ruff check ml/src/ cli/src/ api/ tests/
+ruff format --check ml/src/ cli/src/ api/ tests/
+"""
+
+[tasks.format]
+description = "Auto-format code"
+run = """
+ruff check --fix ml/src/ cli/src/ api/ tests/
+ruff format ml/src/ cli/src/ api/ tests/
+"""
+
+[tasks.typecheck]
+description = "Run type checker"
+run = "mypy ml/src/ cli/src/ api/"
+
+[tasks.validate]
+description = "Run all validation checks (lint + typecheck + test)"
+depends = ["lint", "typecheck", "test"]
+
+# ─────────────────────────────────────────────────────────────────
+# Web UI
+# ─────────────────────────────────────────────────────────────────
+
+[tasks."web:install"]
+description = "Install web dependencies"
+dir = "web"
+run = "npm install"
+
+[tasks."web:dev"]
+description = "Start web dev server (port 3000)"
+dir = "web"
+run = "npm run dev"
+
+[tasks."web:build"]
+description = "Build web for production"
+dir = "web"
+run = "npm run build"
+
+[tasks."web:lint"]
+description = "Lint web source files"
+dir = "web"
+run = "npm run lint"
+
+[tasks."web:preview"]
+description = "Preview production build locally"
+dir = "web"
+run = "npm run preview"
+
+[tasks.web]
+description = "Install deps and start web dev server"
+depends = ["web:install"]
+run = "cd web && npm run dev"
+
+# ─────────────────────────────────────────────────────────────────
+# API Server
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.serve]
+description = "Start API server (dev mode with reload)"
+run = "python3 -m uvicorn api.app:app --reload --host 0.0.0.0 --port 8000"
+
+[tasks."serve:prod"]
+description = "Start API server in production mode"
+run = "python3 -m uvicorn api.app:app --host 0.0.0.0 --port 8000 --workers 4"
+
+[tasks.start]
+description = "Start both API and Web dev servers"
+depends = ["serve", "web:dev"]
+
+# ─────────────────────────────────────────────────────────────────
+# Docker
+# ─────────────────────────────────────────────────────────────────
+
+[tasks."docker:build"]
+description = "Build Docker images"
+run = "docker compose build"
+
+[tasks."docker:up"]
+description = "Start all services (detached)"
+run = "docker compose up -d"
+
+[tasks."docker:down"]
+description = "Stop all services"
+run = "docker compose down"
+
+[tasks."docker:dev"]
+description = "Start development environment"
+run = "docker compose -f docker-compose.dev.yml up"
+
+[tasks."docker:prod"]
+description = "Start production environment"
+run = "docker compose -f docker-compose.prod.yml up -d"
+
+# ─────────────────────────────────────────────────────────────────
+# Build & Release
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.build]
+description = "Build Python package"
+run = "python3 -m build"
+
+[tasks.release]
+description = "Full release process (validate + build)"
+depends = ["validate", "build"]
+run = """
+echo "✓ Release build complete"
+echo "  Upload with: twine upload dist/*"
+"""
+
+# ─────────────────────────────────────────────────────────────────
+# Cleanup
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.clean]
+description = "Clean build artifacts"
+run = """
+rm -rf build/ dist/ *.egg-info
+rm -rf ml/reports/*.png ml/reports/*.html
+rm -rf .pytest_cache .mypy_cache .ruff_cache
+rm -rf htmlcov/
+find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+echo "✓ Cleaned"
+"""
+
+[tasks."clean:models"]
+description = "Clean generated models and indices"
+run = """
+rm -rf ml/models/embedding/*/
+rm -rf ml/models/classifier/*/
+rm -rf ml/data/processed/*.faiss
+rm -rf ml/data/processed/*.npy
+rm -rf ml/data/processed/*.json
+rm -rf ml/data/processed/*.jsonl
+echo "✓ Models cleaned"
+"""
+
+[tasks."clean:all"]
+description = "Clean everything (artifacts + models)"
+depends = ["clean", "clean:models"]
+
+# ─────────────────────────────────────────────────────────────────
+# Knowledge Management
+# ─────────────────────────────────────────────────────────────────
+
+[tasks."knowledge:reload"]
+description = "Fast reload: re-read YAML + rebuild FAISS index (seconds)"
+run = "python3 -m alchemyai reload"
+
+[tasks."knowledge:rebuild"]
+description = "Full rebuild: dataset + embeddings + retrain classifier"
+run = "python3 -m alchemyai reload --full"
+
+[tasks."knowledge:validate"]
+description = "Validate all knowledge YAML files parse correctly"
+run = """
+python3 -c "
+from alchemy_ml.inference import InferenceEngine
+e = InferenceEngine()
+count = e.load_commands()
+techs = e.get_all_technologies()
+print(f'  ✓ {count} commands across {len(techs)} technologies')
+for t in sorted(techs):
+    cmds = e.get_commands_by_technology(t)
+    print(f'    {t}: {len(cmds)} commands')
+"
+"""
+
+# ─────────────────────────────────────────────────────────────────
+# Browse (fzf)
+# ─────────────────────────────────────────────────────────────────
+
+[tasks.browse]
+description = "Browse commands interactively with fzf"
+run = "python3 -m alchemyai browse"
