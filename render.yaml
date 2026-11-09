@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: alchemy-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    # DEVICE=cpu uses CPU-only torch (~200MB) to fit in memory
+    # Switch to plan: standard + DEVICE=cuda for GPU inference
+    plan: free
+    envVars:
+      - key: DEVICE
+        value: "cpu"
+      - key: ALCHEMYAI_API_HOST
+        value: "0.0.0.0"
+      - key: ALCHEMYAI_API_PORT
+        value: "8000"
+      - key: ALCHEMYAI_EMBEDDING__DEVICE
+        value: "cpu"
+    healthCheckPath: /api/v1/health
+    autoDeploy: true

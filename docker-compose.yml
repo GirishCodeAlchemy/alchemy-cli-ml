@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        DEVICE: ${DEVICE:-cpu}  # cpu (default) | cuda
     ports:
       - "8000:8000"
     volumes:
